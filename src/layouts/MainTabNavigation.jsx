@@ -18,9 +18,7 @@ const MainTabNavigation = (props) => {
     const onOpen = () => {
         modalizeRef.current?.open();
     };
-    const handleSignOut = () => {
-        props.onSignOut();
-    }
+
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <NavigationContainer>
@@ -90,9 +88,9 @@ const MainTabNavigation = (props) => {
                             <Text style={{ textAlign: 'center', textAlignVertical: 'center' }}>Helo</Text>
                         </View>
                     </Modalize>
+                    {/* <Text>{props.user}</Text> */}
                 </View>
             </NavigationContainer>
-            <Button title='Log out' onPress={handleSignOut} />
         </GestureHandlerRootView>
     )
 }

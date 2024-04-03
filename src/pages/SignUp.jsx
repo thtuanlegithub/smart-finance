@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { View, Button, TextInput } from 'react-native';
+import { View, Button, TextInput, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import SignInButton from '../components/SignInButton';
 import SignInInput from '../components/SignInInput';
@@ -24,7 +24,7 @@ function SignUp(props) {
     };
 
     return (
-        <GestureHandlerRootView>
+        <GestureHandlerRootView style={styles.signUpContainer}>
             <SignInInput
                 placeholder="Email"
                 value={email}
@@ -40,5 +40,12 @@ function SignUp(props) {
         </GestureHandlerRootView>
     );
 }
+
+const styles = StyleSheet.create({
+    signUpContainer: {
+        flex: 1,
+        backgroundColor: 'white',
+    }
+})
 
 export default SignUp;

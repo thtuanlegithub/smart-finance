@@ -17,6 +17,8 @@ const SignInInput = (props) => {
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             secureTextEntry={props.secureTextEntry}
+            onChangeText={props.onChangeText}
+            value={props.value}
 
         />
     );
@@ -29,7 +31,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingLeft: 14,
         marginHorizontal: 16,
-        marginTop: 14
+        marginTop: 16,
+        backgroundColor: "#F4F5F3",
     },
 });
 

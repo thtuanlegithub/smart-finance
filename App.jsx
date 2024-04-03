@@ -1,22 +1,15 @@
-import React, { useState } from "react";
-import MainTabNavigation from "./src/layouts/MainTabNavigation";
-import AuthenticationRoute from "./src/layouts/AuthenticationRoute";
+import React from "react";
+import Root from "./src/pages/Root";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 function App(props) {
-  const [user, setUser] = useState(null);
-  const handleSignOut = () => {
-    setUser(null);
-  }
-  if (!user) {
-    return (
-      <AuthenticationRoute onSignIn={(user) => setUser({ user })} />
-    )
-  }
-  return (
-    <MainTabNavigation user={user} onSignOut={handleSignOut} />
-  );
+
+	return (
+		<Provider store={store}>
+			<Root />
+		</Provider>
+	);
 }
-
-
 
 export default App;

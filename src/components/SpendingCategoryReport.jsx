@@ -1,6 +1,8 @@
-import { View, Text, StyleSheet, Image, Touchable, TouchableOpacity } from 'react-native'
-import React from 'react'
-import formatCurrency from '../utils/formatCurrency'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import formatCurrency from '../utils/formatCurrency';
+import typography from '../styles/typography';
+import colors from '../styles/colors';
 
 const SpendingCategoryReport = (props) => {
     return (

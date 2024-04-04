@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
-import colors from '../styles/colors';
 import typography from '../styles/typography';
 
 const CircularProgress = (props) => {

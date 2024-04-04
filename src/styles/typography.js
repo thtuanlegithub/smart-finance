@@ -1,4 +1,4 @@
-export default typography = {
+const typography = {
     SemiBoldInterH2: {
         fontFamily: 'Inter-SemiBold',
         fontSize: 24,
@@ -72,3 +72,4 @@ export default typography = {
         fontSize: 18,
     },
 }
+export default typography;

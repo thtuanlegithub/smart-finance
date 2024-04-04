@@ -3,6 +3,7 @@ import React from 'react'
 import CircularProgress from './CircularProgress'
 import formatCurrency from '../utils/formatCurrency'
 import colors from '../styles/colors'
+import typography from '../styles/typography';
 
 const SavingItem = () => {
     return (

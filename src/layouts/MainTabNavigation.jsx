@@ -41,7 +41,8 @@ const MainTabNavigation = (props) => {
                                 } else if (route.name == 'Budget') {
                                     iconName = 'wallet';
                                 }
-                                return <FontAwesome5 name={iconName} size={24} color={color} style={{ ...iconStyle, opacity: iconOpacity }} />;
+                                let validIconStyle = typeof iconStyle === 'string' ? {} : iconStyle;
+                                return <FontAwesome5 name={iconName} size={24} color={color} style={{ ...validIconStyle, opacity: iconOpacity }} />;
                             },
                             tabBarLabel: ({ focused, color }) => {
                                 let labelName;

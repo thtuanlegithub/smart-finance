@@ -2,20 +2,21 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import colors from '../styles/colors';
+import typography from '../styles/typography';
 
-const CircularProgress = () => {
-    const size = 60;
-    const strokeWidth = 10;
+const CircularProgress = (props) => {
+    const size = 72;
+    const strokeWidth = 11;
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
-    const fill = 60; // this should be the percentage of the progress (0 - 100)
+    const fill = 77.8; // this should be the percentage of the progress (0 - 100)
     const progress = circumference - (fill / 100) * circumference;
 
     return (
         <View>
             <Svg width={size} height={size} style={{ transform: [{ rotateZ: '-90deg' }] }}>
                 <Circle
-                    stroke={colors.green02}
+                    stroke={props.subColor}
                     fill="none"
                     cx={size / 2}
                     cy={size / 2}
@@ -23,7 +24,7 @@ const CircularProgress = () => {
                     strokeWidth={strokeWidth}
                 />
                 <Circle
-                    stroke={colors.green06}
+                    stroke={props.mainColor}
                     fill="none"
                     cx={size / 2}
                     cy={size / 2}
@@ -43,7 +44,7 @@ const CircularProgress = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <Text>{fill}%</Text>
+                <Text style={[typography.SemiBoldInterH5, { color: props.textColor }]}>{fill}%</Text>
             </View>
         </View>
     );

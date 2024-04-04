@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
         bottom: 24,
         justifyContent: 'center',
         alignItems: 'center'
-    }
-
+    },
 });
 export default CenterButton;

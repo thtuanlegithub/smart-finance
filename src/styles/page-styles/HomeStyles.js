@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 export default styles = StyleSheet.create({
     container: {
-        gap: 20,
+        gap: 10,
         padding: 16,
         backgroundColor: colors.gray02,
         flex: 1,

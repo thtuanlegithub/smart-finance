@@ -15,6 +15,10 @@ export default typography = {
         fontFamily: 'Inter-Bold',
         fontSize: 18,
     },
+    MediumInterH3: {
+        fontFamily: 'Inter-Medium',
+        fontSize: 18,
+    },
     MediumInterH4: {
         fontFamily: 'Inter-Medium',
         fontSize: 14,
@@ -25,54 +29,46 @@ export default typography = {
     },
     RegularInterH5: {
         fontFamily: 'Inter-Regular',
-        fontSize: 11,
+        fontSize: 12,
     },
     MediumInterH5: {
         fontFamily: 'Inter-Medium',
-        fontSize: 11,
+        fontSize: 12,
     },
     MediumInterH6: {
         fontFamily: 'Inter-Medium',
-        fontSize: 8.5
+        fontSize: 11
     },
     LightInterH6: {
         fontFamily: 'Inter-Light',
-        fontSize: 8.5,
-        fontWeight: '300',
+        fontSize: 11,
     },
     SemiBoldInterH5: {
         fontFamily: 'Inter-SemiBold',
-        fontSize: 11,
-        fontWeight: '600',
+        fontSize: 12,
     },
     BoldInterH6: {
         fontFamily: 'Inter-Bold',
-        fontSize: 8.5,
-        fontWeight: '700',
+        fontSize: 11,
     },
     RegularInterH6: {
         fontFamily: 'Inter-Regular',
-        fontSize: 8.5,
-        fontWeight: '400',
+        fontSize: 11,
     },
     SemiBoldInterH6: {
         fontFamily: 'Inter-SemiBold',
-        fontSize: 8.5,
-        fontWeight: '600',
+        fontSize: 11,
     },
     MediumInterH2: {
         fontFamily: 'Inter-Medium',
         fontSize: 24,
-        fontWeight: '500',
     },
     RegularInterH2: {
         fontFamily: 'Inter-Regular',
         fontSize: 24,
-        fontWeight: '400',
     },
     ReguarInterH3: {
         fontFamily: 'Inter-Regular',
         fontSize: 18,
-        fontWeight: '400',
     },
 }

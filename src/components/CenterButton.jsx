@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View, TouchableOpacity } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const CenterButton = ({ onDisplayModal }) => {
     const handlePress = () => {
         if (onDisplayModal) {
@@ -12,7 +12,7 @@ const CenterButton = ({ onDisplayModal }) => {
         <TouchableOpacity onPress={handlePress}
             style={styles.centerButtonContainer}>
             <View style={styles.centerButton}>
-                <Ionicons name='add' size={28} color='#FFFFFF' />
+                <FontAwesome5 name='plus' size={28} color='#FFFFFF' />
             </View>
         </TouchableOpacity>
     )
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     centerButton: {
         position: 'absolute',
-        backgroundColor: 'green',
+        backgroundColor: '#40916C',
         height: 48,
         width: 48,
         borderRadius: 24,

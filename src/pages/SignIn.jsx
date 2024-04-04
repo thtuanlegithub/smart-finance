@@ -31,7 +31,7 @@ function SignIn(props) {
             // behavior={Platform.OS === "ios" ? "height" : "padding"}
             style={styles.container}>
             <View style={{ width: '100%', alignItems: 'center' }}>
-                <Image style={styles.logInImage} source={require('../assets/loginIllustration.png')} />
+                <Image style={styles.logInImage} source={require('../assets/images/loginIllustration.png')} />
             </View>
             <Text style={styles.loginTitle}>Sign in</Text>
             <Text style={styles.loginSubtitle}>Continue with your account to get started</Text>
@@ -58,7 +58,7 @@ function SignIn(props) {
                 underlayColor="#E4E6E3"
                 style={styles.continueWithGoogleContainer}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Image style={styles.googleLogo} source={require('../assets/google.png')} />
+                    <Image style={styles.googleLogo} source={require('../assets/images/google.png')} />
                     <Text style={styles.continueWithOtherSocialNetwork}>Or Continue with your Gmail</Text>
                 </View>
             </TouchableHighlight>

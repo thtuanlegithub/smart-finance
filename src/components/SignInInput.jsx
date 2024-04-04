@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
+import colors from '../styles/colors';
+import typography from '../styles/typography';
 
 const SignInInput = (props) => {
     const [isFocused, setFocus] = useState(false);
@@ -7,19 +9,20 @@ const SignInInput = (props) => {
     return (
         <TextInput
             style={[
+                typography.MediumInterH4,
+                { color: colors.green08 },
                 styles.signInInput,
                 { borderColor: isFocused ? '#1C322D' : 'gray' },
                 { borderWidth: isFocused ? 2 : 1 },
                 { paddingVertical: isFocused ? 9 : 10 }
             ]}
             placeholder={props.placeholder}
-            placeholderTextColor={isFocused ? '#1C322D' : 'gray'}
+            placeholderTextColor={colors.gray03}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             secureTextEntry={props.secureTextEntry}
             onChangeText={props.onChangeText}
             value={props.value}
-
         />
     );
 };

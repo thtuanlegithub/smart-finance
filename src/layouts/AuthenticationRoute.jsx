@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import SignIn from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
+import SignIn from '../features/authentication/pages/SignIn';
+import SignUp from '../features/authentication/pages/SignUp';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();

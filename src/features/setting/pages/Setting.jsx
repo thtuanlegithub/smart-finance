@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { clearUser } from '../redux/loginSlice';
+import { clearUser } from '../../authentication';
 import { useDispatch } from 'react-redux';
 
 function Setting(props) {

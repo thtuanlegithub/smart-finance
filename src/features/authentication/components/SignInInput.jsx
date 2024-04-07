@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
-import colors from '../styles/colors';
-import typography from '../styles/typography';
+import colors from '../../../styles/colors';
+import typography from '../../../styles/typography';
 
 const SignInInput = (props) => {
     const [isFocused, setFocus] = useState(false);

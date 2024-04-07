@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import formatCurrency from '../utils/formatCurrency';
-import typography from '../styles/typography';
-import colors from '../styles/colors';
+import formatCurrency from '../../../utils/formatCurrency';
+import typography from '../../../styles/typography';
+import colors from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import styles from '../styles/page-styles/HomeStyles';
-import LabelSwitchButton from '../components/LabelSwitchButton';
-import SpendingCategoryReport from '../components/SpendingCategoryReport';
-import SavingItem from '../components/SavingItem';
-import LimitItem from '../components/LimitItem';
+import styles from '../HomeStyles';
+import LabelSwitchButton from '../../../components/LabelSwitchButton';
+import SpendingCategoryReport from '../../../components/SpendingCategoryReport';
+import SavingItem from '../../../components/SavingItem';
+import LimitItem from '../../../components/LimitItem';
 function Home(props) {
     const [balances, setBalances] = useState(15000000);
     const [spendingMoney, setSpendingMoney] = useState(785000);
@@ -35,7 +35,7 @@ function Home(props) {
                     <TouchableOpacity>
                         <View style={styles.currentWallet}>
                             <View style={styles.currentWalletName}>
-                                <Image style={styles.currentWalletIcon} source={require('../assets/images/wallet.png')} />
+                                <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
                                 <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Current wallet</Text>
                             </View>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(balances)}</Text>

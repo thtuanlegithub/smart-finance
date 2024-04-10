@@ -29,11 +29,11 @@ const typography = {
     },
     RegularInterH5: {
         fontFamily: 'Inter-Regular',
-        fontSize: 12,
+        fontSize: 13,
     },
     MediumInterH5: {
         fontFamily: 'Inter-Medium',
-        fontSize: 12,
+        fontSize: 13,
     },
     MediumInterH6: {
         fontFamily: 'Inter-Medium',
@@ -45,7 +45,7 @@ const typography = {
     },
     SemiBoldInterH5: {
         fontFamily: 'Inter-SemiBold',
-        fontSize: 12,
+        fontSize: 13,
     },
     BoldInterH6: {
         fontFamily: 'Inter-Bold',

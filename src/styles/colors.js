@@ -6,7 +6,7 @@ export default colors = {
     green05: "#52b788",
     green06: "#40916C",
     green07: "#2D6A4F",
-    green08: "#1b4332",
+    green08: "#1B4332",
     green09: "#081C15",
     gray01: "#F4F5F3",
     gray02: "#EEEFED",

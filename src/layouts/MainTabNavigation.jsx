@@ -12,6 +12,7 @@ import NullComponent from '../components/NullComponent';
 import CenterButton from '../components/CenterButton';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from '../styles/colors';
+import AddTransactionForm from '../features/transaction/components/AddTransactionForm';
 const Tab = createBottomTabNavigator();
 const MainTabNavigation = (props) => {
     const modalizeRef = useRef(null);
@@ -98,13 +99,14 @@ const MainTabNavigation = (props) => {
                     <Modalize
                         adjustToContentHeight={true}
                         ref={modalizeRef}>
-                        <View style={{ height: 700, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ textAlign: 'center', textAlignVertical: 'center' }}>Helo</Text>
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <AddTransactionForm />
+                            {/* <Text style={{ textAlign: 'center', textAlignVertical: 'center' }}>Helo</Text> */}
                         </View>
                     </Modalize>
                 </View>
             </NavigationContainer>
-        </GestureHandlerRootView>
+        </GestureHandlerRootView >
     )
 }
 const styles = StyleSheet.create({

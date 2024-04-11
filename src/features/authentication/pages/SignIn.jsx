@@ -6,7 +6,6 @@ import SignInButton from '../components/SignInButton';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../authentication';
 
-
 function SignIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,14 +17,14 @@ function SignIn(props) {
             // Signed in 
             console.log(userCredential.user.toJSON());
             if (userCredential) {
-                dispatch(setUser(userCredential.user.toJSON()));
+               dispatch(setUser(userCredential.user.toJSON()));
             }
         } catch (error) {
             alert('Invalid email or password');
             console.error(error);
         }
     };
-
+    
     return (
         <KeyboardAvoidingView
             // behavior={Platform.OS === "ios" ? "height" : "padding"}

@@ -1,4 +1,4 @@
-export {default as BudgetTargetType} from './budget_target/budetTargetType';
+export {default as BudgetTargetType} from './budget_target/budgetTargetType';
 export {default as BudgetTarget} from './budget_target/budgetTarget';
 
 export {default as Category} from './category/category';
@@ -21,6 +21,7 @@ export {default as DynamicInvestment} from './investment/dynamicInvestment';
 
 export {default as Transaction} from './transaction/transaction';
 export {default as TransactionType} from './transaction/transactionType';
+export {default as Tax} from './transaction/tax';   
 
 export {default as User} from './user/user';
 export {default as Setting} from './user/setting';

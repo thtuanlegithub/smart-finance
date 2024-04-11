@@ -1,41 +1,41 @@
 class User {
     constructor() {
-        this.uid = '';
-        this.username = '';
-        this.password = '';
-        this.email = '';
+        this._uid = '';
+        this._username = '';
+        this._password = '';
+        this._email = '';
     }
 
-    getUid() {
-        return this.uid;
+    get uid() {
+        return this._uid;
     }
 
-    getUsername() {
-        return this.username;
+    set uid(value) {
+        this._uid = value;
     }
 
-    getPassword() {
-        return this.password;
+    get username() {
+        return this._username;
     }
 
-    getEmail() {
-        return this.email;
+    set username(value) {
+        this._username = value;
     }
 
-    setUid(uid) {
-        this.uid = uid;
+    get password() {
+        return this._password;
     }
 
-    setUsername(username) {
-        this.username = username;
+    set password(value) {
+        this._password = value;
     }
 
-    setPassword(password) {
-        this.password = password;
+    get email() {
+        return this._email;
     }
 
-    setEmail(email) {
-        this.email = email;
+    set email(value) {
+        this._email = value;
     }
 }
 

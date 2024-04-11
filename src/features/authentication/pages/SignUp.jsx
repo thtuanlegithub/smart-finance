@@ -14,7 +14,7 @@ function SignUp(props) {
         try {
             const userCredential = await auth().createUserWithEmailAndPassword(email, password);
             // Signed in 
-            const user = userCredential;;
+            const user = userCredential;
             console.log(user);
             // ...
         } catch (error) {

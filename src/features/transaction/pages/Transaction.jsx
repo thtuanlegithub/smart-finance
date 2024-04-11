@@ -8,8 +8,8 @@ import formatCurrency from '../../../utils/formatCurrency';
 import TransactionSelect from '../../../components/TransactionSelect';
 import globalStyles from '../../../styles/globalStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import TransactionList from '../components/TransactionsList';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 const Tab = createMaterialTopTabNavigator();
 
 function Transaction(props) {

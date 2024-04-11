@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native"
-import colors from '../styles/colors';
+import colors from './colors';
+import typography from "./typography";
 export default globalStyles = StyleSheet.create({
     currentWalletIcon: {
         height: 20,
@@ -31,6 +32,31 @@ export default globalStyles = StyleSheet.create({
     transactionIcon: {
         height: 26,
         width: 26
+    },
+    transactionInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    currencyUnitLabelBorder: {
+        marginTop: 6,
+        borderWidth: 0.5,
+        borderRadius: 8,
+        borderColor: colors.green06,
+    },
+    currencyUnitLabel: {
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        textAlign: 'center',
+        ...typography.MediumInterH4,
+        color: colors.green07,
+    },
+    input: {
+        borderBottomWidth: 0.5,
+        borderRadius: 8,
+        borderColor: colors.green08,
+        padding: 4,
+        width: 300,
+        ...typography.MediumInterH3,
     }
-
 });

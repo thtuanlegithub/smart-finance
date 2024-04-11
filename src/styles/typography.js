@@ -67,7 +67,7 @@ const typography = {
         fontFamily: 'Inter-Regular',
         fontSize: 24,
     },
-    ReguarInterH3: {
+    RegularInterH3: {
         fontFamily: 'Inter-Regular',
         fontSize: 18,
     },

@@ -1,20 +1,21 @@
 import { Text, TouchableHighlight, StyleSheet } from 'react-native'
 import React from 'react'
-import colors from '../../../styles/colors'
+import colors from '../styles/colors'
+import typography from '../styles/typography'
 
-const SignInButton = (props) => {
+const W1Button = (props) => {
     return (
         <TouchableHighlight
-            style={styles.signInButton}
+            style={styles.w1Button}
             onPress={props.onPress}
             underlayColor="#456B58">
-            <Text style={styles.signInButtonTitle}>{props.title}</Text>
+            <Text style={styles.w1ButtonTitle}>{props.title}</Text>
         </TouchableHighlight>
     )
 }
 
 const styles = StyleSheet.create({
-    signInButton: {
+    w1Button: {
         backgroundColor: colors.green07,
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,10 +24,10 @@ const styles = StyleSheet.create({
         padding: 14,
         marginHorizontal: 16,
     },
-    signInButtonTitle: {
+    w1ButtonTitle: {
+        ...typography.MediumInterH4,
         color: 'white',
-        fontSize: 14,
     }
 })
 
-export default SignInButton;
+export default W1Button;

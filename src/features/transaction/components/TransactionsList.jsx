@@ -18,6 +18,7 @@ const TransactionsList = (props) => {
                 data={transactionList}
                 renderItem={({ item }) => <DayTransactionsGroup {...item} />}
                 keyExtractor={item => item.id}
+                showsVerticalScrollIndicator={false}
             />
         </View>
     )

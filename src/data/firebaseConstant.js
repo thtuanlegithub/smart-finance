@@ -3,6 +3,7 @@ export const FirebaseNodes = {
 
     TRANSACTION_TYPE: 'trans_type',
     TRANSACTION: 'trans',
+    TAX: 'tax',
 
     CURRENCY: 'currency',
     EXCHANGE_RATE: 'exchange_rate',
@@ -48,6 +49,16 @@ export const TransactionFields = {
     NOTE: 'note',
     CREATED_AT: 'created_at',
     WALLED_ID: 'wallet_id',
+};
+
+export const TaxFields = {  
+    TAX_ID: 'tax_id',
+    TRANSACTION_ID: 'trans_id',
+    INCOME: 'income',
+    INSURANCE_SALARY: 'insurance_salary',
+    DEPENDENTS: 'dependents',
+    TAX_BRACKET: 'tax_bracket',
+    TAX_AMOUNT: 'tax_amount',
 };
 
 export const CurrencyFields = {

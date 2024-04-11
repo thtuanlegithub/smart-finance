@@ -8,7 +8,7 @@ export default styles = {
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    transactionInfomation: {
+    transactionInformation: {
         marginLeft: 10,
         flex: 1,
         flexDirection: 'row',

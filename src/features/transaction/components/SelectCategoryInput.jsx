@@ -2,15 +2,15 @@ import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
 import React, { useState } from 'react'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
-import categoryIcons from '../../../data/expenseCategoryIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import transactionCategoryIcons from '../../../data/transactionCategoryIcons'
 const SelectCategoryInput = () => {
     const [isFilled, setIsFileld] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('Food & Beverage');
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
-                <Image style={styles.labelIcon} source={categoryIcons[selectedCategory]} />
+                <Image style={styles.labelIcon} source={transactionCategoryIcons[selectedCategory]} />
             </View>
             <View style={styles.inputGroup}>
                 {isFilled

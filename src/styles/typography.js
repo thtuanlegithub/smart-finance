@@ -37,11 +37,11 @@ const typography = {
     },
     MediumInterH6: {
         fontFamily: 'Inter-Medium',
-        fontSize: 11
+        fontSize: 12
     },
     LightInterH6: {
         fontFamily: 'Inter-Light',
-        fontSize: 11,
+        fontSize: 12,
     },
     SemiBoldInterH5: {
         fontFamily: 'Inter-SemiBold',
@@ -49,15 +49,15 @@ const typography = {
     },
     BoldInterH6: {
         fontFamily: 'Inter-Bold',
-        fontSize: 11,
+        fontSize: 12,
     },
     RegularInterH6: {
         fontFamily: 'Inter-Regular',
-        fontSize: 11,
+        fontSize: 12,
     },
     SemiBoldInterH6: {
         fontFamily: 'Inter-SemiBold',
-        fontSize: 11,
+        fontSize: 12,
     },
     MediumInterH2: {
         fontFamily: 'Inter-Medium',

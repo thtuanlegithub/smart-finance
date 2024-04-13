@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native'
 import React from 'react'
 import styles from '../../styles/AddTransactionFormStyles'
 import MoneyInput from '../../../../components/MoneyInput'
@@ -6,7 +6,7 @@ import SelectCategoryInput from '../SelectCategoryInput'
 import MediumTextIconInput from '../MediumTextIconInput'
 import NoOutlinedMediumTextIconInput from '../NoOutlinedMediumTextIconInput'
 import W1Button from '../../../../components/W1Button'
-const AddTransactionForm = () => {
+const AddTransactionForm = ({ navigation }) => {
     return (
         <KeyboardAvoidingView
             style={styles.container}>
@@ -16,7 +16,9 @@ const AddTransactionForm = () => {
                     <View style={{ marginTop: 8 }}>
                         <MoneyInput />
                     </View>
-                    <SelectCategoryInput />
+                    <TouchableOpacity onPress={() => navigation.navigate("Select Category")}>
+                        <SelectCategoryInput />
+                    </TouchableOpacity>
                     <MediumTextIconInput type='note' placeholder='Note' />
                     <MediumTextIconInput type='date' placeholder='Pick a day' />
                     <NoOutlinedMediumTextIconInput type='wallet' placeholder='Select wallet' />

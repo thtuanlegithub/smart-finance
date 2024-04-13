@@ -1,18 +1,25 @@
 import React, { useState } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack'
 import AddTransactionForm from './stack/AddTransactionForm';
-import { View, Text } from 'react-native';
-import typography from '../../../styles/typography';
-import colors from '../../../styles/colors';
 
-const Stack = createStackNavigator();
+import SelectCategoryForm from './stack/SelectCategoryForm';
+
+const AddTransactionStack = createStackNavigator();
 
 const AddTransactionNavigator = () => {
     return (
-        <Stack.Navigator
-            screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Add Transaction" component={AddTransactionForm} />
-        </Stack.Navigator>
+        <AddTransactionStack.Navigator
+            screenOptions={{
+                headerShown: false,
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                transitionSpec: {
+                    open: TransitionSpecs.TransitionIOSSpec,
+                    close: TransitionSpecs.TransitionIOSSpec,
+                },
+            }}>
+            <AddTransactionStack.Screen name="Add Transaction" component={AddTransactionForm} />
+            <AddTransactionStack.Screen name="Select Category" component={SelectCategoryForm} />
+        </AddTransactionStack.Navigator>
     );
 }
 

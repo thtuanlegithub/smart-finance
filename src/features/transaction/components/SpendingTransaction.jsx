@@ -3,7 +3,7 @@ import React from 'react'
 import globalStyles from '../../../styles/globalStyles'
 import styles from '../styles/TransactionItem';
 import formatCurrency from '../../../utils/formatCurrency';
-import categoryIcons from '../../../data/categoryIcons';
+import categoryIcons from '../../../data/expenseCategoryIcons';
 const SpendingTransaction = ({ item }) => {
     return (
         <View style={styles.container}>

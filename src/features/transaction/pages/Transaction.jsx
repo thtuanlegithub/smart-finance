@@ -41,13 +41,14 @@ function Transaction(props) {
             <View style={styles.timeRangeContainer}>
                 <Tab.Navigator
                     screenOptions={{
+                        tabBarPressColor: colors.gray02,
                         tabBarScrollEnabled: true,
                         tabBarLabelStyle: {
                             ...typography.MediumInterH4,
                             color: colors.green07
                         },
                         tabBarItemStyle: {
-                            width: 100
+                            width: 100,
                         },
                         tabBarIndicatorStyle: {
                             backgroundColor: colors.green07

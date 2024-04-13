@@ -14,8 +14,6 @@ export default styles = StyleSheet.create({
         paddingBottom: 24,
     },
     title: {
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
         backgroundColor: 'white',
         ...typography.MediumInterH4,
         color: 'black',

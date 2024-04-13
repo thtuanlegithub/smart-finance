@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
 import React, { useState } from 'react'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
-import categoryIcons from '../../../data/categoryIcons'
+import categoryIcons from '../../../data/expenseCategoryIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 const SelectCategoryInput = () => {
     const [isFilled, setIsFileld] = useState(false);

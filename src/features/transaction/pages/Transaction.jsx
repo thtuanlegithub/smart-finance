@@ -13,7 +13,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 const Tab = createMaterialTopTabNavigator();
 
 function Transaction(props) {
-    const seletedTransactionType = 'expense';
+    const selectedTransactionType = 'expense';
     const timeRanges = ['Today', 'Yesterday', 'This week', 'Last week', 'This month', 'Last month', 'This year', 'Last year'];
     return (
         <View style={styles.container}>
@@ -30,7 +30,7 @@ function Transaction(props) {
                 <View style={styles.typeOfTransaction}>
                     <View style={globalStyles.centerAlign}>
                         <TouchableOpacity>
-                            <TransactionSelect selected={seletedTransactionType} />
+                            <TransactionSelect selected={selectedTransactionType} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.calendar}>
@@ -66,7 +66,7 @@ function Transaction(props) {
                             initialParams={{ range }}
                         >
                             {
-                                props => <TransactionList {...props} type={seletedTransactionType} />
+                                props => <TransactionList {...props} type={selectedTransactionType} />
                             }
                         </Tab.Screen>
                     ))}

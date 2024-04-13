@@ -1,59 +1,59 @@
 class Debt {
     constructor() {
-        this.debt_id = '';
-        this.trans_id = '';
-        this.paid = 0;
-        this.remaining = 0;
-        this.remind_time = '';
-        this.image = '';
+        this._debt_id = '';
+        this._trans_id = '';
+        this._paid = 0;
+        this._remaining = 0;
+        this._remind_time = '';
+        this._image = '';
     }
 
     get debt_id() {
-        return this.debt_id;
+        return this._debt_id;
     }
 
-    set debt_id(debt_id) {
-        this.debt_id = debt_id;
+    set debt_id(value) {
+        this._debt_id = value;
     }
 
     get trans_id() {
-        return this.trans_id;
+        return this._trans_id;
     }
 
-    set trans_id(trans_id) {
-        this.trans_id = trans_id;
+    set trans_id(value) {
+        this._trans_id = value;
     }
 
     get paid() {
-        return this.paid;
+        return this._paid;
     }
 
-    set paid(paid) {
-        this.paid = paid;
+    set paid(value) {
+        this._paid = value;
     }
 
     get remaining() {
-        return this.remaining;
+        return this._remaining;
     }
 
-    set remaining(remaining) {
-        this.remaining = remaining;
+    set remaining(value) {
+        this._remaining = value;
     }
 
     get remind_time() {
-        return this.remind_time;
+        return this._remind_time;
     }
 
-    set remind_time(remind_time) {
-        this.remind_time = remind_time;
+    set remind_time(value) {
+        this._remind_time = value;
     }
 
     get image() {
-        return this.image;
+        return this._image;
     }
 
-    set image(image) {
-        this.image = image;
+    set image(value) {
+        this._image = value;
     }
 }
 

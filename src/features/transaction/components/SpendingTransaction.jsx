@@ -8,7 +8,7 @@ const SpendingTransaction = ({ item }) => {
     return (
         <View style={styles.container}>
             <Image style={globalStyles.transactionIcon} source={categoryIcons[item.category]} />
-            <View style={styles.transactionInfomation}>
+            <View style={styles.transactionInformation}>
                 <View style={styles.detailInformation}>
                     <Text style={styles.transactionType}>{item.category}</Text>
                     <Text style={styles.transactionNote}>{item.note}</Text>

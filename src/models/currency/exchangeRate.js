@@ -1,50 +1,50 @@
 class ExchangeRate {
     constructor() {
-        this.exchange_rate_id = '';
-        this.from_currency_id = '';
-        this.to_currency_id = '';
-        this.rate = 0;
-        this.last_updated = '';
-    }
-
-    set exchange_rate_id(value) {
-        this.exchange_rate_id = value;
+        this._exchange_rate_id = '';
+        this._from_currency_id = '';
+        this._to_currency_id = '';
+        this._rate = 0;
+        this._last_updated = '';
     }
 
     get exchange_rate_id() {
-        return this.exchange_rate_id;
+        return this._exchange_rate_id;
     }
 
-    set from_currency_id(value) {
-        this.from_currency_id = value;
+    set exchange_rate_id(value) {
+        this._exchange_rate_id = value;
     }
 
     get from_currency_id() {
-        return this.from_currency_id;
+        return this._from_currency_id;
     }
 
-    set to_currency_id(value) {
-        this.to_currency_id = value;
+    set from_currency_id(value) {
+        this._from_currency_id = value;
     }
 
     get to_currency_id() {
-        return this.to_currency_id;
+        return this._to_currency_id;
     }
 
-    set rate(value) {
-        this.rate = value;
+    set to_currency_id(value) {
+        this._to_currency_id = value;
     }
 
     get rate() {
-        return this.rate;
+        return this._rate;
     }
 
-    set last_updated(value) {
-        this.last_updated = value;
+    set rate(value) {
+        this._rate = value;
     }
 
     get last_updated() {
-        return this.last_updated;
+        return this._last_updated;
+    }
+
+    set last_updated(value) {
+        this._last_updated = value;
     }
 }
 

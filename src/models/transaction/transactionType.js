@@ -1,23 +1,23 @@
 class TransactionType {
     constructor() {
-        this.trans_type_id = '';
-        this.trans_type_name = '';
+        this._trans_type_id = '';
+        this._trans_type_name = '';
     }
 
-    getTransTypeId() {
-        return this.trans_type_id;
+    get trans_type_id() {
+        return this._trans_type_id;
     }
 
-    getTransTypeName() {
-        return this.trans_type_name;
+    set trans_type_id(value) {
+        this._trans_type_id = value;
     }
 
-    setTransTypeId(trans_type_id) {
-        this.trans_type_id = trans_type_id;
+    get trans_type_name() {
+        return this._trans_type_name;
     }
 
-    setTransTypeName(trans_type_name) {
-        this.trans_type_name = trans_type_name;
+    set trans_type_name(value) {
+        this._trans_type_name = value;
     }
 }
 

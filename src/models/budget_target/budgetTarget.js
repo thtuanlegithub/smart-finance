@@ -1,69 +1,77 @@
 class BudgetTarget {
     constructor() {
-        this.budget_target_id = '';
-        this.budget_target_type_id = '';
-        this.category_id = '';
-        this.amount = 0;
-        this.from_date = '';
-        this.to_date = '';
-        this.created_at = '';
-        this.wallet_id = '';
+        this._budget_target_id = '';
+        this._budget_target_type_id = '';
+        this._category_id = '';
+        this._amount = 0;
+        this._from_date = '';
+        this._to_date = '';
+        this._created_at = '';
+        this._wallet_id = '';
     }
 
-    set budgetTargetId(budget_target_id) {
-        this.budget_target_id = budget_target_id;
-    }
-    get budgetTargetId() {
-        return this.budget_target_id;
+    get budget_target_id() {
+        return this._budget_target_id;
     }
 
-    set budgetTargetTypeId(budget_target_type_id) {
-        this.budget_target_type_id = budget_target_type_id;
-    }
-    get budgetTargetTypeId() {
-        return this.budget_target_type_id;
+    set budget_target_id(value) {
+        this._budget_target_id = value;
     }
 
-    set categoryId(category_id) {
-        this.category_id = category_id;
-    }
-    get categoryId() {
-        return this.category_id;
+    get budget_target_type_id() {
+        return this._budget_target_type_id;
     }
 
-    set amount(amount) {
-        this.amount = amount;
+    set budget_target_type_id(value) {
+        this._budget_target_type_id = value;
     }
+
+    get category_id() {
+        return this._category_id;
+    }
+
+    set category_id(value) {
+        this._category_id = value;
+    }
+
     get amount() {
-        return this.amount;
+        return this._amount;
     }
 
-    set fromDate(from_date) {
-        this.from_date = from_date;
-    }
-    get fromDate() {
-        return this.from_date;
+    set amount(value) {
+        this._amount = value;
     }
 
-    set toDate(to_date) {
-        this.to_date = to_date;
-    }
-    get toDate() {
-        return this.to_date;
+    get from_date() {
+        return this._from_date;
     }
 
-    set createdAt(created_at) {
-        this.created_at = created_at;
+    set from_date(value) {
+        this._from_date = value;
     }
-    get createdAt() {
-        return this.created_at;
+
+    get to_date() {
+        return this._to_date;
     }
-    
-    set walletId(wallet_id) {
-        this.wallet_id = wallet_id;
+
+    set to_date(value) {
+        this._to_date = value;
     }
-    get walletId() {
-        return this.wallet_id;
+
+    get created_at() {
+        return this._created_at;
+    }
+
+    set created_at(value) {
+        this._created_at = value;
+    }
+
+    get wallet_id() {
+        return this._wallet_id;
+    }
+
+    set wallet_id(value) {
+        this._wallet_id = value;
     }
 }
 

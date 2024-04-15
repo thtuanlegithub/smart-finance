@@ -5,6 +5,7 @@ import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader';
 import WalletItem from '../../../../components/WalletItem';
 import { useDispatch } from 'react-redux';
 import { setTransactionWallet } from '../../services/addTransactionFormSlice';
+import colors from '../../../../styles/colors';
 
 const WalletForm = () => {
     const listWallet = [{ name: 'Wallet 1' }, { name: 'Wallet 2' }, { name: 'Wallet 3' }];
@@ -20,14 +21,16 @@ const WalletForm = () => {
                 onBackPress={() => {
                     navigation.navigate('Add Transaction');
                 }} />
-            {listWallet.map((wallet, index) => {
-                return (
-                    <WalletItem
-                        onSelect={() => handleSelectWallet(wallet)}
-                        key={index}
-                        name={wallet.name} />
-                )
-            })}
+            <View style={{ marginTop: 10 }}>
+                {listWallet.map((wallet, index) => {
+                    return (
+                        <WalletItem
+                            onSelect={() => handleSelectWallet(wallet)}
+                            key={index}
+                            name={wallet.name} />
+                    )
+                })}
+            </View>
         </View>
     )
 }
@@ -35,8 +38,8 @@ const WalletForm = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        flexDirection: 'column'
+        backgroundColor: colors.gray01,
+        flexDirection: 'column',
     },
     navBar: {
         borderTopWidth: 0.5,

@@ -13,7 +13,7 @@ const SelectCategoryInput = () => {
         <View style={styles.container}>
             <View style={styles.labelGroup}>
                 {
-                    category != '' ?
+                    category != 0 ?
                         <Image style={styles.labelIcon} source={transactionCategoryIcons[category]} />
                         :
                         <Image style={styles.labelIcon} source={require('../../../assets/images/placeholdericon.png')} />

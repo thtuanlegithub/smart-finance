@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    type: "",
+    type: null,
     amount: '0',
-    category: "",
-    note: "",
-    date: "",
-    wallet: "",
-    displayModal: "",
+    category: null,
+    note: null,
+    date: null,
+    wallet: null,
+    displayModal: null,
+    reference: null,
 };
 const addTransactionFormSlice = createSlice({
     name: 'addTransactionForm',
@@ -33,6 +34,9 @@ const addTransactionFormSlice = createSlice({
         setTransactionType: (state, action) => {
             state.type = action.payload;
         },
+        setTransactionReference: (state, action) => {
+            state.reference = action.payload;
+        },
         clearInput: (state) => {
             Object.assign(state, initialState);
         },
@@ -42,6 +46,6 @@ const addTransactionFormSlice = createSlice({
     }
 })
 
-export const { setTransactionAmount, setTransactionNote, setTransactionDate, setTransactionWallet, setTransactionCategory, setTransactionType, clearInput, setDisplayModal } = addTransactionFormSlice.actions;
+export const { setTransactionAmount, setTransactionNote, setTransactionDate, setTransactionWallet, setTransactionCategory, setTransactionPeople, setTransactionType, setTransactionReference, clearInput, setDisplayModal } = addTransactionFormSlice.actions;
 
 export default addTransactionFormSlice.reducer;

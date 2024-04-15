@@ -14,12 +14,14 @@ import BottomMenuItem from '../../../../components/BottomMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate } from '../../services/addTransactionFormSlice'
 import { formatDate } from '../../../../utils/formatDate'
+import LoanInformation from '../LoanInformation'
+import DebtInformation from '../DebtInformation'
 
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
 
-const AddTransactionForm = ({ navigation, bottomSheetRef }) => {
+const AddTransactionForm = ({ navigation }) => {
 
     // Handle Action Sheet - Bottom Menu
     const [open, setOpen] = useState(false)
@@ -30,8 +32,10 @@ const AddTransactionForm = ({ navigation, bottomSheetRef }) => {
     const date = useSelector(state => state.addTransactionForm.date);
     const amount = useSelector(state => state.addTransactionForm.amount);
     const wallet = useSelector(state => state.addTransactionForm.wallet);
+    const category = useSelector(state => state.addTransactionForm.category);
 
     const dispatch = useDispatch();
+
 
     // Handle Select Transaction Date
     const handlePress = (index) => {
@@ -105,7 +109,6 @@ const AddTransactionForm = ({ navigation, bottomSheetRef }) => {
                             dispatch(setTransactionDate(formatDate(date)));
                             setOpen(false)
                             actionSheetRef.current?.setModalVisible(false)
-                            console.log(formatDate(date));
                         }}
                         onCancel={() => {
                             setOpen(false)
@@ -118,12 +121,23 @@ const AddTransactionForm = ({ navigation, bottomSheetRef }) => {
                             value={wallet} />
                     </TouchableOpacity>
                 </View>
+                {
+                    category == 'Debt collection'
+                    &&
+                    <LoanInformation />
+                }
+                {
+                    category == 'Repayment'
+                    &&
+                    <DebtInformation />
+                }
                 <View style={styles.form}>
                     <MediumTextIconInput field='people' placeholder='People' />
                     <NoOutlinedMediumTextIconInput field='reminder' placeholder='Reminder' />
                 </View>
             </View>
-            <W1Button title='Save'
+            <W1Button
+                title='Save'
                 onPress={() => {
                     dispatch(setDisplayModal(false));
                     dispatch(clearInput());

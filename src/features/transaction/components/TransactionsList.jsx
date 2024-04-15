@@ -7,7 +7,7 @@ import formatCurrency from '../../../utils/formatCurrency';
 import DayTransactionsGroup from './DayTransactionsGroup';
 
 const TransactionsList = (props) => {
-    const transactionList = [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }];
+    const transactionList = [{ id: '1' }, { id: '2' }, { id: '3' }];
     return (
         <View style={styles.container}>
             <View style={styles.transactionListQuickReport}>

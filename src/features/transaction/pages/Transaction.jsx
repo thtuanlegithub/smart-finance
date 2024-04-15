@@ -14,7 +14,7 @@ const Tab = createMaterialTopTabNavigator();
 
 function Transaction(props) {
     const selectedTransactionType = 'expense';
-    const timeRanges = ['Today', 'Yesterday', 'This week', 'Last week', 'This month', 'Last month', 'This year', 'Last year'];
+    const timeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -44,27 +44,27 @@ function Transaction(props) {
                         tabBarPressColor: colors.gray02,
                         tabBarScrollEnabled: true,
                         tabBarLabelStyle: {
-                            ...typography.MediumInterH4,
-                            color: colors.green07
-                        },
-                        tabBarItemStyle: {
-                            width: 100,
+                            ...typography.MediumInterH5,
+                            color: colors.green07,
                         },
                         tabBarIndicatorStyle: {
-                            backgroundColor: colors.green07
+                            backgroundColor: colors.green07,
+                        },
+                        tabBarItemStyle: {
+                            width: 'auto',
                         },
                         tabBarStyle: {
                             shadowColor: "#FFF",
                             borderBottomWidth: 0.3,
                             borderBottomColor: colors.gray03,
+
                         }
                     }}>
                     {timeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={`Week ${index + 1}`}
-                            initialParams={{ range }}
-                        >
+                            name={range}
+                            initialParams={{ range }}>
                             {
                                 props => <TransactionList {...props} type={selectedTransactionType} />
                             }

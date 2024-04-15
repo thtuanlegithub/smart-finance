@@ -24,5 +24,10 @@ export default styles = StyleSheet.create({
         marginTop: 10,
         paddingHorizontal: 16,
         backgroundColor: 'white',
+    },
+    bottomMenuItemContainer: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

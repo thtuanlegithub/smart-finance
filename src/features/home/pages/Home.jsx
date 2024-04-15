@@ -11,7 +11,7 @@ import SavingItem from '../../../components/SavingItem';
 import LimitItem from '../../../components/LimitItem';
 function Home(props) {
     const [balances, setBalances] = useState(15000000);
-    const [spendingMoney, setSpendingMoney] = useState(785000);
+    const [spendingMoney, setSpendingMoney] = useState(1225000);
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -65,9 +65,9 @@ function Home(props) {
                         </View>
                         <View>
                             <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Top spending</Text>
-                            <SpendingCategoryReport category="Food & Beverage" amount={800000} percentage={50} />
-                            <SpendingCategoryReport category="Food & Beverage" amount={800000} percentage={50} />
-                            <SpendingCategoryReport category="Food & Beverage" amount={800000} percentage={50} />
+                            <SpendingCategoryReport category="Food & Beverage" amount={825000} percentage={67} />
+                            <SpendingCategoryReport category="Shopping" amount={250000} percentage={20} />
+                            <SpendingCategoryReport category="Transportation" amount={150000} percentage={13} />
                         </View>
                     </View>
                 </View>

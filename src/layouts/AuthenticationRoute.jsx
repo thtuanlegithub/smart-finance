@@ -19,7 +19,9 @@ const AuthenticationRoute = (props) => {
                     }}>
                     {props => <SignIn {...props} />}
                 </Stack.Screen>
-                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="SignUp"     
+                            component={SignUp} 
+                            options={{title: 'Sign Up'}} />
             </Stack.Navigator>
         </NavigationContainer>
     )

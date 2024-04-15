@@ -6,12 +6,25 @@ import DebtLoanSelectCategoryItem from '../DebtLoanSelectCategoryItem'
 import {
     ScrollView
 } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { setTransactionCategory, setTransactionType } from '../../services/addTransactionFormSlice'
 const DebtLoanSelectCategoryList = () => {
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const handleSelectCategory = (category) => {
+        dispatch(setTransactionType('Debt/ Loan'));
+        dispatch(setTransactionCategory(category));
+        navigation.navigate('Add Transaction');
+    }
     return (
         <View style={styles.outerContainer}>
             <ScrollView contentContainerStyle={styles.container}>
                 {Object.entries(debtLoanCategoryIcons).map(([key, value], index) => {
-                    return <DebtLoanSelectCategoryItem key={index} category={key} />
+                    return <DebtLoanSelectCategoryItem
+                        onSelect={() => handleSelectCategory(key)}
+                        key={index}
+                        category={key} />
                 })}
                 <View style={{ height: 24 }}></View>
             </ScrollView>

@@ -3,23 +3,30 @@ import React from 'react'
 import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader';
 import { useNavigation } from '@react-navigation/native';
 import typography from '../../../../styles/typography';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTransactionNote } from '../../services/addTransactionFormSlice';
 
 
 const NoteForm = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const note = useSelector(state => state.addTransactionForm.note);
+    const handleNoteTransaction = (text) => {
+        dispatch(setTransactionNote(text));
+    }
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Add Note'
                 onBackPress={() => {
-                    navigation.goBack();
+                    navigation.navigate('Add Transaction');
                 }} />
             <TextInput
                 multiline={true}
                 style={[typography.RegularInterH3, { flexWrap: 'wrap', marginHorizontal: 16 }]}
-                autoFocus={true}>
-
-            </TextInput>
-        </View>
+                autoFocus={true}
+                value={note}
+                onChangeText={(text) => handleNoteTransaction(text)} />
+        </View >
     )
 }
 

@@ -11,28 +11,47 @@ import ActionSheet from 'react-native-actions-sheet'
 import typography from '../../../../styles/typography'
 import colors from '../../../../styles/colors'
 import BottomMenuItem from '../../../../components/BottomMenuItem'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate } from '../../services/addTransactionFormSlice'
+import { formatDate } from '../../../../utils/formatDate'
 
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
 
-const AddTransactionForm = ({ navigation }) => {
-    const [date, setDate] = useState(new Date())
+const AddTransactionForm = ({ navigation, bottomSheetRef }) => {
+
+    // Handle Action Sheet - Bottom Menu
     const [open, setOpen] = useState(false)
     const actionSheetRef = useRef()
+
+    // redux selector
+    const note = useSelector(state => state.addTransactionForm.note);
+    const date = useSelector(state => state.addTransactionForm.date);
+    const amount = useSelector(state => state.addTransactionForm.amount);
+    const wallet = useSelector(state => state.addTransactionForm.wallet);
+
+    const dispatch = useDispatch();
+
+    // Handle Select Transaction Date
     const handlePress = (index) => {
         if (index === TODAY) {
-            /* "Today" was selected */
-            setDate(new Date())
+            dispatch(setTransactionDate(formatDate(new Date())));
+            actionSheetRef.current?.setModalVisible(false)
+            console.log(date);
         } else if (index === YESTERDAY) {
-            /* "Yesterday" was selected */
             let yesterday = new Date()
             yesterday.setDate(yesterday.getDate() - 1)
-            setDate(yesterday)
+            dispatch(setTransactionDate(formatDate(yesterday)));
+            actionSheetRef.current?.setModalVisible(false)
         } else if (index === CUSTOM) {
-            /* "Custom" was selected */
             setOpen(true)
         }
+    }
+
+    const handleAmountChange = (amount) => {
+        dispatch(setTransactionAmount(amount));
+        console.log(amount);
     }
 
     return (
@@ -42,16 +61,23 @@ const AddTransactionForm = ({ navigation }) => {
                 <Text style={styles.title}>Add Transaction</Text>
                 <View style={styles.form}>
                     <View style={{ marginTop: 8 }}>
-                        <MoneyInput />
+                        <MoneyInput
+                            onChange={(amount) => handleAmountChange(amount)}
+                            value={amount} />
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate("Select Category")}>
                         <SelectCategoryInput />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("Note")}>
-                        <MediumTextIconInput type='note' placeholder='Note' />
+                        <MediumTextIconInput value={note}
+                            field='note'
+                            placeholder='Note' />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(true)}>
-                        <MediumTextIconInput type='date' placeholder='Pick a day' />
+                        <MediumTextIconInput
+                            value={date}
+                            field='date'
+                            placeholder='Pick a day' />
                     </TouchableOpacity>
                     <ActionSheet ref={actionSheetRef}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
@@ -74,25 +100,35 @@ const AddTransactionForm = ({ navigation }) => {
                         mode='date'
                         modal
                         open={open}
-                        date={date}
+                        date={new Date()}
                         onConfirm={(date) => {
+                            dispatch(setTransactionDate(formatDate(date)));
                             setOpen(false)
-                            setDate(date)
+                            actionSheetRef.current?.setModalVisible(false)
+                            console.log(formatDate(date));
                         }}
                         onCancel={() => {
                             setOpen(false)
                         }}
                     />
                     <TouchableOpacity onPress={() => navigation.navigate("Wallet")}>
-                        <NoOutlinedMediumTextIconInput type='wallet' placeholder='Select wallet' />
+                        <NoOutlinedMediumTextIconInput
+                            field='wallet'
+                            placeholder='Select wallet'
+                            value={wallet} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.form}>
-                    <MediumTextIconInput type='people' placeholder='People' />
-                    <NoOutlinedMediumTextIconInput type='reminder' placeholder='Reminder' />
+                    <MediumTextIconInput field='people' placeholder='People' />
+                    <NoOutlinedMediumTextIconInput field='reminder' placeholder='Reminder' />
                 </View>
             </View>
-            <W1Button title='Save' />
+            <W1Button title='Save'
+                onPress={() => {
+                    dispatch(setDisplayModal(false));
+                    dispatch(clearInput());
+                }}
+            />
         </KeyboardAvoidingView>
     )
 }

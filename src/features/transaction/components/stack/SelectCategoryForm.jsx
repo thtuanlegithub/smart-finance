@@ -8,19 +8,22 @@ import typography from '../../../../styles/typography';
 import ExpenseSelectCategoryList from './ExpenseSelectCategoryList';
 import IncomeSelectCategoryList from './IncomeSelectCategoryList';
 import DebtLoanSelectCategoryList from './DebtLoanSelectCategoryList';
+import { useSelector } from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();
 
 const SelectCategoryForm = () => {
     const navigation = useNavigation();
+    const type = useSelector(state => state.addTransactionForm.type);
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Select Category'
                 onBackPress={() => {
-                    navigation.goBack();
+                    navigation.navigate('Add Transaction');
                 }} />
             <View style={styles.navBar}>
                 <Tab.Navigator
+                    initialRouteName={type ? type : 'Expense'}
                     screenOptions={{
                         animationEnabled: true,
                         tabBarPressColor: colors.gray02,

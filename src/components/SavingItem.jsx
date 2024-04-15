@@ -9,7 +9,7 @@ const SavingItem = () => {
     return (
         <View style={styles.savingItem}>
             <View style={styles.savingProgress}>
-                <CircularProgress subColor={colors.green03} mainColor={colors.green06} textColor={colors.green07} />
+                <CircularProgress fill={77.8} subColor={colors.green03} mainColor={colors.green06} textColor={colors.green07} />
             </View>
             <View style={styles.savingInformation}>
                 <View>

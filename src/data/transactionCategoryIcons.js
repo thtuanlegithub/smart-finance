@@ -18,4 +18,6 @@ export default transactionCategoryIcons = {
     "Debt": require('../assets/images/debt.png'),
     "Debt collection": require('../assets/images/debtcollection.png'),
     "Repayment": require('../assets/images/repayment.png'),
+    "Default": require('../assets/images/placeholdericon.png'),
+    null: require('../assets/images/placeholdericon.png'),
 }

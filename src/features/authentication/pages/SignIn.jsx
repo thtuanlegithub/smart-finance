@@ -5,6 +5,7 @@ import SignInInput from '../components/SignInInput';
 import SignInButton from '../components/SignInButton';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../authentication';
+import { isValidAccount } from '../../../utils/validateAccount';
 
 function SignIn(props) {
     const [email, setEmail] = useState('');
@@ -12,16 +13,15 @@ function SignIn(props) {
     const dispatch = useDispatch();
 
     const handleSignIn = async () => {
-        try {
-            const userCredential = await auth().signInWithEmailAndPassword(email, password);
-            // Signed in 
-            console.log(userCredential.user.toJSON());
-            if (userCredential) {
-               dispatch(setUser(userCredential.user.toJSON()));
+        if (isValidAccount(email, password)) {
+            try {
+                const userCredential = await auth().signInWithEmailAndPassword(email, password);
+                if (userCredential) {
+                   dispatch(setUser(userCredential.user.toJSON()));
+                }
+            } catch (error) {
+                alert('Invalid account. Please try again!');
             }
-        } catch (error) {
-            alert('Invalid email or password');
-            console.error(error);
         }
     };
     

@@ -4,22 +4,24 @@ import { View, Button, TextInput, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import SignInButton from '../components/SignInButton';
 import SignInInput from '../components/SignInInput';
+import { isValidAccount } from '../../../utils/validateAccount';
 
-function SignUp(props) {
+function SignUp({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [phone, setPhone] = useState('');
 
     const handleSignUp = async () => {
-        try {
-            const userCredential = await auth().createUserWithEmailAndPassword(email, password);
-            // Signed in 
-            const user = userCredential;
-            console.log(user);
-            // ...
-        } catch (error) {
-            alert(error);
-            console.error(error);
+        if (isValidAccount(email, password)) {
+            try {
+                const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+                if (userCredential) {
+                    alert('Account created successfully! Please sign in to explore more features.');
+                    navigation.goBack();
+                }
+            } catch (error) {
+                alert(error.message);
+            }
         }
     };
 

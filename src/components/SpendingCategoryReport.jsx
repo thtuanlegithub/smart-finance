@@ -3,13 +3,14 @@ import React from 'react';
 import formatCurrency from '../utils/formatCurrency';
 import typography from '../styles/typography';
 import colors from '../styles/colors';
+import expenseCategoryIcons from '../data/expenseCategoryIcons';
 
 const SpendingCategoryReport = (props) => {
     return (
         <TouchableOpacity>
             <View style={styles.categoryReport}>
                 <View>
-                    <Image style={styles.categoryIcon} source={require('../assets/images/burger.png')} />
+                    <Image style={styles.categoryIcon} source={expenseCategoryIcons[props.category]} />
                 </View>
                 <View style={styles.categoryInformation}>
                     <View>

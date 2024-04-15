@@ -8,7 +8,7 @@ const CircularProgress = (props) => {
     const strokeWidth = 11;
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
-    const fill = 77.8; // this should be the percentage of the progress (0 - 100)
+    const fill = props.fill; // this should be the percentage of the progress (0 - 100)
     const progress = circumference - (fill / 100) * circumference;
 
     return (

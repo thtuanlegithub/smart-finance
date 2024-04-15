@@ -5,17 +5,15 @@ import colors from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import inputIcons from '../../../data/inputIcons';
 const MediumTextIconInput = (props) => {
-    const [isFilled, setIsFileld] = useState(false);
-
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
-                <FontAwesome5 name={inputIcons[props.type]} size={18} color={colors.green08} style={styles.labelIcon} />
+                <FontAwesome5 name={inputIcons[props.field]} size={18} color={colors.green08} style={styles.labelIcon} />
             </View>
             <View style={styles.inputGroup}>
-                {isFilled
+                {props.value
                     ?
-                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>Filled Text</Text>
+                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{props.value}</Text>
                     :
                     <Text style={[typography.RegularInterH5, { color: colors.green08, opacity: 0.5 }]}>{props.placeholder}</Text>
                 }

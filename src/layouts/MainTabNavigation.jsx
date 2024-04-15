@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback } from 'react';
+import React, { useRef, useMemo, useCallback, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Button } from 'react-native';
@@ -13,6 +13,8 @@ import colors from '../styles/colors';
 import AddTransactionNavigator from '../features/transaction/components/AddTransactionNavigator';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDisplayModal } from '../features/transaction';
 
 const Tab = createBottomTabNavigator();
 const CustomHandle = () => (
@@ -24,10 +26,18 @@ const MainTabNavigation = (props) => {
 
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useMemo(() => ['50%', '75%', '98%'], []);
+    const displayModal = useSelector(state => state.addTransactionForm.displayModal);
 
-    const handlePresentModalPress = () => {
-        bottomSheetModalRef.current.present();
-    };
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (displayModal) {
+            bottomSheetModalRef.current.present();
+        }
+        else {
+            bottomSheetModalRef.current.dismiss();
+        }
+    }, [displayModal]);
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -90,7 +100,7 @@ const MainTabNavigation = (props) => {
                             <Tab.Screen
                                 name="Center"
                                 component={NullComponent}
-                                options={{ tabBarButton: () => <CenterButton onDisplayModal={handlePresentModalPress} /> }}
+                                options={{ tabBarButton: () => <CenterButton onDisplayModal={() => dispatch(setDisplayModal(true))} /> }}
                             />
                             <Tab.Screen
                                 name="Budget"
@@ -106,6 +116,7 @@ const MainTabNavigation = (props) => {
                                 }} />
                         </Tab.Navigator>
                         <BottomSheetModal
+                            onDismiss={() => dispatch(setDisplayModal(false))}
                             backdropComponent={BottomSheetBackdrop}
                             ref={bottomSheetModalRef}
                             snapPoints={snapPoints}

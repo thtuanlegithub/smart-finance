@@ -1,20 +1,19 @@
 import { TouchableOpacity, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import colors from '../../../styles/colors'
-import typography from '../../../styles/typography'
-import debtLoanCategoryIcons from '../../../data/debtLoanCategoryIcons'
-import { useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
-const DebtLoanSelectCategoryItem = (props) => {
+import typography from '../styles/typography'
+import colors from '../styles/colors'
+import transactionCategoryIcons from '../data/transactionCategoryIcons'
 
+const WalletItem = (props) => {
     return (
         <TouchableOpacity onPress={props.onSelect} style={styles.container}>
             <Image style={{ height: 24, width: 24, paddingHorizontal: 6, paddingVertical: 4, borderRadius: 6 }}
-                source={debtLoanCategoryIcons[props.category]} />
-            <Text style={[typography.MediumInterH5, { color: colors.green07 }]}>{props.category}</Text>
+                source={require('../assets/images/wallet.png')} />
+            <Text style={[typography.MediumInterH5, { color: colors.green07 }]}>{props.name}</Text>
         </TouchableOpacity>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -27,4 +26,5 @@ const styles = StyleSheet.create({
         borderColor: colors.gray02,
     },
 })
-export default DebtLoanSelectCategoryItem
+
+export default WalletItem

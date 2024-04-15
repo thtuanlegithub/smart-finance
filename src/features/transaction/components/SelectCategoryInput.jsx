@@ -4,18 +4,25 @@ import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import transactionCategoryIcons from '../../../data/transactionCategoryIcons'
+import { useSelector } from 'react-redux'
 const SelectCategoryInput = () => {
-    const [isFilled, setIsFileld] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('Food & Beverage');
+
+    const category = useSelector(state => state.addTransactionForm.category);
+    console.log(category);
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
-                <Image style={styles.labelIcon} source={transactionCategoryIcons[selectedCategory]} />
+                {
+                    category != '' ?
+                        <Image style={styles.labelIcon} source={transactionCategoryIcons[category]} />
+                        :
+                        <Image style={styles.labelIcon} source={require('../../../assets/images/placeholdericon.png')} />
+                }
             </View>
             <View style={styles.inputGroup}>
-                {isFilled
+                {category
                     ?
-                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{selectedCategory}</Text>
+                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{category}</Text>
                     :
                     <Text style={[typography.RegularInterH4, { color: colors.green08, opacity: 0.5 }]}>Select category</Text>
                 }

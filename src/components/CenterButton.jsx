@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View, TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-const CenterButton = ({ onDisplayModal }) => {
+const CenterButton = (props) => {
     const handlePress = () => {
-        if (onDisplayModal) {
-            onDisplayModal();
+        if (props.onDisplayModal) {
+            props.onDisplayModal();
         }
     }
     return (

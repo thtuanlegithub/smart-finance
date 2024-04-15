@@ -9,7 +9,7 @@ const LimitItem = () => {
     return (
         <View style={styles.limitItem}>
             <View style={styles.limitProgress}>
-                <CircularProgress subColor={colors.red04} mainColor={colors.red03} textColor={colors.red05} />
+                <CircularProgress fill={50} subColor={colors.red04} mainColor={colors.red03} textColor={colors.red05} />
             </View>
             <View style={styles.limitInformation}>
                 <View>
@@ -19,7 +19,7 @@ const LimitItem = () => {
                             <Text style={[typography.MediumInterH6, { color: 'white' }]}>Limit</Text>
                         </View>
                     </View>
-                    <Text style={[typography.MediumInterH5, { color: colors.red05 }]}>{formatCurrency(3114000)}/</Text>
+                    <Text style={[typography.MediumInterH5, { color: colors.red05 }]}>{formatCurrency(2000000)}/</Text>
                     <Text style={[typography.MediumInterH5, { color: colors.red05 }]}>{formatCurrency(4000000)} VND</Text>
                     <Text style={[typography.RegularInterH6, styles.completedPrediction]}>Goal will be completed on 21st April, 2024</Text>
                 </View>

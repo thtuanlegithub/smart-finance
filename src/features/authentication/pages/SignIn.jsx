@@ -39,7 +39,7 @@ function SignIn(props) {
                 return;
             }
             const currentUser = getCurrentUser();
-            if (user) {
+            if (currentUser) {
                 dispatch(setUser(currentUser.toJSON()));
                 setLoading(false);
             }

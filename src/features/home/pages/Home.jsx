@@ -5,13 +5,18 @@ import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import styles from '../HomeStyles';
-import LabelSwitchButton from '../../../components/LabelSwitchButton';
-import SpendingCategoryReport from '../../../components/SpendingCategoryReport';
 import SavingItem from '../../../components/SavingItem';
 import LimitItem from '../../../components/LimitItem';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import WeekReport from '../components/WeekReport';
+import MonthReport from '../components/MonthReport';
+import { useNavigation } from '@react-navigation/native';
+
+const SpendingReportTab = createMaterialTopTabNavigator();
+
 function Home(props) {
     const [balances, setBalances] = useState(15000000);
-    const [spendingMoney, setSpendingMoney] = useState(1225000);
+    const navigation = useNavigation();
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -50,31 +55,45 @@ function Home(props) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.spendingReportCard}>
-                        <LabelSwitchButton />
-                        <View>
-                            <Text style={[typography.BoldInterH3, { color: colors.green07 }]}>{formatCurrency(spendingMoney)} VND</Text>
-                            <View style={styles.summaryGroup}>
-                                <Text style={[typography.RegularInterH5]}>Total spend of this week</Text>
-                                <View style={styles.changeReport}>
-                                    <View style={styles.changeIcon}>
-                                        <FontAwesome5 name="arrow-down" size={11} color={colors.green06} />
-                                    </View>
-                                    <Text style={[typography.MediumInterH5, { color: colors.green07 }]}> 15%</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View>
-                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Top spending</Text>
-                            <SpendingCategoryReport category="Food & Beverage" amount={825000} percentage={67} />
-                            <SpendingCategoryReport category="Shopping" amount={250000} percentage={20} />
-                            <SpendingCategoryReport category="Transportation" amount={150000} percentage={13} />
-                        </View>
+                        <SpendingReportTab.Navigator
+                            screenOptions={{
+                                animationEnabled: true,
+                                tabBarPressColor: colors.gray02,
+                                tabBarIndicatorStyle: {
+                                    borderRadius: 10,
+                                    backgroundColor: 'white',
+                                    height: '100%',
+                                    borderWidth: 4,
+                                    borderColor: colors.gray02,
+                                },
+                                tabBarStyle: {
+                                    backgroundColor: colors.gray02,
+                                    marginHorizontal: 16,
+                                    borderRadius: 10,
+                                    marginVertical: 8,
+                                    elevation: 0,
+                                    height: 40,
+                                },
+                                tabBarItemStyle: {
+                                },
+                                tabBarLabelStyle: {
+                                    ...typography.MediumInterH5,
+                                    textTransform: 'capitalize',
+                                    justifyContent: 'center',
+                                    marginTop: -4,
+                                },
+                                tabBarActiveTintColor: colors.green08,
+                                tabBarInactiveTintColor: colors.gray03,
+                            }}>
+                            <SpendingReportTab.Screen name="Month" component={MonthReport} />
+                            <SpendingReportTab.Screen name="Week" component={WeekReport} />
+                        </SpendingReportTab.Navigator>
                     </View>
                 </View>
                 <View style={styles.targetProgress}>
                     <View style={styles.targetProgressReportHeader}>
                         <Text style={[typography.MediumInterH4, { color: colors.green08, paddingVertical: 8 }]}>Target Progress</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('Budget')}>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green06, paddingVertical: 8 }]}>See all</Text>
                         </TouchableOpacity>
                     </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from '../styles/TransactionStyles';
 import WalletSelect from '../../../components/WalletSelect';
@@ -10,11 +10,22 @@ import globalStyles from '../../../styles/globalStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import TransactionList from '../components/TransactionsList';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import ActionSheet from 'react-native-actions-sheet';
+import BottomMenuItem from '../../../components/BottomMenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTransactionTypeFilter } from '../services/transactionSlice';
 const Tab = createMaterialTopTabNavigator();
 
+
 function Transaction(props) {
-    const selectedTransactionType = 'expense';
     const timeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
+    const actionSheetTransactionTypeRef = useRef();
+    const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
+    const dispatch = useDispatch();
+    const handleSelectTransactionType = (transactionType) => {
+        dispatch(setTransactionTypeFilter(transactionType));
+        actionSheetTransactionTypeRef.current?.setModalVisible(false);
+    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -29,8 +40,8 @@ function Transaction(props) {
                 </View>
                 <View style={styles.typeOfTransaction}>
                     <View style={globalStyles.centerAlign}>
-                        <TouchableOpacity>
-                            <TransactionSelect selected={selectedTransactionType} />
+                        <TouchableOpacity onPress={() => actionSheetTransactionTypeRef.current?.setModalVisible(true)}>
+                            <TransactionSelect selected={transactionTypeFilter} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.calendar}>
@@ -38,6 +49,26 @@ function Transaction(props) {
                     </TouchableOpacity>
                 </View>
             </View>
+            <ActionSheet ref={actionSheetTransactionTypeRef}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select transaction type</Text>
+                    <TouchableOpacity onPress={() => handleSelectTransactionType('Expense')} style={styles.bottomMenuItemContainer}>
+                        <BottomMenuItem title='Expense' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleSelectTransactionType('Income')} style={styles.bottomMenuItemContainer}>
+                        <BottomMenuItem title='Income' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleSelectTransactionType('Debt/ Loan')} style={styles.bottomMenuItemContainer}>
+                        <BottomMenuItem title='Debt/ Loan' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleSelectTransactionType(null)} style={styles.bottomMenuItemContainer}>
+                        <BottomMenuItem title='All' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => actionSheetTransactionTypeRef.current?.setModalVisible(false)} style={styles.bottomMenuItemContainer}>
+                        <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
+            </ActionSheet>
             <View style={styles.timeRangeContainer}>
                 <Tab.Navigator
                     screenOptions={{
@@ -66,13 +97,13 @@ function Transaction(props) {
                             name={range}
                             initialParams={{ range }}>
                             {
-                                props => <TransactionList {...props} type={selectedTransactionType} />
+                                props => <TransactionList {...props} type={transactionTypeFilter} />
                             }
                         </Tab.Screen>
                     ))}
                 </Tab.Navigator>
             </View>
-        </View >
+        </View>
     );
 }
 

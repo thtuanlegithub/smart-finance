@@ -1,30 +1,57 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableHighlight, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import SignInInput from '../components/SignInInput';
 import SignInButton from '../components/SignInButton';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../authentication';
+import { getCurrentUser, setUser, emailPasswordSignIn } from '../../authentication';
 import { isValidAccount } from '../../../utils/validateAccount';
+import { googleSignIn } from '../../authentication';
+import LoadingItem from '../../../components/LoadingItem';
 
 function SignIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     const handleSignIn = async () => {
         if (isValidAccount(email, password)) {
             try {
-                const userCredential = await auth().signInWithEmailAndPassword(email, password);
+                setLoading(true);
+                const userCredential = await emailPasswordSignIn(email, password);
                 if (userCredential) {
-                   dispatch(setUser(userCredential.user.toJSON()));
+                    dispatch(setUser(userCredential.user.toJSON()));
+                    setLoading(false);
                 }
             } catch (error) {
                 alert('Invalid account. Please try again!');
+                setLoading(false);
             }
         }
     };
-    
+
+    const handleGoogleSignIn = async () => {
+        setLoading(true);
+        try {
+            const result = await googleSignIn();
+            if (result === false) {
+                setLoading(false);
+                return;
+            }
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                dispatch(setUser(currentUser.toJSON()));
+                setLoading(false);
+            }
+        } catch (error) {
+            alert(error.message);            
+        }
+    };
+
+    if (loading) {
+        return <LoadingItem />;
+    }
+
     return (
         <KeyboardAvoidingView
             // behavior={Platform.OS === "ios" ? "height" : "padding"}
@@ -53,7 +80,7 @@ function SignIn(props) {
                 </TouchableOpacity>
             </View>
             <TouchableHighlight
-                onPress={() => alert('Google Sign In')}
+                onPress={handleGoogleSignIn}
                 underlayColor="#E4E6E3"
                 style={styles.continueWithGoogleContainer}>
                 <View style={{ flexDirection: 'row' }}>

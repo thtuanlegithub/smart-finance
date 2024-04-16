@@ -1,29 +1,47 @@
 {
-  "project_info": {
-    "project_number": "929969100582",
-    "project_id": "smart-finance-226f6",
-    "storage_bucket": "smart-finance-226f6.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:929969100582:android:f10f8beef86b51150c53e7",
-        "android_client_info": {
-          "package_name": "com.smartfinance"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBGlJZ1_Zd9BaKioorAFj12kj0_ZeatKyE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+    "project_info": {
+      "project_number": "929969100582",
+      "project_id": "smart-finance-226f6",
+      "storage_bucket": "smart-finance-226f6.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:929969100582:android:f10f8beef86b51150c53e7",
+          "android_client_info": {
+            "package_name": "com.smartfinance"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "929969100582-s31r69lkb0hcjgeml87k3r6si81m9g82.apps.googleusercontent.com",
+            "client_type": 1,
+            "android_info": {
+              "package_name": "com.smartfinance",
+              "certificate_hash": "a430770db978b03c22494d10effdbcd1a06be14e"
+            }
+          },
+          {
+            "client_id": "929969100582-o5pg0c0httuosqeij1vtactjedbcglja.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyBGlJZ1_Zd9BaKioorAFj12kj0_ZeatKyE"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "929969100582-o5pg0c0httuosqeij1vtactjedbcglja.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
         }
       }
-    }
-  ],
-  "configuration_version": "1"
-}
+    ],
+    "configuration_version": "1"
+  }

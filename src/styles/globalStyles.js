@@ -58,5 +58,15 @@ export default globalStyles = StyleSheet.create({
         padding: 4,
         width: 300,
         ...typography.MediumInterH3,
+    },
+    handle: {
+        backgroundColor: colors.gray03,
+        opacity: 0.5,
+        marginVertical: 5,
+        height: 5,
+        width: 50,
+        borderRadius: 5,
+        alignSelf: 'center',
+        // marginTop: 10,
     }
 });

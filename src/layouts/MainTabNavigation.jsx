@@ -15,17 +15,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDisplayModal } from '../features/transaction';
+import CustomHandle from '../components/CustomHandle';
+import { useSnapPoints } from '../hooks/useSnapPoints';
 
 const Tab = createBottomTabNavigator();
-const CustomHandle = () => (
-    <View style={styles.handle} />
-);
+
 
 
 const MainTabNavigation = (props) => {
 
     const bottomSheetModalRef = useRef(null);
-    const snapPoints = useMemo(() => ['50%', '75%', '98%'], []);
+    const snapPoints = useSnapPoints();
     const displayModal = useSelector(state => state.addTransactionForm.displayModal);
 
     const dispatch = useDispatch();
@@ -139,16 +139,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.gray02,
         flex: 1,
         justifyContent: 'center',
-    },
-    handle: {
-        backgroundColor: colors.gray03,
-        opacity: 0.5,
-        marginVertical: 5,
-        height: 5,
-        width: 50,
-        borderRadius: 5,
-        alignSelf: 'center',
-        // marginTop: 10,
     },
 })
 export default MainTabNavigation

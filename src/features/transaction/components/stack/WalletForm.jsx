@@ -7,10 +7,21 @@ import { useDispatch } from 'react-redux';
 import { setTransactionWallet } from '../../services/addTransactionFormSlice';
 import colors from '../../../../styles/colors';
 
+const listWallet = [{
+    name: 'Wallet 1',
+    amount: 1000000
+}, {
+    name: 'Wallet 2',
+    amount: 2000000
+}, {
+    name: 'Wallet 3',
+    amount: 4000000
+}];
+
 const WalletForm = () => {
-    const listWallet = [{ name: 'Wallet 1' }, { name: 'Wallet 2' }, { name: 'Wallet 3' }];
     const navigation = useNavigation();
     const dispatch = useDispatch();
+
     const handleSelectWallet = (wallet) => {
         dispatch(setTransactionWallet(wallet.name));
         navigation.navigate('Add Transaction');

@@ -7,8 +7,15 @@ const AddTransactionInputViewHeader = (props) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.back} onPress={props.onBackPress}>
-                <FontAwesome5 name='chevron-left' size={16} color='black' style={{ alignSelf: 'center', marginTop: 8 }} />
-                <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>Back</Text>
+                {props.backContent
+                    ?
+                    <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{props.backContent}</Text>
+                    :
+                    <>
+                        <FontAwesome5 name='chevron-left' size={16} color='black' style={{ alignSelf: 'center', marginTop: 8 }} />
+                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>Back</Text>
+                    </>
+                }
             </TouchableOpacity>
             <Text style={styles.title}>{props.title}</Text>
         </View>

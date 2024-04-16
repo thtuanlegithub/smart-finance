@@ -4,7 +4,10 @@ const initialState = {
     timeRange: null,
     timeRangeStart: null,
     timeRangeEnd: null,
-    currentWallet: null,
+    currentWallet: {
+        amount: null,
+        name: null,
+    },
 };
 const transactionSlice = createSlice({
     name: 'transaction',
@@ -24,10 +27,15 @@ const transactionSlice = createSlice({
         },
         setCurrentWallet: (state, action) => {
             state.currentWallet = action.payload;
-        }
+        },
+        clearTimeRange(state) {
+            state.timeRange = null;
+            state.timeRangeStart = null;
+            state.timeRangeEnd = null;
+        },
     }
 })
 
-export const { setCurrentWallet, setTransactionTypeFilter, setTimeRange, setTimeRangeStart, setTimeRangeEnd } = transactionSlice.actions;
+export const { setCurrentWallet, setTransactionTypeFilter, setTimeRange, setTimeRangeStart, setTimeRangeEnd, clearTimeRange } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

@@ -49,5 +49,10 @@ export default styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    border: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.gray02,
+        width: '50%'
     }
 });

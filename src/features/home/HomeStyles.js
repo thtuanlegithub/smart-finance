@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import colors from "../../styles/colors";
-
+import typography from "../../styles/typography";
 export default styles = StyleSheet.create({
     spendingReportCardContainer:
     {
@@ -21,7 +21,8 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     balancesAmount: {
-        color: colors.green08,
+        ...typography.SemiBoldInterH2,
+        color: colors.green07,
     },
     totalBalancesLabel: {
         color: colors.green07,

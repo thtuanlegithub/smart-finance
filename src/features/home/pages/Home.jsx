@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import formatCurrency from '../../../utils/formatCurrency';
 import typography from '../../../styles/typography';
@@ -11,18 +11,44 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import WeekReport from '../components/WeekReport';
 import MonthReport from '../components/MonthReport';
 import { useNavigation } from '@react-navigation/native';
+import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import CustomHandle from '../../../components/CustomHandle';
+import AddTransactionInputViewHeader from '../../transaction/components/AddTransactionInputViewHeader';
+import WalletItem from '../../../components/WalletItem';
+import { useSnapPoints } from '../../../hooks/useSnapPoints';
+import { listWallet } from '../../../data/fakeDataListWallet';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentWallet } from '../../transaction';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
+const CLOSE = false;
+const OPEN = true;
+
 function Home(props) {
-    const [balances, setBalances] = useState(15000000);
     const navigation = useNavigation();
+    const bottomSheetSelectWalletRef = useRef(null);
+    const snapPoints = useSnapPoints();
+    const currentWallet = useSelector(state => state.transaction.currentWallet);
+    const dispatch = useDispatch();
+    const handleSelectWallet = (wallet) => {
+        dispatch(setCurrentWallet(wallet));
+        bottomSheetSelectWalletRef.current?.close();
+    }
+    const handleBottomSheetSelectWallet = (action) => {
+        if (action == CLOSE) {
+            bottomSheetSelectWalletRef.current?.close();
+        }
+        else {
+            bottomSheetSelectWalletRef.current?.present();
+        }
+    }
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>
-                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(balances)}</Text>
+                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.amount)}</Text>
                         <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>Total balances</Text>
                     </View>
                     <View style={styles.notificationContainer}>
@@ -32,18 +58,18 @@ function Home(props) {
                 <View style={styles.wallet}>
                     <View style={styles.walletHeader}>
                         <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>My wallet</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleBottomSheetSelectWallet(OPEN)}>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green06 }]}>See all</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.border}></View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleBottomSheetSelectWallet(OPEN)}>
                         <View style={styles.currentWallet}>
                             <View style={styles.currentWalletName}>
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
-                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Current wallet</Text>
+                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet.name}</Text>
                             </View>
-                            <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(balances)}</Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet.amount)}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -103,6 +129,30 @@ function Home(props) {
                     </View>
                 </View>
             </View>
+            <BottomSheetModal
+                backdropComponent={BottomSheetBackdrop}
+                ref={bottomSheetSelectWalletRef}
+                snapPoints={snapPoints}
+                index={2}
+                style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
+                handleComponent={CustomHandle}>
+                <AddTransactionInputViewHeader
+                    backContent='Close'
+                    title='Select Wallet'
+                    onBackPress={() => {
+                        handleBottomSheetSelectWallet(CLOSE);
+                    }} />
+                <View style={{ marginTop: 10 }}>
+                    {listWallet.map((wallet, index) => {
+                        return (
+                            <WalletItem
+                                onSelect={() => handleSelectWallet(wallet)}
+                                key={index}
+                                name={wallet.name} />
+                        )
+                    })}
+                </View>
+            </BottomSheetModal>
         </ScrollView>
     );
 }

@@ -18,5 +18,6 @@ export {
     setTimeRange,
     setTimeRangeStart,
     setTimeRangeEnd,
-    setCurrentWallet
+    setCurrentWallet,
+    clearTimeRange
 } from './services/transactionSlice';

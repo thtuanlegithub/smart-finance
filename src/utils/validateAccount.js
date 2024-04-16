@@ -1,6 +1,6 @@
 export function isValidAccount(email, password) {
     if (!email || !password) {
-        alert('Please fill all the fields');
+        alert('Please fill all account information');
         return false;
     }
     if (!isValidGmail(email)) {

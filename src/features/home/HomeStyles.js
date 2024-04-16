@@ -2,6 +2,13 @@ import { StyleSheet } from "react-native";
 import colors from "../../styles/colors";
 
 export default styles = StyleSheet.create({
+    spendingReportCardContainer:
+    {
+        flex: 1,
+        backgroundColor: 'white',
+        paddingTop: 4,
+        paddingHorizontal: 8
+    },
     container: {
         gap: 10,
         padding: 16,
@@ -53,17 +60,21 @@ export default styles = StyleSheet.create({
         gap: 10,
     },
     spendingReport: {
-
+        flexDirection: 'column',
+        flex: 1,
     },
     spendingReportHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     spendingReportCard: {
+        flexDirection: 'column',
+        flex: 1,
         gap: 16,
         backgroundColor: 'white',
         borderRadius: 16,
         padding: 16,
+        height: 320,
     },
     summaryGroup: {
         flexDirection: 'row',

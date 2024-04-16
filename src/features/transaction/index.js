@@ -11,3 +11,12 @@ export {
     clearInput,
     setDisplayModal
 } from './services/addTransactionFormSlice';
+
+export {
+    default as transactionReducer,
+    setTransactionTypeFilter,
+    setTimeRange,
+    setTimeRangeStart,
+    setTimeRangeEnd,
+    setCurrentWallet
+} from './services/transactionSlice';

@@ -45,5 +45,9 @@ export default styles = StyleSheet.create({
         borderBottomWidth: 0.3,
         borderBottomColor: colors.gray03,
     },
-
+    bottomMenuItemContainer: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });

@@ -11,8 +11,29 @@ const TransactionsList = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.transactionListQuickReport}>
-                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total {props.type} of this time: </Text>
-                <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(1500000)}</Text>
+                {props.type
+                    ?
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total {props.type} of this time: </Text>
+                        <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(1500000)}</Text>
+                    </View>
+                    :
+                    <View style={{ flexDirection: 'column', gap: 4 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total Expense of this time: </Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(1500000)}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total Income of this time: </Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(1500000)}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total Debt/ Loan of this time: </Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(1500000)}</Text>
+                        </View>
+                    </View>
+
+                }
             </View>
             <FlatList
                 data={transactionList}

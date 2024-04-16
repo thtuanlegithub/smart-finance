@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import MainTabNavigation from './layouts/MainTabNavigation';
 import AuthenticationRoute from './layouts/AuthenticationRoute';
 import { getCurrentUser, isUserSignedIn, setUser } from './features/authentication';
-import Loading from './components/Loading'; // import your loading component
+import LoadingItem from './components/LoadingItem'; // import your loading component
 import { isEmailPasswordSignedIn } from './features/authentication';
 
 const Root = () => {
@@ -23,7 +23,7 @@ const Root = () => {
     }, [dispatch]);
 
     if (loading) {
-        return <Loading />;
+        return <LoadingItem />;
     }
 
     return (

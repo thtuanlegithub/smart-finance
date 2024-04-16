@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { getCurrentUser, setUser, emailPasswordSignIn } from '../../authentication';
 import { isValidAccount } from '../../../utils/validateAccount';
 import { googleSignIn } from '../../authentication';
-import Loading from '../../../components/Loading';
+import LoadingItem from '../../../components/LoadingItem';
 
 function SignIn(props) {
     const [email, setEmail] = useState('');
@@ -49,7 +49,7 @@ function SignIn(props) {
     };
 
     if (loading) {
-        return <Loading />;
+        return <LoadingItem />;
     }
 
     return (

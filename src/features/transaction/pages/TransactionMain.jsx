@@ -28,7 +28,7 @@ const Tab = createMaterialTopTabNavigator();
 const DISPLAY = true;
 const HIDE = false;
 
-function Transaction(props) {
+function TransactionMain(props) {
     const timeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     const actionSheetTransactionTypeRef = useRef();
 
@@ -286,4 +286,4 @@ function Transaction(props) {
     );
 }
 
-export default Transaction;
+export default TransactionMain;

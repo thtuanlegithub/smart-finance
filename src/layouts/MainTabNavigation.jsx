@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Home from '../features/home/pages/Home';
 import Setting from '../features/setting/pages/Setting';
-import Transaction from '../features/transaction/pages/Transaction';
-import Budget from '../features/budget/pages/Budget';
+import Transaction from '../features/transaction/pages/TransactionMain';
+import Budget from '../features/budget/pages/BudgetMain';
 import NullComponent from '../components/NullComponent';
 import CenterButton from '../components/CenterButton';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDisplayModal } from '../features/transaction';
 import CustomHandle from '../components/CustomHandle';
 import { useSnapPoints } from '../hooks/useSnapPoints';
+import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
+import BudgetNavigator from '../features/budget/pages/BudgetNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -93,7 +95,7 @@ const MainTabNavigation = (props) => {
                                 }} />
                             <Tab.Screen
                                 name="Transaction"
-                                component={Transaction}
+                                component={TransactionNavigator}
                                 options={{
                                     headerShown: false
                                 }} />
@@ -104,7 +106,7 @@ const MainTabNavigation = (props) => {
                             />
                             <Tab.Screen
                                 name="Budget"
-                                component={Budget}
+                                component={BudgetNavigator}
                                 options={{
                                     headerShown: false
                                 }} />

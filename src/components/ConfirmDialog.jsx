@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         ...typography.SemiBoldInterH3,
         textAlign: 'center',
-        color: colors.green06,
+        color: colors.green07,
     },
     message: {
         ...typography.RegularInterH4,

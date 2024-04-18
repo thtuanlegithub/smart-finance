@@ -3,9 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Home from '../features/home/pages/Home';
-import Setting from '../features/setting/pages/Setting';
-import Transaction from '../features/transaction/pages/TransactionMain';
-import Budget from '../features/budget/pages/BudgetMain';
 import NullComponent from '../components/NullComponent';
 import CenterButton from '../components/CenterButton';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -19,6 +16,7 @@ import CustomHandle from '../components/CustomHandle';
 import { useSnapPoints } from '../hooks/useSnapPoints';
 import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
 import BudgetNavigator from '../features/budget/pages/BudgetNavigator';
+import SettingMain from '../features/setting/pages/SettingMain';
 
 const Tab = createBottomTabNavigator();
 
@@ -112,7 +110,7 @@ const MainTabNavigation = (props) => {
                                 }} />
                             <Tab.Screen
                                 name="Setting"
-                                component={Setting}
+                                component={SettingMain}
                                 options={{
                                     headerShown: false
                                 }} />

@@ -15,9 +15,9 @@ export {
 export {
     default as transactionReducer,
     setTransactionTypeFilter,
-    setTimeRange,
-    setTimeRangeStart,
-    setTimeRangeEnd,
+    setBudgetTimeRange,
+    setBudgetTimeRangeStart,
+    setBudgetTimeRangeEnd,
     setCurrentWallet,
-    clearTimeRange
+    clearBudgetTimeRange
 } from './services/transactionSlice';

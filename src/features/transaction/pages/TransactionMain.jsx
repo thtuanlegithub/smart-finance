@@ -13,7 +13,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ActionSheet from 'react-native-actions-sheet';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearTimeRange, setCurrentWallet, setTimeRangeEnd, setTimeRangeStart, setTransactionTypeFilter } from '../services/transactionSlice';
+import { clearBudgetTimeRange, setCurrentWallet, setBudgetTimeRangeEnd, setBudgetTimeRangeStart, setTransactionTypeFilter } from '../services/transactionSlice';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import CustomHandle from '../../../components/CustomHandle';
@@ -29,15 +29,15 @@ const DISPLAY = true;
 const HIDE = false;
 
 function TransactionMain(props) {
-    const timeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
+    const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
     const currentWallet = useSelector(state => state.transaction.currentWallet);
 
-    const timeRange = useSelector(state => state.transaction.timeRange);
-    const timeRangeStart = useSelector(state => state.transaction.timeRangeStart);
-    const timeRangeEnd = useSelector(state => state.transaction.timeRangeEnd);
+    const budgetTimeRange = useSelector(state => state.transaction.budgetTimeRange);
+    const budgetTimeRangeStart = useSelector(state => state.transaction.budgetTimeRangeStart);
+    const budgetTimeRangeEnd = useSelector(state => state.transaction.budgetTimeRangeEnd);
 
     const [open, setOpen] = useState(false)
     const [selectForStart, setSelectForStart] = useState(true);
@@ -53,25 +53,25 @@ function TransactionMain(props) {
         dispatch(setCurrentWallet(wallet));
         bottomSheetSelectWalletRef.current?.close();
     }
-    const actionSheetTimeRangeRef = useRef(null);
-    const handleActionSheetSelectTimeRangeDisplay = (action) => {
-        actionSheetTimeRangeRef.current.setModalVisible(action);
+    const actionSheetBudgetTimeRangeRef = useRef(null);
+    const handleActionSheetSelectBudgetTimeRangeDisplay = (action) => {
+        actionSheetBudgetTimeRangeRef.current.setModalVisible(action);
     }
 
-    const actionSheetCustomizeTimeRangeRef = useRef(null);
+    const actionSheetCustomizeBudgetTimeRangeRef = useRef(null);
 
-    const handleActionSheetCustomizeTimeRangeDisplay = (action) => {
-        actionSheetCustomizeTimeRangeRef.current.setModalVisible(action);
+    const handleActionSheetCustomizeBudgetTimeRangeDisplay = (action) => {
+        actionSheetCustomizeBudgetTimeRangeRef.current.setModalVisible(action);
     }
 
-    const handleTimeRangeSelect = (timeRange) => {
-        if (timeRange === 'Customize') {
-            handleActionSheetCustomizeTimeRangeDisplay(DISPLAY);
-            handleActionSheetSelectTimeRangeDisplay(HIDE);
+    const handleBudgetTimeRangeSelect = (budgetTimeRange) => {
+        if (budgetTimeRange === 'Customize') {
+            handleActionSheetCustomizeBudgetTimeRangeDisplay(DISPLAY);
+            handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
         }
         else {
-            dispatch(clearTimeRange());
-            handleActionSheetSelectTimeRangeDisplay(HIDE);
+            dispatch(clearBudgetTimeRange());
+            handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
         }
     }
     return (
@@ -92,7 +92,7 @@ function TransactionMain(props) {
                             <TransactionSelect selected={transactionTypeFilter} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => handleActionSheetSelectTimeRangeDisplay(DISPLAY)} style={styles.calendar}>
+                    <TouchableOpacity onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY)} style={styles.calendar}>
                         <FontAwesome5 name="calendar-alt" size={24} color={colors.green07} solid />
                     </TouchableOpacity>
                 </View>
@@ -127,38 +127,38 @@ function TransactionMain(props) {
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetTimeRangeRef}>
+            <ActionSheet ref={actionSheetBudgetTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
                     <TouchableOpacity
-                        onPress={() => handleTimeRangeSelect('This week')}
+                        onPress={() => handleBudgetTimeRangeSelect('This week')}
                         style={styles.bottomMenuItemContainer}>
                         <BottomMenuItem title='This week' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => handleTimeRangeSelect('This month')}
+                        onPress={() => handleBudgetTimeRangeSelect('This month')}
                         style={styles.bottomMenuItemContainer}>
                         <BottomMenuItem title='This month' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => handleTimeRangeSelect('This year')}
+                        onPress={() => handleBudgetTimeRangeSelect('This year')}
                         style={styles.bottomMenuItemContainer}>
                         <BottomMenuItem title='This year' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => handleTimeRangeSelect('Customize')}
+                        onPress={() => handleBudgetTimeRangeSelect('Customize')}
                         style={styles.bottomMenuItemContainer}>
                         <BottomMenuItem title='Customize' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => handleActionSheetSelectTimeRangeDisplay(HIDE)}
+                        onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>
                         <Text style={
                             [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetCustomizeTimeRangeRef}>
+            <ActionSheet ref={actionSheetCustomizeBudgetTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
                     <TouchableOpacity onPress={() => {
@@ -166,9 +166,9 @@ function TransactionMain(props) {
                         setSelectForStart(true);
                     }}>
                         {
-                            timeRangeStart
+                            budgetTimeRangeStart
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {timeRangeStart}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {budgetTimeRangeStart}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
                         }
@@ -180,9 +180,9 @@ function TransactionMain(props) {
                         setSelectForStart(false);
                     }}>
                         {
-                            timeRangeEnd
+                            budgetTimeRangeEnd
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {timeRangeEnd}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {budgetTimeRangeEnd}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
                         }
@@ -190,16 +190,16 @@ function TransactionMain(props) {
                     <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectTimeRangeDisplay(DISPLAY);
+                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY);
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectTimeRangeDisplay(HIDE);
+                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
@@ -214,10 +214,10 @@ function TransactionMain(props) {
                 date={new Date()}
                 onConfirm={(date) => {
                     if (selectForStart) {
-                        dispatch(setTimeRangeStart(formatDate(date)));
+                        dispatch(setBudgetTimeRangeStart(formatDate(date)));
                     }
                     else {
-                        dispatch(setTimeRangeEnd(formatDate(date)));
+                        dispatch(setBudgetTimeRangeEnd(formatDate(date)));
                     }
                     setOpen(false)
                 }}
@@ -270,7 +270,7 @@ function TransactionMain(props) {
                             borderBottomColor: colors.gray03,
                         }
                     }}>
-                    {timeRanges.map((range, index) => (
+                    {budgetTimeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
                             name={range}

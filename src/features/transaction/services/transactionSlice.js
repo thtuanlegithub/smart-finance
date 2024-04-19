@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     transactionTypeFilter: null,
-    timeRange: null,
-    timeRangeStart: null,
-    timeRangeEnd: null,
+    budgetTimeRange: null,
+    budgetTimeRangeStart: null,
+    budgetTimeRangeEnd: null,
     currentWallet: {
         amount: null,
         name: null,
@@ -16,26 +16,26 @@ const transactionSlice = createSlice({
         setTransactionTypeFilter: (state, action) => {
             state.transactionTypeFilter = action.payload;
         },
-        setTimeRange: (state, action) => {
-            state.timeRange = action.payload;
+        setBudgetTimeRange: (state, action) => {
+            state.budgetTimeRange = action.payload;
         },
-        setTimeRangeStart: (state, action) => {
-            state.timeRangeStart = action.payload;
+        setBudgetTimeRangeStart: (state, action) => {
+            state.budgetTimeRangeStart = action.payload;
         },
-        setTimeRangeEnd: (state, action) => {
-            state.timeRangeEnd = action.payload;
+        setBudgetTimeRangeEnd: (state, action) => {
+            state.budgetTimeRangeEnd = action.payload;
         },
         setCurrentWallet: (state, action) => {
             state.currentWallet = action.payload;
         },
-        clearTimeRange(state) {
-            state.timeRange = null;
-            state.timeRangeStart = null;
-            state.timeRangeEnd = null;
+        clearBudgetTimeRange(state) {
+            state.budgetTimeRange = null;
+            state.budgetTimeRangeStart = null;
+            state.budgetTimeRangeEnd = null;
         },
     }
 })
 
-export const { setCurrentWallet, setTransactionTypeFilter, setTimeRange, setTimeRangeStart, setTimeRangeEnd, clearTimeRange } = transactionSlice.actions;
+export const { setCurrentWallet, setTransactionTypeFilter, setBudgetTimeRange, setBudgetTimeRangeStart, setBudgetTimeRangeEnd, clearBudgetTimeRange } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

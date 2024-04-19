@@ -13,7 +13,9 @@ const CircularProgress = (props) => {
 
     return (
         <View>
-            <Svg width={size} height={size} style={{ transform: [{ rotateZ: '-90deg' }] }}>
+            <Svg width={size}
+                height={size}
+                style={{ transform: [{ rotateZ: '-90deg' }] }}>
                 <Circle
                     stroke={props.subColor}
                     fill="none"

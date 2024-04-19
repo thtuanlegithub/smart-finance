@@ -45,14 +45,16 @@ export default styles = StyleSheet.create({
         borderBottomWidth: 0.3,
         borderBottomColor: colors.gray03,
     },
-    bottomMenuItemContainer: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     border: {
         borderBottomWidth: 1,
         borderBottomColor: colors.gray02,
         width: '50%'
-    }
+    },
+    bottomMenuItemContainer: {
+        paddingVertical: 8,
+        paddingHorizontal: 24,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

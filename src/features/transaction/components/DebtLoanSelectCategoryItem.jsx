@@ -3,8 +3,7 @@ import React from 'react'
 import colors from '../../../styles/colors'
 import typography from '../../../styles/typography'
 import debtLoanCategoryIcons from '../../../data/debtLoanCategoryIcons'
-import { useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
+
 const DebtLoanSelectCategoryItem = (props) => {
 
     return (

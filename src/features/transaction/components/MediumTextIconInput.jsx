@@ -17,7 +17,7 @@ const MediumTextIconInput = (props) => {
                     :
                     <Text style={[typography.RegularInterH5, { color: colors.green08, opacity: 0.5 }]}>{props.placeholder}</Text>
                 }
-                <FontAwesome5 name="chevron-right" size={18} color={colors.green08} opacity={0.5} />
+                <FontAwesome5 name="chevron-right" size={16} color={colors.green08} opacity={0.5} />
             </View>
         </View>
     )

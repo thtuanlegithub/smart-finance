@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     message: {
         ...typography.RegularInterH4,
         textAlign: 'center',
-        color: colors.green07,
+        color: colors.green08,
         paddingBottom: 16,
         paddingTop: 10,
         paddingHorizontal: 16,

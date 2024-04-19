@@ -16,6 +16,7 @@ export default globalStyles = StyleSheet.create({
     },
     centerAlign: {
         alignItems: 'center',
+        backgroundColor: 'transparent',
     },
     borderSelectContainer: {
         width: 190,

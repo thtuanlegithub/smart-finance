@@ -13,7 +13,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ActionSheet from 'react-native-actions-sheet';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearBudgetTimeRange, setCurrentWallet, setBudgetTimeRangeEnd, setBudgetTimeRangeStart, setTransactionTypeFilter } from '../services/transactionSlice';
+import { clearTransactionTimeRange, setCurrentWallet, setTransactionTimeRangeEnd, setTransactionTimeRangeStart, setTransactionTypeFilter } from '../services/transactionSlice';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import CustomHandle from '../../../components/CustomHandle';
@@ -29,15 +29,15 @@ const DISPLAY = true;
 const HIDE = false;
 
 function TransactionMain(props) {
-    const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
+    const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
     const currentWallet = useSelector(state => state.transaction.currentWallet);
 
-    const budgetTimeRange = useSelector(state => state.transaction.budgetTimeRange);
-    const budgetTimeRangeStart = useSelector(state => state.transaction.budgetTimeRangeStart);
-    const budgetTimeRangeEnd = useSelector(state => state.transaction.budgetTimeRangeEnd);
+    const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
+    const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
+    const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
 
     const [open, setOpen] = useState(false)
     const [selectForStart, setSelectForStart] = useState(true);
@@ -53,25 +53,25 @@ function TransactionMain(props) {
         dispatch(setCurrentWallet(wallet));
         bottomSheetSelectWalletRef.current?.close();
     }
-    const actionSheetBudgetTimeRangeRef = useRef(null);
-    const handleActionSheetSelectBudgetTimeRangeDisplay = (action) => {
-        actionSheetBudgetTimeRangeRef.current.setModalVisible(action);
+    const actionSheetTransactionTimeRangeRef = useRef(null);
+    const handleActionSheetSelectTransactionTimeRangeDisplay = (action) => {
+        actionSheetTransactionTimeRangeRef.current.setModalVisible(action);
     }
 
-    const actionSheetCustomizeBudgetTimeRangeRef = useRef(null);
+    const actionSheetCustomizeTransactionTimeRangeRef = useRef(null);
 
-    const handleActionSheetCustomizeBudgetTimeRangeDisplay = (action) => {
-        actionSheetCustomizeBudgetTimeRangeRef.current.setModalVisible(action);
+    const handleActionSheetCustomizeTransactionTimeRangeDisplay = (action) => {
+        actionSheetCustomizeTransactionTimeRangeRef.current.setModalVisible(action);
     }
 
-    const handleBudgetTimeRangeSelect = (budgetTimeRange) => {
-        if (budgetTimeRange === 'Customize') {
-            handleActionSheetCustomizeBudgetTimeRangeDisplay(DISPLAY);
-            handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
+    const handleTransactionTimeRangeSelect = (transactionTimeRange) => {
+        if (transactionTimeRange === 'Customize') {
+            handleActionSheetCustomizeTransactionTimeRangeDisplay(DISPLAY);
+            handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
         }
         else {
-            dispatch(clearBudgetTimeRange());
-            handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
+            dispatch(clearTransactionTimeRange());
+            handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
         }
     }
     return (
@@ -92,34 +92,27 @@ function TransactionMain(props) {
                             <TransactionSelect selected={transactionTypeFilter} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY)} style={styles.calendar}>
+                    <TouchableOpacity onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(DISPLAY)} style={styles.calendar}>
                         <FontAwesome5 name="calendar-alt" size={24} color={colors.green07} solid />
                     </TouchableOpacity>
                 </View>
             </View>
             <ActionSheet ref={actionSheetTransactionTypeRef}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
+                <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>Select transaction type</Text>
-                    <TouchableOpacity
-                        onPress={() => handleSelectTransactionType('Expense')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='Expense' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                    <BottomMenuItem
+                        title='Expense'
+                        onPress={() => handleSelectTransactionType('Expense')} />
+                    <BottomMenuItem
+                        title='Income'
                         onPress={() => handleSelectTransactionType('Income')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='Income' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleSelectTransactionType('Debt/ Loan')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='Debt/ Loan' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleSelectTransactionType(null)}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='All' />
-                    </TouchableOpacity>
+                    />
+                    <BottomMenuItem
+                        title='Debt/ Loan'
+                        onPress={() => handleSelectTransactionType('Debt/ Loan')} />
+                    <BottomMenuItem
+                        title='All'
+                        onPress={() => handleSelectTransactionType(null)} />
                     <TouchableOpacity
                         onPress={() => actionSheetTransactionTypeRef.current?.setModalVisible(false)}
                         style={styles.bottomMenuItemContainer}>
@@ -127,48 +120,40 @@ function TransactionMain(props) {
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetBudgetTimeRangeRef}>
+            <ActionSheet ref={actionSheetTransactionTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
+                    <BottomMenuItem
+                        title='This week'
+                        onPress={() => handleTransactionTimeRangeSelect('This week')} />
+                    <BottomMenuItem
+                        title='This month'
+                        onPress={() => handleTransactionTimeRangeSelect('This month')} />
+                    <BottomMenuItem
+                        title='This year'
+                        onPress={() => handleTransactionTimeRangeSelect('This year')} />
+                    <BottomMenuItem
+                        title='Customize'
+                        onPress={() => handleTransactionTimeRangeSelect('Customize')} />
                     <TouchableOpacity
-                        onPress={() => handleBudgetTimeRangeSelect('This week')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='This week' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleBudgetTimeRangeSelect('This month')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='This month' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleBudgetTimeRangeSelect('This year')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='This year' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleBudgetTimeRangeSelect('Customize')}
-                        style={styles.bottomMenuItemContainer}>
-                        <BottomMenuItem title='Customize' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(HIDE)}
+                        onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>
                         <Text style={
                             [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetCustomizeBudgetTimeRangeRef}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
+            <ActionSheet ref={actionSheetCustomizeTransactionTimeRangeRef}>
+                <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
                     <TouchableOpacity onPress={() => {
                         setOpen(true);
                         setSelectForStart(true);
                     }}>
                         {
-                            budgetTimeRangeStart
+                            transactionTimeRangeStart
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {budgetTimeRangeStart}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {transactionTimeRangeStart}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
                         }
@@ -180,9 +165,9 @@ function TransactionMain(props) {
                         setSelectForStart(false);
                     }}>
                         {
-                            budgetTimeRangeEnd
+                            transactionTimeRangeEnd
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {budgetTimeRangeEnd}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {transactionTimeRangeEnd}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
                         }
@@ -190,16 +175,16 @@ function TransactionMain(props) {
                     <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY);
+                                handleActionSheetCustomizeTransactionTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectTransactionTimeRangeDisplay(DISPLAY);
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
+                                handleActionSheetCustomizeTransactionTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
@@ -214,10 +199,10 @@ function TransactionMain(props) {
                 date={new Date()}
                 onConfirm={(date) => {
                     if (selectForStart) {
-                        dispatch(setBudgetTimeRangeStart(formatDate(date)));
+                        dispatch(setTransactionTimeRangeStart(formatDate(date)));
                     }
                     else {
-                        dispatch(setBudgetTimeRangeEnd(formatDate(date)));
+                        dispatch(setTransactionTimeRangeEnd(formatDate(date)));
                     }
                     setOpen(false)
                 }}
@@ -251,6 +236,7 @@ function TransactionMain(props) {
             </BottomSheetModal>
             <View style={styles.timeRangeContainer}>
                 <Tab.Navigator
+                    initialRouteName={transactionTimeRange ? transactionTimeRange : 'This week'}
                     screenOptions={{
                         tabBarPressColor: colors.gray02,
                         tabBarScrollEnabled: true,
@@ -270,7 +256,7 @@ function TransactionMain(props) {
                             borderBottomColor: colors.gray03,
                         }
                     }}>
-                    {budgetTimeRanges.map((range, index) => (
+                    {transactionTimeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
                             name={range}

@@ -47,7 +47,6 @@ const MainTabNavigation = (props) => {
                         <Tab.Navigator
                             screenOptions={({ route }) => ({
                                 tabBarActiveTintColor: colors.green06,
-                                // tabBarInactiveTintColor: '#ABC3B9',
                                 tabBarIcon: ({ focused, color, size }) => {
                                     let iconName;
                                     let iconStyle = focused ? 'solid' : 'regular';

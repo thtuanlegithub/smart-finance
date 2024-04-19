@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     transactionTypeFilter: null,
-    budgetTimeRange: null,
-    budgetTimeRangeStart: null,
-    budgetTimeRangeEnd: null,
+    transactionTimeRange: null,
+    transactionTimeRangeStart: null,
+    transactionTimeRangeEnd: null,
     currentWallet: {
         amount: null,
         name: null,
@@ -16,26 +16,26 @@ const transactionSlice = createSlice({
         setTransactionTypeFilter: (state, action) => {
             state.transactionTypeFilter = action.payload;
         },
-        setBudgetTimeRange: (state, action) => {
-            state.budgetTimeRange = action.payload;
+        setTransactionTimeRange: (state, action) => {
+            state.transactionTimeRange = action.payload;
         },
-        setBudgetTimeRangeStart: (state, action) => {
-            state.budgetTimeRangeStart = action.payload;
+        setTransactionTimeRangeStart: (state, action) => {
+            state.transactionTimeRangeStart = action.payload;
         },
-        setBudgetTimeRangeEnd: (state, action) => {
-            state.budgetTimeRangeEnd = action.payload;
+        setTransactionTimeRangeEnd: (state, action) => {
+            state.transactionTimeRangeEnd = action.payload;
         },
         setCurrentWallet: (state, action) => {
             state.currentWallet = action.payload;
         },
-        clearBudgetTimeRange(state) {
-            state.budgetTimeRange = null;
-            state.budgetTimeRangeStart = null;
-            state.budgetTimeRangeEnd = null;
+        clearTransactionTimeRange(state) {
+            state.transactionTimeRange = null;
+            state.transactionTimeRangeStart = null;
+            state.transactionTimeRangeEnd = null;
         },
     }
 })
 
-export const { setCurrentWallet, setTransactionTypeFilter, setBudgetTimeRange, setBudgetTimeRangeStart, setBudgetTimeRangeEnd, clearBudgetTimeRange } = transactionSlice.actions;
+export const { setCurrentWallet, setTransactionTypeFilter, setTransactionTimeRange, setTransactionTimeRangeStart, setTransactionTimeRangeEnd, clearTransactionTimeRange } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

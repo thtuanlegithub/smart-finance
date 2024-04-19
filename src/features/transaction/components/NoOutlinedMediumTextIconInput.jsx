@@ -10,7 +10,7 @@ const NoOutlinedMediumTextIconInput = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
-                <FontAwesome5 name={inputIcons[props.field]} size={18} color={colors.green08} style={styles.labelIcon} />
+                <FontAwesome5 name={inputIcons[props.field]} size={16} color={colors.green08} style={styles.labelIcon} />
             </View>
             <View style={styles.inputGroup}>
                 {props.value
@@ -19,7 +19,7 @@ const NoOutlinedMediumTextIconInput = (props) => {
                     :
                     <Text style={[typography.RegularInterH5, { color: colors.green08, opacity: 0.5 }]}>{props.placeholder}</Text>
                 }
-                <FontAwesome5 name="chevron-right" size={18} color={colors.green08} opacity={0.5} />
+                <FontAwesome5 name="chevron-right" size={16} color={colors.green08} opacity={0.5} />
             </View>
         </View>
     )

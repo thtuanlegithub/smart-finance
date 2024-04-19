@@ -14,6 +14,7 @@ function SettingMain(props) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.login.user);
     const [confirmSignOutDialogVisible, setConfirmSignOutDialogVisible] = useState(false);
+
     const handleSignOut = async () => {
         const user = auth().currentUser;
         if (user) {
@@ -38,7 +39,8 @@ function SettingMain(props) {
                 <SettingButton icon='clock' title='Reminder' />
             </View>
             <View style={styles.buttonsGroup}>
-                <SettingButton icon='money-bill' title='Currency Unit' />
+                <SettingButton icon='money-bill' title='Currency Unit' onPress={handleDisplayCurrencyUnit}/>
+                <SettingButton icon='money-bill' title='Update Exchange Rate' />
                 <SettingButton icon='globe-americas' title='Languages' />
             </View>
             <View style={styles.buttonsGroup}>

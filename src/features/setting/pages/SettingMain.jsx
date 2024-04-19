@@ -39,8 +39,7 @@ function SettingMain(props) {
                 <SettingButton icon='clock' title='Reminder' />
             </View>
             <View style={styles.buttonsGroup}>
-                <SettingButton icon='money-bill' title='Currency Unit' onPress={handleDisplayCurrencyUnit}/>
-                <SettingButton icon='money-bill' title='Update Exchange Rate' />
+                <SettingButton icon='money-bill' title='Currency Unit' />
                 <SettingButton icon='globe-americas' title='Languages' />
             </View>
             <View style={styles.buttonsGroup}>

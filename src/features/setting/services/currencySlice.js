@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-const PATH_TO_CURRENCY_API = '../../data/currencyApi.json';
-const PATH_TO_CURRENCY_NAME = '../../data/currencyName.json';
+const PATH_TO_CURRENCY_API = '../data/currencyApi.json';
+const PATH_TO_CURRENCY_NAME = '../data/currencyName.json';
 const CURRENCY_API_URL = 'https://api.currencyapi.com/v3/latest?apikey=cur_live_NhmVyM9p4RpkJGsGCPZKxfuDC7kPlOOZjP9X04Hu';
 
 const fetchCurrencyData = createAsyncThunk('currency/fetchData', async () => {

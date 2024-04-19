@@ -4,4 +4,5 @@ export {
     updateExchangeRate,
     searchCurrencyUnit,
     convertCurrencyUnit,
-} from './services/currency/currencySlice';
+} from './services/currencySlice';
+    

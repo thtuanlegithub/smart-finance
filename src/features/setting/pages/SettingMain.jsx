@@ -14,6 +14,7 @@ function SettingMain(props) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.login.user);
     const [confirmSignOutDialogVisible, setConfirmSignOutDialogVisible] = useState(false);
+
     const handleSignOut = async () => {
         const user = auth().currentUser;
         if (user) {

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import MainTabNavigation from './layouts/MainTabNavigation';
 import AuthenticationRoute from './layouts/AuthenticationRoute';
-import { getCurrentUser, isUserSignedIn, setUser } from './features/authentication';
-import LoadingItem from './components/LoadingItem'; // import your loading component
+import LoadingItem from './components/LoadingItem';
 import { isEmailPasswordSignedIn } from './features/authentication';
+import { getCurrentUser, isUserSignedIn, setUser } from './features/authentication';
+import { getUserSetting, createUserSetting, updateUserSetting, setSetting } from './features/setting';
 
 const Root = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.login.user);
+    const settingState = useSelector((state) => state.setting);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -16,6 +18,16 @@ const Root = () => {
             if (await isUserSignedIn() || await isEmailPasswordSignedIn()) {
                 const currentUser = getCurrentUser();
                 dispatch(setUser(currentUser.toJSON()));
+                let setting = await getUserSetting(currentUser.uid);
+                if (!setting) {
+                    const newSetting = createUserSetting(currentUser.uid);
+                    const settingId = await updateUserSetting(currentUser.uid, newSetting);
+                    newSetting.settingId = settingId;
+                    setting = newSetting;
+                }
+                dispatch(setSetting(setting));
+                setting.notifi
+                updateUserSetting(currentUser.uid, setting)
             }
             setLoading(false);
         };

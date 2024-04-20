@@ -1,7 +1,7 @@
 // Singleton pattern
 // How to use: const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
 // firestore.collection('users').doc('ABC123').get
-export {default as FirestoreSingleton} from './builder/singleton/FirestoreSingleton';
+export {default as FirestoreSingleton} from './singleton/FirestoreSingleton';
 
 // Builder pattern
 // How to use: const wallet = new WalletBuilder()

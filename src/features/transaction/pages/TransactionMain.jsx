@@ -22,11 +22,11 @@ import WalletItem from '../../../components/WalletItem';
 import { listWallet } from '../../../data/fakeDataListWallet';
 import DatePicker from 'react-native-date-picker';
 import { formatDate } from '../../../utils/formatDate';
+import ActionSheetSelectTimeRangeTransaction from '../components/ActionSheetSelectTimeRangeTransaction';
 
 const Tab = createMaterialTopTabNavigator();
 
 const DISPLAY = true;
-const HIDE = false;
 
 function TransactionMain(props) {
     const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
@@ -36,11 +36,6 @@ function TransactionMain(props) {
     const currentWallet = useSelector(state => state.transaction.currentWallet);
 
     const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
-    const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
-    const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
-
-    const [open, setOpen] = useState(false)
-    const [selectForStart, setSelectForStart] = useState(true);
 
     const dispatch = useDispatch();
     const handleSelectTransactionType = (transactionType) => {
@@ -53,27 +48,13 @@ function TransactionMain(props) {
         dispatch(setCurrentWallet(wallet));
         bottomSheetSelectWalletRef.current?.close();
     }
+
     const actionSheetTransactionTimeRangeRef = useRef(null);
     const handleActionSheetSelectTransactionTimeRangeDisplay = (action) => {
         actionSheetTransactionTimeRangeRef.current.setModalVisible(action);
     }
 
-    const actionSheetCustomizeTransactionTimeRangeRef = useRef(null);
 
-    const handleActionSheetCustomizeTransactionTimeRangeDisplay = (action) => {
-        actionSheetCustomizeTransactionTimeRangeRef.current.setModalVisible(action);
-    }
-
-    const handleTransactionTimeRangeSelect = (transactionTimeRange) => {
-        if (transactionTimeRange === 'Customize') {
-            handleActionSheetCustomizeTransactionTimeRangeDisplay(DISPLAY);
-            handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
-        }
-        else {
-            dispatch(clearTransactionTimeRange());
-            handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
-        }
-    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -120,96 +101,8 @@ function TransactionMain(props) {
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetTransactionTimeRangeRef}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
-                    <BottomMenuItem
-                        title='This week'
-                        onPress={() => handleTransactionTimeRangeSelect('This week')} />
-                    <BottomMenuItem
-                        title='This month'
-                        onPress={() => handleTransactionTimeRangeSelect('This month')} />
-                    <BottomMenuItem
-                        title='This year'
-                        onPress={() => handleTransactionTimeRangeSelect('This year')} />
-                    <BottomMenuItem
-                        title='Customize'
-                        onPress={() => handleTransactionTimeRangeSelect('Customize')} />
-                    <TouchableOpacity
-                        onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(HIDE)}
-                        style={styles.bottomMenuItemContainer}>
-                        <Text style={
-                            [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            </ActionSheet>
-            <ActionSheet ref={actionSheetCustomizeTransactionTimeRangeRef}>
-                <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
-                    <TouchableOpacity onPress={() => {
-                        setOpen(true);
-                        setSelectForStart(true);
-                    }}>
-                        {
-                            transactionTimeRangeStart
-                                ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {transactionTimeRangeStart}</Text>
-                                :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
-                        }
-                    </TouchableOpacity>
-                    <View style={styles.border}>
-                    </View>
-                    <TouchableOpacity onPress={() => {
-                        setOpen(true);
-                        setSelectForStart(false);
-                    }}>
-                        {
-                            transactionTimeRangeEnd
-                                ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {transactionTimeRangeEnd}</Text>
-                                :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
-                        }
-                    </TouchableOpacity>
-                    <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                handleActionSheetCustomizeTransactionTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectTransactionTimeRangeDisplay(DISPLAY);
-                            }}>
-                            <Text style={
-                                [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                handleActionSheetCustomizeTransactionTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
-                            }}>
-                            <Text style={
-                                [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ActionSheet>
-            <DatePicker
-                mode='date'
-                modal
-                open={open}
-                date={new Date()}
-                onConfirm={(date) => {
-                    if (selectForStart) {
-                        dispatch(setTransactionTimeRangeStart(formatDate(date)));
-                    }
-                    else {
-                        dispatch(setTransactionTimeRangeEnd(formatDate(date)));
-                    }
-                    setOpen(false)
-                }}
-                onCancel={() => {
-                    setOpen(false)
-                }}
-            />
+            <ActionSheetSelectTimeRangeTransaction
+                actionSheetTransactionTimeRangeRef={actionSheetTransactionTimeRangeRef} />
             <BottomSheetModal
                 backdropComponent={BottomSheetBackdrop}
                 ref={bottomSheetSelectWalletRef}

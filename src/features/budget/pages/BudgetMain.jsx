@@ -17,19 +17,17 @@ import { clearBudgetTimeRange, setBudgetTimeRangeEnd, setBudgetTimeRangeStart, s
 import DatePicker from 'react-native-date-picker';
 import { formatDate } from '../../../utils/formatDate';
 import InvestmentList from '../components/InvestmentList';
+import ActionSheetSelectTimeRangeBudget from '../components/ActionSheetSelectTimeRangeBudget';
 const DISPLAY = true;
 const HIDE = false;
 
 const Tab = createMaterialTopTabNavigator();
 
 function BudgetMain(props) {
-    const [open, setOpen] = useState(false)
-    const [selectForStart, setSelectForStart] = useState(true);
 
     const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week'];
     const budgetTypeFilter = useSelector(state => state.budget.budgetTypeFilter);
-    const budgetTimeRangeStart = useSelector(state => state.budget.budgetTimeRangeStart);
-    const budgetTimeRangeEnd = useSelector(state => state.budget.budgetTimeRangeEnd);
+
 
     const actionSheetBudgetTypeRef = useRef();
     const handleDisplayActionSheetBudgetType = (DISPLAY) => {
@@ -133,97 +131,8 @@ function BudgetMain(props) {
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetBudgetTimeRangeRef}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
-                    <BottomMenuItem
-                        title='This week'
-                        onPress={() => handleBudgetTimeRangeSelect('This week')} />
-                    <BottomMenuItem
-                        title='This month'
-                        onPress={() => handleBudgetTimeRangeSelect('This month')} />
-                    <BottomMenuItem
-                        title='This year'
-                        onPress={() => handleBudgetTimeRangeSelect('This year')} />
-                    <BottomMenuItem
-                        title='Customize'
-                        onPress={() => handleBudgetTimeRangeSelect('Customize')} />
-                    <TouchableOpacity
-                        onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(HIDE)}
-                        style={styles.bottomMenuItemContainer}>
-                        <Text style={
-                            [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            </ActionSheet>
-            <ActionSheet ref={actionSheetCustomizeBudgetTimeRangeRef}>
-                <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
-                    <TouchableOpacity onPress={() => {
-                        setOpen(true);
-                        setSelectForStart(true);
-                    }}>
-                        {
-                            budgetTimeRangeStart
-                                ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {budgetTimeRangeStart}</Text>
-                                :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
-                        }
-                    </TouchableOpacity>
-                    <View style={styles.border}>
-                    </View>
-                    <TouchableOpacity onPress={() => {
-                        setOpen(true);
-                        setSelectForStart(false);
-                    }}>
-                        {
-                            budgetTimeRangeEnd
-                                ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {budgetTimeRangeEnd}</Text>
-                                :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
-                        }
-                    </TouchableOpacity>
-                    <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY);
-                                dispatch(clearBudgetTimeRange());
-                            }}>
-                            <Text style={
-                                [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
-                            }}>
-                            <Text style={
-                                [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ActionSheet>
-            <DatePicker
-                mode='date'
-                modal
-                open={open}
-                date={new Date()}
-                onConfirm={(date) => {
-                    if (selectForStart) {
-                        dispatch(setBudgetTimeRangeStart(formatDate(date)));
-                    }
-                    else {
-                        dispatch(setBudgetTimeRangeEnd(formatDate(date)));
-                    }
-                    setOpen(false)
-                }}
-                onCancel={() => {
-                    setOpen(false)
-                }}
-            />
+            <ActionSheetSelectTimeRangeBudget
+                actionSheetBudgetTimeRangeRef={actionSheetBudgetTimeRangeRef} />
         </View>
     );
 }

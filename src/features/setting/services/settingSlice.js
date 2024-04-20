@@ -14,8 +14,8 @@ async function getUserSetting(accountId) {
     }
 }
 
-async function updateUserSetting(accountId, newSetting) {
-    const settingRef = settingCollection.doc(accountId);
+async function updateUserSetting(settingId, newSetting) {
+    const settingRef = settingCollection.doc(settingId);
     const doc = await settingRef.get();
 
     if (doc.exists) {
@@ -40,7 +40,6 @@ const settingSlice = createSlice({
     initialState: createUserSetting(''),
     reducers: {
         setSetting: (state, action) => {
-            console.log(action.payload);
             state.settingId = action.payload[SettingFields.SETTING_ID];
             state.notificationTime = action.payload[SettingFields.NOTIFICATION_TIME];
             state.language = action.payload[SettingFields.LANGUAGE];

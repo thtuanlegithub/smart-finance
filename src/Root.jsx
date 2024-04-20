@@ -6,11 +6,10 @@ import LoadingItem from './components/LoadingItem';
 import { isEmailPasswordSignedIn } from './features/authentication';
 import { getCurrentUser, isUserSignedIn, setUser } from './features/authentication';
 import { getUserSetting, createUserSetting, updateUserSetting, setSetting } from './features/setting';
-
+import { SettingFields } from './data/firebaseConstant';
 const Root = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.login.user);
-    const settingState = useSelector((state) => state.setting);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -21,13 +20,12 @@ const Root = () => {
                 let setting = await getUserSetting(currentUser.uid);
                 if (!setting) {
                     const newSetting = createUserSetting(currentUser.uid);
-                    const settingId = await updateUserSetting(currentUser.uid, newSetting);
-                    newSetting.settingId = settingId;
+                    const settingId = await updateUserSetting('', newSetting);
+                    newSetting[SettingFields.SETTING_ID] = settingId;
+                    await updateUserSetting(settingId, newSetting);
                     setting = newSetting;
                 }
                 dispatch(setSetting(setting));
-                setting.notifi
-                updateUserSetting(currentUser.uid, setting)
             }
             setLoading(false);
         };

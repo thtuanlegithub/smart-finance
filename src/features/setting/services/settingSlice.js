@@ -28,10 +28,10 @@ async function updateUserSetting(settingId, newSetting) {
 
 function createUserSetting(accountId) {
     return {
-        [SettingFields.SETTING_ID]: '',
-        [SettingFields.LANGUAGE]: 'en',
-        [SettingFields.NOTIFICATION_TIME]: '20:00',
-        [SettingFields.ACCOUNT_ID]: accountId,
+        setting_id: '',
+        notify_time: '20:00',
+        language: 'en',
+        account_id: accountId,
     };
 }
 
@@ -60,16 +60,16 @@ const settingSlice = createSlice({
     },
 });
 
-export { 
-    getUserSetting, 
-    createUserSetting, 
-    updateUserSetting 
+export {
+    getUserSetting,
+    createUserSetting,
+    updateUserSetting
 };
 export const {
     setSettingId,
     setNotificationTime,
     setLanguage,
     setAccountId,
-    setSetting, 
+    setSetting,
 } = settingSlice.actions;
 export default settingSlice.reducer;

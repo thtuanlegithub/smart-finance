@@ -40,22 +40,22 @@ const settingSlice = createSlice({
     initialState: createUserSetting(''),
     reducers: {
         setSetting: (state, action) => {
-            state.settingId = action.payload[SettingFields.SETTING_ID];
-            state.notificationTime = action.payload[SettingFields.NOTIFICATION_TIME];
-            state.language = action.payload[SettingFields.LANGUAGE];
-            state.accountId = action.payload[SettingFields.ACCOUNT_ID];
+            state[SettingFields.SETTING_ID] = action.payload[SettingFields.SETTING_ID];
+            state[SettingFields.NOTIFICATION_TIME] = action.payload[SettingFields.NOTIFICATION_TIME];
+            state[SettingFields.LANGUAGE] = action.payload[SettingFields.LANGUAGE];
+            state[SettingFields.ACCOUNT_ID] = action.payload[SettingFields.ACCOUNT_ID];
         },
         setSettingId: (state, action) => {
-            state.settingId = action.payload;
+            state[SettingFields.SETTING_ID] = action.payload;
         },
         setNotificationTime: (state, action) => {
-            state.notificationTime = action.payload;
+            state[SettingFields.NOTIFICATION_TIME] = action.payload;
         },
         setLanguage: (state, action) => {
-            state.language = action.payload;
+            state[SettingFields.LANGUAGE] = action.payload;
         },
         setAccountId: (state, action) => {
-            state.accountId = action.payload;
+            state[SettingFields.ACCOUNT_ID] = action.payload;
         },
     },
 });

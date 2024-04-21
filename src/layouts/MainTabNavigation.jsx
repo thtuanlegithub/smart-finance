@@ -17,18 +17,43 @@ import { useSnapPoints } from '../hooks/useSnapPoints';
 import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
 import BudgetNavigator from '../features/budget/pages/BudgetNavigator';
 import SettingMain from '../features/setting/pages/SettingMain';
+import { getUserSetting, createUserSetting, updateUserSetting, setSetting } from '../features/setting';
+import { SettingFields } from '../data/firebaseConstant';
 
 const Tab = createBottomTabNavigator();
 
-
-
 const MainTabNavigation = (props) => {
-
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useSnapPoints();
     const displayModal = useSelector(state => state.addTransactionForm.displayModal);
-
     const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.login.user);
+    const settingState = useSelector(state => state.setting);
+
+    const initiateUserSetting = useCallback(async () => {
+        let setting = await getUserSetting(currentUser.uid);
+        if (!setting) {
+            const newSetting = createUserSetting(currentUser.uid);
+            const settingId = await updateUserSetting('', newSetting);
+            newSetting[SettingFields.SETTING_ID] = settingId;
+            await updateUserSetting(settingId, newSetting);
+            setting = newSetting;
+        }
+        dispatch(setSetting(setting));
+    }, []);
+    
+    const initiateUserWallet = useCallback(async () => {
+
+    }, []); 
+    
+    useEffect(() => {
+        initiateUserSetting();
+        initiateUserWallet();
+    }, [currentUser]);
+
+    useEffect(() => {
+        console.log(settingState);
+    }, [settingState]);
 
     useEffect(() => {
         if (displayModal) {

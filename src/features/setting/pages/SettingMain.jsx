@@ -18,7 +18,6 @@ function SettingMain(props) {
     const handleSignOut = async () => {
         const user = auth().currentUser;
         if (user) {
-            console.log(user);
             const providerId = user.providerData[0].providerId;
             if (providerId === 'password') {
                 await emailPasswordSignOut();

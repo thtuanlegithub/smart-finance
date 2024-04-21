@@ -37,6 +37,9 @@ export const googleSignOut = async () => {
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
     } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+            return;
+        }
         console.error(error);
     }
 };

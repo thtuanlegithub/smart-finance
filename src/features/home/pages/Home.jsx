@@ -16,11 +16,9 @@ import CustomHandle from '../../../components/CustomHandle';
 import AddTransactionInputViewHeader from '../../transaction/components/AddTransactionInputViewHeader';
 import WalletItem from '../../../components/WalletItem';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
-import { listWallet } from '../../../data/fakeDataListWallet';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentWallet } from '../../transaction';
 import { initiateUserSetting, initiateUserWallet } from '../../setting';
-
+import { selectWallet } from '../../setting';
 const SpendingReportTab = createMaterialTopTabNavigator();
 
 const CLOSE = false;
@@ -31,15 +29,16 @@ function Home(props) {
     const bottomSheetSelectWalletRef = useRef(null);
     const snapPoints = useSnapPoints();
     const currentUser = useSelector(state => state.login.user);
-    const settingState = useSelector(state => state.setting);
-    const walletState = useSelector(state => state.wallet);
-    const currentWallet = useSelector(state => state.transaction.currentWallet);
+
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const userWallet = useSelector(state => state.wallet.wallets);
     const dispatch = useDispatch();
 
     const handleSelectWallet = (wallet) => {
-        dispatch(setCurrentWallet(wallet));
+        dispatch(selectWallet(wallet.wallet_id));
         bottomSheetSelectWalletRef.current?.close();
     }
+
     const handleBottomSheetSelectWallet = (action) => {
         if (action == CLOSE) {
             bottomSheetSelectWalletRef.current?.close();
@@ -54,20 +53,12 @@ function Home(props) {
         initiateUserWallet(currentUser, dispatch);
     }, [currentUser]);
     
-    useEffect(() => {
-        console.log(walletState);
-    }, [walletState]);
-
-    useEffect(() => {
-        console.log(settingState);
-    }, [settingState]);
-
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>
-                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.amount)}</Text>
+                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.balance)}</Text>
                         <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>Total balances</Text>
                     </View>
                     <View style={styles.notificationContainer}>
@@ -86,7 +77,7 @@ function Home(props) {
                         <View style={styles.currentWallet}>
                             <View style={styles.currentWalletName}>
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
-                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet.name}</Text>
+                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet.wallet_name}</Text>
                             </View>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet.amount)}</Text>
                         </View>
@@ -162,12 +153,12 @@ function Home(props) {
                         handleBottomSheetSelectWallet(CLOSE);
                     }} />
                 <View style={{ marginTop: 10 }}>
-                    {listWallet.map((wallet, index) => {
+                    {userWallet.map((wallet, index) => {
                         return (
                             <WalletItem
                                 onSelect={() => handleSelectWallet(wallet)}
                                 key={index}
-                                name={wallet.name} />
+                                name={wallet.wallet_name} />
                         )
                     })}
                 </View>

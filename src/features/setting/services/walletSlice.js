@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { WalletFields, FirebaseNodes } from "../../../data/firebaseConstant";
 import { FirestoreSingleton } from "../../../patterns";
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
@@ -46,26 +46,31 @@ async function initiateUserWallet(currentUser, dispatch) {
     dispatch(addWallet(wallets));
 }
 
-const selectWallet = async (walletId) => {
-    // Get the current wallet from state
-    const currentWallet = state.currentWallet;
+const selectWallet = createAsyncThunk(
+    'wallet/selectWallet',
+    async (walletId, { getState, dispatch }) => {
+        const state = getState();
+        const currentWallet = state.wallet.currentWallet;
+        const wallets = state.wallet.wallets;
 
-    // Set in_use to false for the current wallet and update it on Firebase
-    if (currentWallet && currentWallet.in_use) {
-        currentWallet.in_use = false;
-        await updateUserWallet(currentWallet.wallet_id, currentWallet);
+        // Set in_use to false for the current wallet and update it on Firebase
+        if (currentWallet && currentWallet.in_use) {
+            const updatedWallet = { ...currentWallet, in_use: false };
+            await updateUserWallet(updatedWallet.wallet_id, updatedWallet);
+            dispatch(updateWallet(updatedWallet));
+        }
+
+        // Find the new wallet and set in_use to true, then update it on Firebase
+        let updatedNewWallet;
+        const newWallet = wallets.find(wallet => wallet.wallet_id === walletId);
+        if (newWallet) {
+            updatedNewWallet = { ...newWallet, in_use: true };
+            await updateUserWallet(updatedNewWallet.wallet_id, updatedNewWallet);
+            dispatch(updateWallet(updatedNewWallet));
+        }   
+        return updatedNewWallet;
     }
-
-    // Find the new wallet and set in_use to true, then update it on Firebase
-    const newWallet = wallets.find(wallet => wallet.wallet_id === walletId);
-    if (newWallet) {
-        newWallet.in_use = true;
-        await updateUserWallet(walletId, newWallet);
-    }
-
-    dispatch(setCurrentWallet(newWallet));
-}
-
+);
 
 function createUserWallet(accountId, walletName) {
     return {
@@ -123,6 +128,12 @@ const walletSlice = createSlice({
             state.currentWallet.account_id = action.payload;
         },    
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(selectWallet.fulfilled, (state, action) => {
+                state.currentWallet = action.payload;
+            })
+    }
 });
 
 

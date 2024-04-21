@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import formatCurrency from '../../../utils/formatCurrency';
 import typography from '../../../styles/typography';
@@ -19,6 +19,7 @@ import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import { listWallet } from '../../../data/fakeDataListWallet';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentWallet } from '../../transaction';
+import { initiateUserSetting, initiateUserWallet } from '../../setting';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
@@ -29,8 +30,12 @@ function Home(props) {
     const navigation = useNavigation();
     const bottomSheetSelectWalletRef = useRef(null);
     const snapPoints = useSnapPoints();
+    const currentUser = useSelector(state => state.login.user);
+    const settingState = useSelector(state => state.setting);
+    const walletState = useSelector(state => state.wallet);
     const currentWallet = useSelector(state => state.transaction.currentWallet);
     const dispatch = useDispatch();
+
     const handleSelectWallet = (wallet) => {
         dispatch(setCurrentWallet(wallet));
         bottomSheetSelectWalletRef.current?.close();
@@ -43,6 +48,20 @@ function Home(props) {
             bottomSheetSelectWalletRef.current?.present();
         }
     }
+
+    useEffect(() => {
+        initiateUserSetting(currentUser, dispatch);
+        initiateUserWallet(currentUser, dispatch);
+    }, [currentUser]);
+    
+    useEffect(() => {
+        console.log(walletState);
+    }, [walletState]);
+
+    useEffect(() => {
+        console.log(settingState);
+    }, [settingState]);
+
     return (
         <ScrollView>
             <View style={styles.container}>

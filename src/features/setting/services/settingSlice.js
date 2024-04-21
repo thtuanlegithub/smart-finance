@@ -35,6 +35,18 @@ function createUserSetting(accountId) {
     };
 }
 
+async function initiateUserSetting(currentUser, dispatch) {
+    let setting = await getUserSetting(currentUser.uid);
+    if (!setting) {
+        const newSetting = createUserSetting(currentUser.uid);
+        const settingId = await updateUserSetting('', newSetting);
+        newSetting[SettingFields.SETTING_ID] = settingId;
+        await updateUserSetting(settingId, newSetting);
+        setting = newSetting;
+    }
+    dispatch(setSetting(setting));
+}
+
 const settingSlice = createSlice({
     name: 'setting',
     initialState: createUserSetting(''),
@@ -63,7 +75,8 @@ const settingSlice = createSlice({
 export {
     getUserSetting,
     createUserSetting,
-    updateUserSetting
+    updateUserSetting,
+    initiateUserSetting,
 };
 export const {
     setSettingId,

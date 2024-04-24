@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/TransactionStyles';
 import WalletSelect from '../../../components/WalletSelect';
@@ -13,15 +13,13 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ActionSheet from 'react-native-actions-sheet';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearTransactionTimeRange, setCurrentWallet, setTransactionTimeRangeEnd, setTransactionTimeRangeStart, setTransactionTypeFilter } from '../services/transactionSlice';
+import { setCurrentWallet, setTransactionTypeFilter } from '../services/transactionSlice';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import CustomHandle from '../../../components/CustomHandle';
 import AddTransactionInputViewHeader from '../components/AddTransactionInputViewHeader';
 import WalletItem from '../../../components/WalletItem';
 import { listWallet } from '../../../data/fakeDataListWallet';
-import DatePicker from 'react-native-date-picker';
-import { formatDate } from '../../../utils/formatDate';
 import ActionSheetSelectTimeRangeTransaction from '../components/ActionSheetSelectTimeRangeTransaction';
 
 const Tab = createMaterialTopTabNavigator();

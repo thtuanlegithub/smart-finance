@@ -13,11 +13,11 @@ const typography = {
     },
     BoldInterH3: {
         fontFamily: 'Inter-Bold',
-        fontSize: 18,
+        fontSize: 16,
     },
     MediumInterH3: {
         fontFamily: 'Inter-Medium',
-        fontSize: 18,
+        fontSize: 16,
     },
     MediumInterH4: {
         fontFamily: 'Inter-Medium',
@@ -25,7 +25,7 @@ const typography = {
     },
     SemiBoldInterH3: {
         fontFamily: 'Inter-SemiBold',
-        fontSize: 18,
+        fontSize: 16,
     },
     RegularInterH5: {
         fontFamily: 'Inter-Regular',
@@ -69,7 +69,7 @@ const typography = {
     },
     RegularInterH3: {
         fontFamily: 'Inter-Regular',
-        fontSize: 18,
+        fontSize: 16,
     },
 }
 export default typography;

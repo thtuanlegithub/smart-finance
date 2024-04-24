@@ -10,39 +10,40 @@ import LimitItem from '../../../components/LimitItem';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import WeekReport from '../components/WeekReport';
 import MonthReport from '../components/MonthReport';
-import { useNavigation } from '@react-navigation/native';
-import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import CustomHandle from '../../../components/CustomHandle';
-import AddTransactionInputViewHeader from '../../transaction/components/AddTransactionInputViewHeader';
-import WalletItem from '../../../components/WalletItem';
-import { useSnapPoints } from '../../../hooks/useSnapPoints';
-import { listWallet } from '../../../data/fakeDataListWallet';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentWallet } from '../../transaction';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import BottomSheetSelectWallet from '../components/BottomSheetSelectWallet';
+import BottomSheetReport from '../components/BottomSheetReport';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
-const CLOSE = false;
-const OPEN = true;
+const HIDE = false;
+const DISPLAY = true;
 
 function Home(props) {
     const navigation = useNavigation();
     const bottomSheetSelectWalletRef = useRef(null);
-    const snapPoints = useSnapPoints();
     const currentWallet = useSelector(state => state.transaction.currentWallet);
-    const dispatch = useDispatch();
-    const handleSelectWallet = (wallet) => {
-        dispatch(setCurrentWallet(wallet));
-        bottomSheetSelectWalletRef.current?.close();
-    }
-    const handleBottomSheetSelectWallet = (action) => {
-        if (action == CLOSE) {
-            bottomSheetSelectWalletRef.current?.close();
+
+    const handleDisplayBottomSheetSelectWallet = (action) => {
+        if (action == HIDE) {
+            bottomSheetSelectWalletRef.current?.hide();
         }
         else {
             bottomSheetSelectWalletRef.current?.present();
         }
     }
+
+    const bottomSheetReportRef = useRef(null);
+    const handleDisplayBottomSheetReport = (action) => {
+        if (action == HIDE) {
+            bottomSheetReportRef.current?.hide();
+        }
+        else {
+            bottomSheetReportRef.current?.present();
+        }
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -58,12 +59,12 @@ function Home(props) {
                 <View style={styles.wallet}>
                     <View style={styles.walletHeader}>
                         <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>My wallet</Text>
-                        <TouchableOpacity onPress={() => handleBottomSheetSelectWallet(OPEN)}>
+                        <TouchableOpacity onPress={() => handleDisplayBottomSheetSelectWallet(DISPLAY)}>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green06 }]}>See all</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.border}></View>
-                    <TouchableOpacity onPress={() => handleBottomSheetSelectWallet(OPEN)}>
+                    <TouchableOpacity onPress={() => handleDisplayBottomSheetSelectWallet(DISPLAY)}>
                         <View style={styles.currentWallet}>
                             <View style={styles.currentWalletName}>
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
@@ -76,7 +77,9 @@ function Home(props) {
                 <View style={styles.spendingReport}>
                     <View style={styles.spendingReportHeader}>
                         <Text style={[typography.MediumInterH4, { color: colors.green08, paddingVertical: 8 }]}>Spending Report</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={
+                            () => handleDisplayBottomSheetReport(DISPLAY)
+                        }>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green06, paddingVertical: 8 },]}>Detail reports</Text>
                         </TouchableOpacity>
                     </View>
@@ -129,30 +132,11 @@ function Home(props) {
                     </View>
                 </View>
             </View>
-            <BottomSheetModal
-                backdropComponent={BottomSheetBackdrop}
-                ref={bottomSheetSelectWalletRef}
-                snapPoints={snapPoints}
-                index={2}
-                style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
-                handleComponent={CustomHandle}>
-                <AddTransactionInputViewHeader
-                    backContent='Close'
-                    title='Select Wallet'
-                    onBackPress={() => {
-                        handleBottomSheetSelectWallet(CLOSE);
-                    }} />
-                <View style={{ marginTop: 10 }}>
-                    {listWallet.map((wallet, index) => {
-                        return (
-                            <WalletItem
-                                onSelect={() => handleSelectWallet(wallet)}
-                                key={index}
-                                name={wallet.name} />
-                        )
-                    })}
-                </View>
-            </BottomSheetModal>
+            <BottomSheetSelectWallet
+                bottomSheetSelectWalletRef={bottomSheetSelectWalletRef} />
+            <BottomSheetReport
+                bottomSheetReportRef={bottomSheetReportRef}
+            />
         </ScrollView>
     );
 }

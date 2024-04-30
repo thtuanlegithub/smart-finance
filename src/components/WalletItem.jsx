@@ -2,7 +2,6 @@ import { TouchableOpacity, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import typography from '../styles/typography'
 import colors from '../styles/colors'
-import transactionCategoryIcons from '../data/transactionCategoryIcons'
 
 const WalletItem = (props) => {
     return (

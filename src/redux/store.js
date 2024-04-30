@@ -6,6 +6,7 @@ import { budgetReducer } from '../features/budget';
 import { currencyReducer } from '../features/setting';
 import { settingReducer } from '../features/setting';
 import { walletReducer } from '../features/setting';
+import { categoryReducer} from '../features/category';
 
 export default configureStore({
         reducer: {
@@ -16,6 +17,7 @@ export default configureStore({
             budget: budgetReducer, 
             setting: settingReducer,
             wallet: walletReducer,
+            category: categoryReducer,
         },
 });
 

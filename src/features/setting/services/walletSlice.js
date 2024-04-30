@@ -37,7 +37,7 @@ async function updateUserWallet(walletId, newWallet) {
 async function initiateUserWallet(currentUser, dispatch) {
     let wallets = await getUserWallet(currentUser.uid);
     if (Array.isArray(wallets) && wallets.length === 0) {
-        const newWallet = createUserWallet(currentUser.uid, 'My Wallet');
+        const newWallet = createUserWallet(currentUser.uid, 'Cash');
         const wallet = await updateUserWallet('', newWallet);
         wallets = [wallet];
     }

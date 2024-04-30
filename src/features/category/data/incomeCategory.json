@@ -1,0 +1,17 @@
+[
+    {
+        "id": "salary",
+        "name": "Salary",
+        "imagePath": "../../../assets/images/salary.png"
+    },
+    {
+        "id": "businessprofit",
+        "name": "Business Profit",
+        "imagePath": "../../../assets/images/businessprofit.png"
+    },
+    {
+        "id": "otherincome",
+        "name": "Other income",
+        "imagePath": "../../../assets/images/otherexpense.png"
+    }
+]

@@ -3,9 +3,10 @@ import React from 'react'
 import typography from '../../../styles/typography'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import FastImage from 'react-native-fast-image'
-import transactionCategoryIcons from '../../../data/transactionCategoryIcons'
+import { getCategoryIcons } from '../../category'
 
 const ReportHeader = (props) => {
+    const item = props.item;
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.back} onPress={props.onBackPress}>
@@ -23,8 +24,8 @@ const ReportHeader = (props) => {
                 <FastImage
                     style={{ height: 18, width: 18 }}
                     resizeMode={FastImage.resizeMode.contain}
-                    source={transactionCategoryIcons[props.title]} />
-                <Text style={styles.title}>{props.title}</Text>
+                    source={getCategoryIcons(item.id)} />
+                <Text style={styles.title}>{item.label}</Text>
             </View>
         </View>
     )

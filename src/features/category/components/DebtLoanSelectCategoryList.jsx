@@ -1,30 +1,34 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import NewCategoryButton from './NewCategoryButton'
-import debtLoanCategoryIcons from '../../../data/debtLoanCategoryIcons'
 import DebtLoanSelectCategoryItem from './DebtLoanSelectCategoryItem'
 import {
     ScrollView
 } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { setTransactionCategory, setTransactionType } from '../../transaction/services/addTransactionFormSlice'
+import { setTransactionType } from '../../transaction/services/addTransactionFormSlice'
+import { setCurrentCategory } from '../services/categorySlice'
+const debtLoanCategory = require('../data/debtLoanCategory.json');
+
 const DebtLoanSelectCategoryList = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    
     const handleSelectCategory = (category) => {
         dispatch(setTransactionType('Debt/ Loan'));
-        dispatch(setTransactionCategory(category));
+        dispatch(setCurrentCategory(category));
         navigation.navigate('Add Transaction');
     }
+    
     return (
         <View style={styles.outerContainer}>
             <ScrollView contentContainerStyle={styles.container}>
-                {Object.entries(debtLoanCategoryIcons).map(([key, value], index) => {
+                {debtLoanCategory.map((item, index) => { 
                     return <DebtLoanSelectCategoryItem
-                        onSelect={() => handleSelectCategory(key)}
+                        onSelect={() => handleSelectCategory(item)} 
                         key={index}
-                        category={key} />
+                        category={item} /> 
                 })}
                 <View style={{ height: 24 }}></View>
             </ScrollView>

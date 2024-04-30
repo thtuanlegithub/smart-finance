@@ -1,21 +1,11 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../../../styles/colors';
 import typography from '../../../styles/typography';
-import TimeReport from './TimeReport';
-import CategoryReport from './CategoryReport';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import formatCurrency from '../../../utils/formatCurrency';
-import { BarChart } from 'react-native-chart-kit';
-import incomeChartConfig from './incomeChartConfig';
-import PieChart from 'react-native-pie-chart';
-import FastImage from 'react-native-fast-image';
-import calculatePercentage from '../../../utils/calculatePercentage';
-import getSum from '../../../utils/getSum';
-import GeneralIncomeReportCard from './GeneralIncomeReportCard';
-import GeneralExpenseReportCard from './GeneralExpenseReportCard';
+import GeneralIncomeReportCard from './IncomeReport/GeneralIncomeReportCard';
+import GeneralExpenseReportCard from './ExpenseReport/GeneralExpenseReportCard';
 import { ScrollView } from 'react-native-gesture-handler';
 
 

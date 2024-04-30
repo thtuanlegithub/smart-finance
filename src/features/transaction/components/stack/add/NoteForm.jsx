@@ -1,19 +1,23 @@
 import { View, TextInput, StyleSheet } from 'react-native'
-import React from 'react'
-import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import typography from '../../../../../styles/typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionNote } from '../../../services/addTransactionFormSlice';
+import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
 
 
 const NoteForm = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const note = useSelector(state => state.addTransactionForm.note);
-    const handleNoteTransaction = (text) => {
-        dispatch(setTransactionNote(text));
+    const node = useSelector(state => state.addTransactionForm.note);
+    const [localNote, setLocalNote] = useState(node);
+
+    const handleNoteTransaction = () => {
+        dispatch(setTransactionNote(localNote));
+        navigation.navigate('Add Transaction');
     }
+
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Add Note'
@@ -21,11 +25,12 @@ const NoteForm = () => {
                     navigation.navigate('Add Transaction');
                 }} />
             <TextInput
-                multiline={true}
+                multiline={false}
                 style={[typography.RegularInterH3, { flexWrap: 'wrap', marginHorizontal: 16 }]}
                 autoFocus={true}
-                value={note}
-                onChangeText={(text) => handleNoteTransaction(text)} />
+                value={localNote}
+                onChangeText={(text) => setLocalNote(text)}
+                onSubmitEditing={handleNoteTransaction} />
         </View >
     )
 }

@@ -1,31 +1,22 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux';
+import { setTransactionWallet } from '../../../services/addTransactionFormSlice';
 import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
 import WalletItem from '../../../../../components/WalletItem';
-import { useDispatch } from 'react-redux';
-import { setTransactionWallet } from '../../../services/addTransactionFormSlice';
 import colors from '../../../../../styles/colors';
-
-const listWallet = [{
-    name: 'Wallet 1',
-    amount: 1000000
-}, {
-    name: 'Wallet 2',
-    amount: 2000000
-}, {
-    name: 'Wallet 3',
-    amount: 4000000
-}];
 
 const WalletForm = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const listWallet = useSelector(state => state.wallet.wallets);
 
     const handleSelectWallet = (wallet) => {
-        dispatch(setTransactionWallet(wallet.name));
+        dispatch(setTransactionWallet(wallet));
         navigation.navigate('Add Transaction');
     }
+
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Select Wallet'
@@ -38,7 +29,7 @@ const WalletForm = () => {
                         <WalletItem
                             onSelect={() => handleSelectWallet(wallet)}
                             key={index}
-                            name={wallet.name} />
+                            name={wallet.wallet_name} />
                     )
                 })}
             </View>

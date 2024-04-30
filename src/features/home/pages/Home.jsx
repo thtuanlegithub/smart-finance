@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import formatCurrency from '../../../utils/formatCurrency';
 import typography from '../../../styles/typography';
@@ -10,11 +10,16 @@ import LimitItem from '../../../components/LimitItem';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import WeekReport from '../components/WeekReport';
 import MonthReport from '../components/MonthReport';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import BottomSheetSelectWallet from '../components/BottomSheetSelectWallet';
+import { useNavigation } from '@react-navigation/native';
+import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import CustomHandle from '../../../components/CustomHandle';
+import AddTransactionInputViewHeader from '../../transaction/components/AddTransactionInputViewHeader';
+import WalletItem from '../../../components/WalletItem';
+import { useSnapPoints } from '../../../hooks/useSnapPoints';
+import { useDispatch, useSelector } from 'react-redux';
+import { initiateUserSetting, initiateUserWallet } from '../../setting';
+import { selectWallet } from '../../setting';
 import BottomSheetReport from '../components/BottomSheetReport';
-
 const SpendingReportTab = createMaterialTopTabNavigator();
 
 const HIDE = false;
@@ -23,11 +28,30 @@ const DISPLAY = true;
 function Home(props) {
     const navigation = useNavigation();
     const bottomSheetSelectWalletRef = useRef(null);
-    const currentWallet = useSelector(state => state.transaction.currentWallet);
+    const snapPoints = useSnapPoints();
+    const currentUser = useSelector(state => state.login.user);
+
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const userWallet = useSelector(state => state.wallet.wallets);
+    const dispatch = useDispatch();
+
+    const handleSelectWallet = (wallet) => {
+        dispatch(selectWallet(wallet.wallet_id));
+        bottomSheetSelectWalletRef.current?.close();
+    }
+
+    const handleBottomSheetSelectWallet = (action) => {
+        if (action == HIDE) {
+            bottomSheetSelectWalletRef.current?.close();
+        }
+        else {
+            bottomSheetSelectWalletRef.current?.present();
+        }
+    }
 
     const handleDisplayBottomSheetSelectWallet = (action) => {
         if (action == HIDE) {
-            bottomSheetSelectWalletRef.current?.hide();
+            bottomSheetSelectWalletRef.current?.close();
         }
         else {
             bottomSheetSelectWalletRef.current?.present();
@@ -35,21 +59,28 @@ function Home(props) {
     }
 
     const bottomSheetReportRef = useRef(null);
+
     const handleDisplayBottomSheetReport = (action) => {
         if (action == HIDE) {
-            bottomSheetReportRef.current?.hide();
+            bottomSheetReportRef.current?.close();
         }
         else {
             bottomSheetReportRef.current?.present();
         }
     }
 
+
+    useEffect(() => {
+        initiateUserSetting(currentUser, dispatch);
+        initiateUserWallet(currentUser, dispatch);
+    }, [currentUser]);
+
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>
-                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.amount)}</Text>
+                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.balance)}</Text>
                         <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>Total balances</Text>
                     </View>
                     <View style={styles.notificationContainer}>
@@ -68,7 +99,7 @@ function Home(props) {
                         <View style={styles.currentWallet}>
                             <View style={styles.currentWalletName}>
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
-                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet.name}</Text>
+                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet.wallet_name}</Text>
                             </View>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet.amount)}</Text>
                         </View>
@@ -132,11 +163,33 @@ function Home(props) {
                     </View>
                 </View>
             </View>
-            <BottomSheetSelectWallet
-                bottomSheetSelectWalletRef={bottomSheetSelectWalletRef} />
             <BottomSheetReport
                 bottomSheetReportRef={bottomSheetReportRef}
             />
+            <BottomSheetModal
+                backdropComponent={BottomSheetBackdrop}
+                ref={bottomSheetSelectWalletRef}
+                snapPoints={snapPoints}
+                index={2}
+                style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
+                handleComponent={CustomHandle}>
+                <AddTransactionInputViewHeader
+                    backContent='Close'
+                    title='Select Wallet'
+                    onBackPress={() => {
+                        handleBottomSheetSelectWallet(HIDE);
+                    }} />
+                <View style={{ marginTop: 10 }}>
+                    {userWallet.map((wallet, index) => {
+                        return (
+                            <WalletItem
+                                onSelect={() => handleSelectWallet(wallet)}
+                                key={index}
+                                name={wallet.wallet_name} />
+                        )
+                    })}
+                </View>
+            </BottomSheetModal>
         </ScrollView>
     );
 }

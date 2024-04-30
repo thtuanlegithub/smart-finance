@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Button } from 'react-native';
@@ -20,15 +20,11 @@ import SettingMain from '../features/setting/pages/SettingMain';
 
 const Tab = createBottomTabNavigator();
 
-
-
 const MainTabNavigation = (props) => {
-
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useSnapPoints();
-    const displayModal = useSelector(state => state.addTransactionForm.displayModal);
-
     const dispatch = useDispatch();
+    const displayModal = useSelector(state => state.addTransactionForm.displayModal);
 
     useEffect(() => {
         if (displayModal) {

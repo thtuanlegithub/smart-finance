@@ -87,6 +87,7 @@ export const WalletFields = {
     CURRENCY_ID: 'currency_id',
     BALANCE: 'balance',
     ACCOUNT_ID: 'account_id',
+    IN_USE: 'in_use',
 };
 
 export const BudgetTargetFields = { 

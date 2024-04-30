@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setTransactionType } from '../../transaction/services/addTransactionFormSlice'
 import { setCurrentCategory } from '../services/categorySlice'
+import transactionType from '../../transaction/data/transactionType'
 const expenseCategory = require('../data/expenseCategory.json');
 
 const ExpenseSelectCategoryList = () => {
@@ -16,7 +17,7 @@ const ExpenseSelectCategoryList = () => {
     const dispatch = useDispatch();
 
     const handleSelectCategory = (category) => {
-        dispatch(setTransactionType('Expense'));
+        dispatch(setTransactionType(transactionType.EXPENSE));
         dispatch(setCurrentCategory(category));
         navigation.navigate('Add Transaction');
     }

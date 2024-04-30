@@ -8,16 +8,15 @@ import removeCommas from '../utils/removeCommas'
 const MoneyInput = (props) => {
 
     const [isFocused, setFocus] = useState(false);
-
     const [money, setMoney] = React.useState(props.value ? parseInt(props.value).toString() : '0');
+
     const handleMoneyChange = (text) => {
+        let newMoney = '0';
         if (text.length > 0 && isNaN(removeCommas(text)) == false) {
-            setMoney(parseInt(removeCommas(text)).toString());
+            newMoney = parseInt(removeCommas(text)).toString();
         }
-        else {
-            setMoney('0');
-        }
-        props.onChange(money)
+        setMoney(newMoney);
+        props.onChange(newMoney);
     }
     return (
         <View style={styles.transactionInputContainer}>

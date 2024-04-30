@@ -1,5 +1,5 @@
 import { View, Text, KeyboardAvoidingView } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styles from '../../styles/AddTransactionFormStyles'
 import MoneyInput from '../../../../components/MoneyInput'
 import SelectCategoryInput from '../SelectCategoryInput'
@@ -12,11 +12,15 @@ import typography from '../../../../styles/typography'
 import colors from '../../../../styles/colors'
 import BottomMenuItem from '../../../../components/BottomMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate } from '../../services/addTransactionFormSlice'
+import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate, updateTransaction } from '../../services/addTransactionFormSlice'
 import { formatDate } from '../../../../utils/formatDate'
 import LoanInformation from '../../../category/components/LoanInformation'
 import DebtInformation from '../../../category/components/DebtInformation'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TransactionBuilder } from '../../../../patterns'
+import { setBalance, updateUserWallet } from '../../../setting'
+import transactionType from '../../data/transactionType'
+import { updateWallet } from '../../../setting'
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
@@ -28,21 +32,20 @@ const AddTransactionForm = ({ navigation }) => {
     const actionSheetRef = useRef(null)
 
     // redux selector
+    const dispatch = useDispatch();
     const note = useSelector(state => state.addTransactionForm.note);
-    const date = useSelector(state => state.addTransactionForm.date);
+    const created_at = useSelector(state => state.addTransactionForm.created_at);
     const amount = useSelector(state => state.addTransactionForm.amount);
     const wallet = useSelector(state => state.addTransactionForm.wallet);
-    const category = useSelector(state => state.addTransactionForm.category);
-
-    const dispatch = useDispatch();
-
+    const category = useSelector(state => state.category.currentCategory);
+    const type = useSelector(state => state.addTransactionForm.type);
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
 
     // Handle Select Transaction Date
     const handlePress = (index) => {
         if (index === TODAY) {
             dispatch(setTransactionDate(formatDate(new Date())));
             actionSheetRef.current?.setModalVisible(false)
-            console.log(date);
         } else if (index === YESTERDAY) {
             let yesterday = new Date()
             yesterday.setDate(yesterday.getDate() - 1)
@@ -54,8 +57,54 @@ const AddTransactionForm = ({ navigation }) => {
     }
 
     const handleAmountChange = (amount) => {
+        amount = parseInt(amount);
         dispatch(setTransactionAmount(amount));
-        console.log(amount);
+    }
+
+    const handleSaveTransaction = () => {
+        if (!created_at || !amount || !wallet || !category) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        dispatch(setDisplayModal(false));
+        dispatch(clearInput());
+
+        const newTransaction = new TransactionBuilder()
+            .setAmount(amount)
+            .setCategoryId(category.id)
+            .setCreatedAt(created_at)
+            .setNote(note)
+            .setWalletId(wallet.wallet_id)
+            .build();
+
+        let newWallet = { ...wallet };
+        switch (type) {
+            case transactionType.EXPENSE:
+                newWallet.balance -= amount;
+                break;
+            case transactionType.INCOME:
+                newWallet.balance += amount;
+                break;
+            case transactionType.DEBT_LOAN:
+                switch (category.id) {
+                    case 'debt':
+                    case 'debtcollection':
+                        newWallet.balance += amount;
+                        break;
+                    case 'loan':
+                    case 'repayment':
+                        newWallet.balance -= amount;
+                        break;
+                }
+                break;
+        }
+
+        updateUserWallet(wallet.wallet_id, newWallet);
+        updateTransaction('', newTransaction);
+        dispatch(updateWallet(newWallet));
+        if (currentWallet.wallet_id === wallet.wallet_id)
+            dispatch(setBalance(newWallet.balance));
     }
 
     return (
@@ -79,7 +128,7 @@ const AddTransactionForm = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(true)}>
                         <MediumTextIconInput
-                            value={date}
+                            value={created_at}
                             field='date'
                             placeholder='Pick a day' />
                     </TouchableOpacity>
@@ -109,8 +158,8 @@ const AddTransactionForm = ({ navigation }) => {
                         modal
                         open={open}
                         date={new Date()}
-                        onConfirm={(date) => {
-                            dispatch(setTransactionDate(formatDate(date)));
+                        onConfirm={(created_at) => {
+                            dispatch(setTransactionDate(formatDate(created_at)));
                             setOpen(false)
                             actionSheetRef.current?.setModalVisible(false)
                         }}
@@ -122,16 +171,16 @@ const AddTransactionForm = ({ navigation }) => {
                         <NoOutlinedMediumTextIconInput
                             field='wallet'
                             placeholder='Select wallet'
-                            value={wallet} />
+                            value={wallet.wallet_name} />
                     </TouchableOpacity>
                 </View>
                 {
-                    category == 'Debt collection'
+                    category.name === 'Debt collection'
                     &&
                     <LoanInformation />
                 }
                 {
-                    category == 'Repayment'
+                    category.name === 'Repayment'
                     &&
                     <DebtInformation />
                 }
@@ -142,10 +191,7 @@ const AddTransactionForm = ({ navigation }) => {
             </View>
             <W1Button
                 title='Save'
-                onPress={() => {
-                    dispatch(setDisplayModal(false));
-                    dispatch(clearInput());
-                }}
+                onPress={handleSaveTransaction}
             />
         </KeyboardAvoidingView>
     )

@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setTransactionType } from '../../transaction/services/addTransactionFormSlice'
 import { setCurrentCategory } from '../services/categorySlice'
+import transactionType from '../../transaction/data/transactionType'
 const debtLoanCategory = require('../data/debtLoanCategory.json');
 
 const DebtLoanSelectCategoryList = () => {
@@ -16,7 +17,7 @@ const DebtLoanSelectCategoryList = () => {
     const dispatch = useDispatch();
     
     const handleSelectCategory = (category) => {
-        dispatch(setTransactionType('Debt/ Loan'));
+        dispatch(setTransactionType(transactionType.DEBT_LOAN));
         dispatch(setCurrentCategory(category));
         navigation.navigate('Add Transaction');
     }

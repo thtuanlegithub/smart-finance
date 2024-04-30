@@ -76,7 +76,7 @@ function createUserWallet(accountId, walletName) {
     return {
         wallet_id: '',
         wallet_name: walletName,
-        balance: '0',
+        balance: 0,
         currency_id: 'VND',
         account_id: accountId,
         in_use: true,

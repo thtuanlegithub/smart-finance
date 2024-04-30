@@ -69,7 +69,6 @@ function Home(props) {
         }
     }
 
-
     useEffect(() => {
         initiateUserSetting(currentUser, dispatch);
         initiateUserWallet(currentUser, dispatch);
@@ -80,7 +79,7 @@ function Home(props) {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>
-                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.balance)}</Text>
+                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.balance.toString())}</Text>
                         <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>Total balances</Text>
                     </View>
                     <View style={styles.notificationContainer}>

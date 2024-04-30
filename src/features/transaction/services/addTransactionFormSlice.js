@@ -1,14 +1,42 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { TransactionFields, FirebaseNodes } from "../../../data/firebaseConstant";
+import { FirestoreSingleton } from "../../../patterns";
+const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
+const transactionCollection = firestoreInstance.collection(FirebaseNodes.TRANSACTION);
+
+// Firebase services
+async function updateTransaction(trans_id, newTransaction) {
+    let docRef;
+    if (trans_id) {
+        docRef = transactionCollection.doc(trans_id);
+        const doc = await docRef.get();
+
+        if (doc.exists) {
+            await docRef.update(newTransaction);
+        }
+    } else {
+        docRef = await transactionCollection.add(newTransaction);
+        const id = docRef.id;
+        newTransaction.trans_id = id;
+        await docRef.update(newTransaction);
+    }
+
+    const updatedTransaction = await docRef.get();
+    return { id: docRef.id, ...updatedTransaction.data() };
+}
+
 const initialState = {
-    type: null,
-    amount: '0',
-    category: null,
-    note: null,
-    date: null,
-    wallet: null,
+    trans_id: '',
+    type: 'expense',
+    amount: 0,
+    note: '',
+    category_id: '',
+    created_at: '',
+    wallet: '',
     displayModal: null,
     reference: null,
 };
+
 const addTransactionFormSlice = createSlice({
     name: 'addTransactionForm',
     initialState,
@@ -20,7 +48,7 @@ const addTransactionFormSlice = createSlice({
             state.note = action.payload;
         },
         setTransactionDate: (state, action) => {
-            state.date = action.payload;
+            state.created_at = action.payload;
         },
         setTransactionWallet: (state, action) => {
             state.wallet = action.payload;
@@ -29,7 +57,7 @@ const addTransactionFormSlice = createSlice({
             state.people = action.payload;
         },
         setTransactionCategory: (state, action) => {
-            state.category = action.payload;
+            state.category_id = action.payload;
         },
         setTransactionType: (state, action) => {
             state.type = action.payload;
@@ -46,6 +74,21 @@ const addTransactionFormSlice = createSlice({
     }
 })
 
-export const { setTransactionAmount, setTransactionNote, setTransactionDate, setTransactionWallet, setTransactionCategory, setTransactionPeople, setTransactionType, setTransactionReference, clearInput, setDisplayModal } = addTransactionFormSlice.actions;
+export {
+    updateTransaction,
+}
+
+export const { 
+    setTransactionAmount,
+    setTransactionNote,
+    setTransactionDate,
+    setTransactionWallet,
+    setTransactionCategory,
+    setTransactionPeople,
+    setTransactionType,
+    setTransactionReference,
+    clearInput,
+    setDisplayModal
+} = addTransactionFormSlice.actions;
 
 export default addTransactionFormSlice.reducer;

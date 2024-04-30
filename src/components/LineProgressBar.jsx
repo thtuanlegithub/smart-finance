@@ -3,7 +3,7 @@ import React from 'react'
 
 const LineProgressBar = (props) => {
     const containerStyle = {
-        height: 16,
+        height: 12,
         backgroundColor: props.subColor,
         borderRadius: 20,
     };

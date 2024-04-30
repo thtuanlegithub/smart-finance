@@ -1,10 +1,10 @@
 import { View, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
-import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader';
+import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
 import { useNavigation } from '@react-navigation/native';
-import typography from '../../../../styles/typography';
+import typography from '../../../../../styles/typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTransactionNote } from '../../services/addTransactionFormSlice';
+import { setTransactionNote } from '../../../services/addTransactionFormSlice';
 
 
 const NoteForm = () => {

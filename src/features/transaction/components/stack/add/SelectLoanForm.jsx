@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader'
+import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader'
 import { useNavigation } from '@react-navigation/native';
-import colors from '../../../../styles/colors';
-import LoanCard from '../../../category/components/LoanCard';
+import colors from '../../../../../styles/colors';
+import LoanCard from '../../../../category/components/LoanCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
-import { setTransactionReference } from '../../services/addTransactionFormSlice';
+import { setTransactionReference } from '../../../services/addTransactionFormSlice';
 
 const SelectLoanForm = () => {
     const navigation = useNavigation();

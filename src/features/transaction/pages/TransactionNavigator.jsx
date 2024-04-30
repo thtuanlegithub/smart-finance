@@ -2,6 +2,9 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createStackNavigator, CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack'
 import TransactionMain from './TransactionMain'
+import TransactionDetail from '../components/stack/detail/TransactionDetail'
+import ListRepayment from '../components/stack/detail/ListRepayment'
+import ListDebtCollection from '../components/stack/detail/ListDebtCollection'
 
 const TransactionStack = createStackNavigator()
 
@@ -20,6 +23,9 @@ const TransactionNavigator = () => {
 
             }>
             <TransactionStack.Screen name="Transaction Main" component={TransactionMain} />
+            <TransactionStack.Screen name="Transaction Detail" component={TransactionDetail} />
+            <TransactionStack.Screen name="List Repayment" component={ListRepayment} />
+            <TransactionStack.Screen name="List Debt Collection" component={ListDebtCollection} />
         </TransactionStack.Navigator>
     )
 }

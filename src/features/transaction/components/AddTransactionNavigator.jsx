@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { createStackNavigator, CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack'
-import AddTransactionForm from './stack/AddTransactionForm';
+import AddTransactionForm from './stack/add/AddTransactionForm';
 
-import SelectCategoryForm from './stack/SelectCategoryForm';
-import NoteForm from './stack/NoteForm';
-import WalletForm from './stack/WalletForm';
-import SelectLoanForm from './stack/SelectLoanForm';
-import SelectDebtForm from './stack/SelectDebtForm';
+import SelectCategoryForm from './stack/add/SelectCategoryForm';
+import NoteForm from './stack/add/NoteForm';
+import WalletForm from './stack/add/WalletForm';
+import SelectLoanForm from './stack/add/SelectLoanForm';
+import SelectDebtForm from './stack/add/SelectDebtForm';
+import TaxForm from './stack/add/TaxForm';
 
 const AddTransactionStack = createStackNavigator();
 
@@ -27,7 +28,7 @@ const AddTransactionNavigator = () => {
             <AddTransactionStack.Screen name="Wallet" component={WalletForm} />
             <AddTransactionStack.Screen name="Select Loan" component={SelectLoanForm} />
             <AddTransactionStack.Screen name="Select Debt" component={SelectDebtForm} />
-            {/* <AddTransactionStack.Screen name="Note" component={NoteForm} /> */}
+            <AddTransactionStack.Screen name="Select Tax" component={TaxForm} />
         </AddTransactionStack.Navigator>
     );
 }

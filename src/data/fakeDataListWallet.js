@@ -1,10 +1,10 @@
 export const listWallet = [{
-    name: 'Wallet 1',
+    name: 'Cash',
     amount: 1000000
 }, {
-    name: 'Wallet 2',
+    name: 'ACB Account',
     amount: 2000000
 }, {
-    name: 'Wallet 3',
+    name: 'Momo',
     amount: 4000000
 }];

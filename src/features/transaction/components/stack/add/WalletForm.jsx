@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader';
-import WalletItem from '../../../../components/WalletItem';
+import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
+import WalletItem from '../../../../../components/WalletItem';
 import { useDispatch } from 'react-redux';
-import { setTransactionWallet } from '../../services/addTransactionFormSlice';
-import colors from '../../../../styles/colors';
+import { setTransactionWallet } from '../../../services/addTransactionFormSlice';
+import colors from '../../../../../styles/colors';
 
 const listWallet = [{
     name: 'Wallet 1',

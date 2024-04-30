@@ -1,30 +1,31 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import NewCategoryButton from '../NewCategoryButton'
-import debtLoanCategoryIcons from '../../../../data/debtLoanCategoryIcons'
-import DebtLoanSelectCategoryItem from '../DebtLoanSelectCategoryItem'
+import NewCategoryButton from './NewCategoryButton'
+import expenseCategoryIcons from '../../../data/expenseCategoryIcons'
+import ExpenseSelectCategoryItem from './ExpenseSelectCategoryItem'
 import {
     ScrollView
 } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { setTransactionCategory, setTransactionType } from '../../services/addTransactionFormSlice'
-const DebtLoanSelectCategoryList = () => {
+import { setTransactionCategory, setTransactionType } from '../../transaction/services/addTransactionFormSlice'
+import { useNavigation } from '@react-navigation/native'
+const ExpenseSelectCategoryList = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const handleSelectCategory = (category) => {
-        dispatch(setTransactionType('Debt/ Loan'));
+        dispatch(setTransactionType('Expense'));
         dispatch(setTransactionCategory(category));
         navigation.navigate('Add Transaction');
     }
     return (
         <View style={styles.outerContainer}>
             <ScrollView contentContainerStyle={styles.container}>
-                {Object.entries(debtLoanCategoryIcons).map(([key, value], index) => {
-                    return <DebtLoanSelectCategoryItem
-                        onSelect={() => handleSelectCategory(key)}
+                <NewCategoryButton />
+                {Object.entries(expenseCategoryIcons).map(([key, value], index) => {
+                    return <ExpenseSelectCategoryItem
                         key={index}
-                        category={key} />
+                        category={key}
+                        onSelect={() => handleSelectCategory(key)} />
                 })}
                 <View style={{ height: 24 }}></View>
             </ScrollView>
@@ -34,7 +35,6 @@ const DebtLoanSelectCategoryList = () => {
 
 const styles = StyleSheet.create({
     outerContainer: {
-        marginTop: 14,
         flex: 1,
     },
     container: {
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default DebtLoanSelectCategoryList
+export default ExpenseSelectCategoryList

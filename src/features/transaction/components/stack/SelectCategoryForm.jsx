@@ -5,9 +5,9 @@ import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../../../styles/colors';
 import typography from '../../../../styles/typography';
-import ExpenseSelectCategoryList from './ExpenseSelectCategoryList';
-import IncomeSelectCategoryList from './IncomeSelectCategoryList';
-import DebtLoanSelectCategoryList from './DebtLoanSelectCategoryList';
+import ExpenseSelectCategoryList from '../../../category/components/ExpenseSelectCategoryList';
+import IncomeSelectCategoryList from '../../../category/components/IncomeSelectCategoryList';
+import DebtLoanSelectCategoryList from '../../../category/components/DebtLoanSelectCategoryList';
 import { useSelector } from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();

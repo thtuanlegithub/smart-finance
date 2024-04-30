@@ -28,6 +28,7 @@ export default styles = StyleSheet.create({
     bottomMenuItemContainer: {
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        position: 'relative',
     }
 });

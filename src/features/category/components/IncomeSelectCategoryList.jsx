@@ -1,12 +1,12 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import NewCategoryButton from '../NewCategoryButton'
-import incomeCategoryIcons from '../../../../data/incomeCategoryIcons'
-import IncomeSelectCategoryItem from '../IncomeSelectCategoryItem'
+import NewCategoryButton from './NewCategoryButton'
+import incomeCategoryIcons from '../../../data/incomeCategoryIcons'
+import IncomeSelectCategoryItem from './IncomeSelectCategoryItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { setTransactionCategory, setTransactionType } from '../../services/addTransactionFormSlice'
+import { setTransactionCategory, setTransactionType } from '../../transaction/services/addTransactionFormSlice'
 
 const IncomeSelectCategoryList = () => {
     const navigation = useNavigation();

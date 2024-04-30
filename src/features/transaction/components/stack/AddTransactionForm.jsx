@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
+import { View, Text, KeyboardAvoidingView } from 'react-native'
 import React, { useState, useRef } from 'react'
 import styles from '../../styles/AddTransactionFormStyles'
 import MoneyInput from '../../../../components/MoneyInput'
@@ -14,9 +14,9 @@ import BottomMenuItem from '../../../../components/BottomMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate } from '../../services/addTransactionFormSlice'
 import { formatDate } from '../../../../utils/formatDate'
-import LoanInformation from '../LoanInformation'
-import DebtInformation from '../DebtInformation'
-
+import LoanInformation from '../../../category/components/LoanInformation'
+import DebtInformation from '../../../category/components/DebtInformation'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
@@ -25,7 +25,7 @@ const AddTransactionForm = ({ navigation }) => {
 
     // Handle Action Sheet - Bottom Menu
     const [open, setOpen] = useState(false)
-    const actionSheetRef = useRef()
+    const actionSheetRef = useRef(null)
 
     // redux selector
     const note = useSelector(state => state.addTransactionForm.note);
@@ -86,10 +86,14 @@ const AddTransactionForm = ({ navigation }) => {
                     <ActionSheet ref={actionSheetRef}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                             <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select a day</Text>
-                            <TouchableOpacity onPress={() => handlePress(TODAY)} style={styles.bottomMenuItemContainer}>
+                            <TouchableOpacity
+                                onPress={() => handlePress(TODAY)}
+                                style={styles.bottomMenuItemContainer}>
                                 <BottomMenuItem title='Today' />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handlePress(YESTERDAY)} style={styles.bottomMenuItemContainer}>
+                            <TouchableOpacity
+                                onPress={() => handlePress(YESTERDAY)}
+                                style={styles.bottomMenuItemContainer}>
                                 <BottomMenuItem title='Yesterday' />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => handlePress(CUSTOM)} style={styles.bottomMenuItemContainer}>

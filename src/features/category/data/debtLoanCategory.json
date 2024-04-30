@@ -1,0 +1,22 @@
+[
+    {
+        "id": "loan",
+        "name": "Loan",
+        "imagePath": "../../../assets/images/loan.png"
+    },
+    {
+        "id": "debt",
+        "name": "Debt",
+        "imagePath": "../../../assets/images/debt.png"
+    },
+    {
+        "id": "debtcollection",
+        "name": "Debt collection",
+        "imagePath": "../../../assets/images/debtcollection.png"
+    },
+    {
+        "id": "repayment",
+        "name": "Repayment",
+        "imagePath": "../../../assets/images/repayment.png"
+    }
+]

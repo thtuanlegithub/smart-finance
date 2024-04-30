@@ -1,4 +1,5 @@
 export {
+    updateTransaction,
     default as addTransactionFormReducer,
     setTransactionAmount,
     setTransactionType,

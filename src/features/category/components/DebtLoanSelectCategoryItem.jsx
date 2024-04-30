@@ -2,18 +2,19 @@ import { TouchableOpacity, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import colors from '../../../styles/colors'
 import typography from '../../../styles/typography'
-import debtLoanCategoryIcons from '../../../data/debtLoanCategoryIcons'
+import getCategoryIcons from '../utils/iconHelper'
 
 const DebtLoanSelectCategoryItem = (props) => {
-
+    const category = props.category;
     return (
         <TouchableOpacity onPress={props.onSelect} style={styles.container}>
             <Image style={{ height: 24, width: 24, paddingHorizontal: 6, paddingVertical: 4, borderRadius: 6 }}
-                source={debtLoanCategoryIcons[props.category]} />
-            <Text style={[typography.MediumInterH5, { color: colors.green07 }]}>{props.category}</Text>
+                source={getCategoryIcons(category.id)} />
+            <Text style={[typography.MediumInterH5, { color: colors.green07 }]}>{category.name}</Text>
         </TouchableOpacity>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',

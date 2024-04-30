@@ -1,0 +1,62 @@
+[
+    {
+        "id": "foodandbeverage",
+        "name": "Food & Beverage",
+        "imagePath": "../../../assets/images/salary.png"
+    },
+    {
+        "id": "shopping",
+        "name": "Shopping",
+        "imagePath": "../../../assets/images/bag.png"
+    },
+    {
+        "id": "transportation",
+        "name": "Transportation",
+        "imagePath": "../../../assets/images/charging.png"
+    },
+    {
+        "id": "traveling",
+        "name": "Traveling",
+        "imagePath": "../../../assets/images/travel.png"
+    },
+    {
+        "id": "education",
+        "name": "Education",
+        "imagePath": "../../../assets/images/education.png"
+    },
+    {
+        "id": "electricitybill",
+        "name": "Electricity Bill",
+        "imagePath": "../../../assets/images/electricity-bill.png"
+    },
+    {
+        "id": "internetbill",
+        "name": "Internet Bill",
+        "imagePath": "../../../assets/images/wifi.png"
+    },
+    {
+        "id": "medicalcheck-up",
+        "name": "Medical Check-up",
+        "imagePath": "../../../assets/images/healthcare.png"
+    },
+    {
+        "id": "entertainment",
+        "name": "Entertainment",
+        "imagePath": "../../../assets/images/popcorn.png"
+    },
+    {
+        "id": "donation",
+        "name": "Donation",
+        "imagePath": "../../../assets/images/donate.png"
+    },
+    {
+        "id": "rentals",
+        "name": "Rentals",
+        "imagePath": "../../../assets/images/rent.png"
+    },
+    {
+        "id": "otherexpense",
+        "name": "Other expense",
+        "imagePath": "../../../assets/images/otherexpense.png"
+    }
+]

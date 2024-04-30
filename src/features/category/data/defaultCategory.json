@@ -1,0 +1,107 @@
+[
+    {
+        "id": "foodandbeverage",
+        "name": "Food & Beverage",
+        "imagePath": "../../../assets/images/salary.png"
+    },
+    {
+        "id": "shopping",
+        "name": "Shopping",
+        "imagePath": "../../../assets/images/bag.png"
+    },
+    {
+        "id": "transportation",
+        "name": "Transportation",
+        "imagePath": "../../../assets/images/charging.png"
+    },
+    {
+        "id": "traveling",
+        "name": "Traveling",
+        "imagePath": "../../../assets/images/travel.png"
+    },
+    {
+        "id": "education",
+        "name": "Education",
+        "imagePath": "../../../assets/images/education.png"
+    },
+    {
+        "id": "electricitybill",
+        "name": "Electricity Bill",
+        "imagePath": "../../../assets/images/electricity-bill.png"
+    },
+    {
+        "id": "internetbill",
+        "name": "Internet Bill",
+        "imagePath": "../../../assets/images/wifi.png"
+    },
+    {
+        "id": "medicalcheck-up",
+        "name": "Medical Check-up",
+        "imagePath": "../../../assets/images/healthcare.png"
+    },
+    {
+        "id": "entertainment",
+        "name": "Entertainment",
+        "imagePath": "../../../assets/images/popcorn.png"
+    },
+    {
+        "id": "donation",
+        "name": "Donation",
+        "imagePath": "../../../assets/images/donate.png"
+    },
+    {
+        "id": "rentals",
+        "name": "Rentals",
+        "imagePath": "../../../assets/images/rent.png"
+    },
+    {
+        "id": "otherexpense",
+        "name": "Other expense",
+        "imagePath": "../../../assets/images/otherexpense.png"
+    },
+    {
+        "id": "salary",
+        "name": "Salary",
+        "imagePath": "../../../assets/images/salary.png"
+    },
+    {
+        "id": "businessprofit",
+        "name": "Business Profit",
+        "imagePath": "../../../assets/images/businessprofit.png"
+    },
+    {
+        "id": "otherincome",
+        "name": "Other income",
+        "imagePath": "../../../assets/images/otherexpense.png"
+    },
+    {
+        "id": "loan",
+        "name": "Loan",
+        "imagePath": "../../../assets/images/loan.png"
+    },
+    {
+        "id": "debt",
+        "name": "Debt",
+        "imagePath": "../../../assets/images/debt.png"
+    },
+    {
+        "id": "debtcollection",
+        "name": "Debt collection",
+        "imagePath": "../../../assets/images/debtcollection.png"
+    },
+    {
+        "id": "repayment",
+        "name": "Repayment",
+        "imagePath": "../../../assets/images/repayment.png"
+    },
+    {
+        "id": "default",
+        "name": "Default",
+        "imagePath": "../../../assets/images/placeholdericon.png"
+    },
+    {
+        "id": "null",
+        "name": null,
+        "imagePath": "../../../assets/images/placeholdericon.png"
+    }
+]

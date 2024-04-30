@@ -28,7 +28,7 @@ const CategoryDetailReport = ({ route }) => {
         <View style={styles.container}>
             <ReportHeader
                 onBackPress={handleBackPress}
-                title={selectedItem.label} />
+                item={selectedItem} />
             <View style={styles.overall}>
                 <Text style={styles.overallContent}>25/03/2024 - 31/03/2024</Text>
             </View>

@@ -3,26 +3,24 @@ import React, { useState } from 'react'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import transactionCategoryIcons from '../../../data/transactionCategoryIcons'
 import { useSelector } from 'react-redux'
+import { getCategoryIcons } from '../../category'
 const SelectCategoryInput = () => {
-
-    const category = useSelector(state => state.addTransactionForm.category);
-    console.log(category);
+    const category = useSelector(state => state.category.currentCategory);
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
                 {
-                    category != 0 ?
-                        <Image style={styles.labelIcon} source={transactionCategoryIcons[category]} />
+                    category ?
+                        <Image style={styles.labelIcon} source={getCategoryIcons(category.id)} />
                         :
-                        <Image style={styles.labelIcon} source={require('../../../assets/images/placeholdericon.png')} />
+                        <Image style={styles.labelIcon} source={placeHolderIcon} />
                 }
             </View>
             <View style={styles.inputGroup}>
-                {category
+                {category && category.id !== 'placeholdericon'
                     ?
-                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{category}</Text>
+                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{category.name}</Text>
                     :
                     <Text style={[typography.RegularInterH4, { color: colors.green08, opacity: 0.5 }]}>Select category</Text>
                 }

@@ -1,13 +1,22 @@
 import auth from '@react-native-firebase/auth'; 
+import { SignInStrategy } from '../../../patterns';
 
-export const emailPasswordSignIn = async (email, password) => {   
-    try {
-        return await auth().signInWithEmailAndPassword(email, password);
-    } catch (error) {
-        console.error(error);
-        throw error; // Throw the error so it can be caught in handleSignIn
-    }   
-};
+export default class emailPasswordSignIn extends SignInStrategy {
+    constructor(email, password) {
+        super();
+        this.email = email;
+        this.password = password;
+    }
+
+    async signIn() {
+        try {
+            return await auth().signInWithEmailAndPassword(this.email, this.password);
+        } catch (error) {
+            console.error(error);
+            throw error; 
+        }
+    }
+}
 
 export const emailPasswordSignOut = async () => {   
     try {

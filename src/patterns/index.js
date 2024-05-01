@@ -40,3 +40,7 @@ export {default as UserBuilder} from './builder/user/userBuilder';
 export {default as SettingBuilder} from './builder/user/settingBuilder';
 export {default as WalletBuilder} from './builder/user/walletBuilder';
 
+// Strategy pattern
+// How to use: const signInStrategy = new EmailPasswordSignInStrategy();
+// signInStrategy.signIn(email, password);
+export {default as SignInStrategy} from './strategy/SignInStrategy';

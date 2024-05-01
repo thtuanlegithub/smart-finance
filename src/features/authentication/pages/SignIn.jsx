@@ -18,7 +18,8 @@ function SignIn(props) {
         if (isValidAccount(email, password)) {
             try {
                 setLoading(true);
-                const userCredential = await emailPasswordSignIn(email, password);
+                const strategy = new emailPasswordSignIn(email, password);
+                const userCredential = await strategy.signIn();
                 if (userCredential) {
                     dispatch(setUser(userCredential.user.toJSON()));
                     setLoading(false);
@@ -33,7 +34,8 @@ function SignIn(props) {
     const handleGoogleSignIn = async () => {
         setLoading(true);
         try {
-            const result = await googleSignIn();
+            const strategy = new googleSignIn();
+            const result = await strategy.signIn();
             if (result === false) {
                 setLoading(false);
                 return;

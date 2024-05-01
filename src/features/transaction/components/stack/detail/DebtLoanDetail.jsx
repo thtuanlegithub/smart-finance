@@ -13,22 +13,22 @@ const DebtLoanDetail = ({ transaction }) => {
     return (
         <>
             {
-                transaction.category == 'Debt'
+                transaction?.category == 'Debt'
                 &&
                 <DebtDetail transaction={transaction} />
             }
             {
-                transaction.category == 'Loan'
+                transaction?.category == 'Loan'
                 &&
                 <LoanDetail transaction={transaction} />
             }
             {
-                transaction.category == 'Debt collection'
+                transaction?.category == 'Debt collection'
                 &&
                 <DebtCollectionDetail transaction={transaction} />
             }
             {
-                transaction.category == 'Repayment'
+                transaction?.category == 'Repayment'
                 &&
                 <RepaymentDetail transaction={transaction} />
             }

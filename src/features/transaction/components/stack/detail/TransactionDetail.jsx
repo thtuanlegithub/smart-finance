@@ -23,17 +23,17 @@ const TransactionDetail = ({ route }) => {
                     }}
                 title='Transaction Detail' />
             {
-                transaction.type == 'Expense'
+                transaction?.type == 'Expense'
                 &&
                 <ExpenseDetail transaction={transaction} />
             }
             {
-                transaction.type == 'Income'
+                transaction?.type == 'Income'
                 &&
                 <IncomeDetail transaction={transaction} />
             }
             {
-                transaction.type == 'Debt/ Loan'
+                transaction?.type == 'Debt/ Loan'
                 &&
                 <DebtLoanDetail transaction={transaction} />
             }

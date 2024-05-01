@@ -61,7 +61,7 @@ const RepaymentDetail = ({ transaction }) => {
                         </View>
                         <View style={{ flexDirection: 'column', gap: 4 }}>
                             <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Debt</Text>
-                            <Text style={[typography.MediumInterH3, { color: colors.green07 }]}>{formatCurrency(reference.remain)}</Text>
+                            <Text style={[typography.MediumInterH3, { color: colors.green07 }]}>{formatCurrency(reference?.remain)}</Text>
                         </View>
                     </View>
                     <View style={[styles.inputGroupContainer, { marginBottom: 8 }]}>
@@ -69,7 +69,7 @@ const RepaymentDetail = ({ transaction }) => {
                             <FontAwesome5 name={inputIcons['note']} size={18} color={colors.green08} style={styles.labelIcon} />
                         </View>
                         <View style={styles.inputGroup}>
-                            <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{reference.note}</Text>
+                            <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{reference?.note}</Text>
                         </View>
                     </View>
                     <View style={styles.inputGroupContainer}>
@@ -77,7 +77,7 @@ const RepaymentDetail = ({ transaction }) => {
                             <FontAwesome5 name={inputIcons['wallet']} size={18} color={colors.green08} style={styles.labelIcon} />
                         </View>
                         <View style={styles.inputGroup}>
-                            <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{reference.wallet}</Text>
+                            <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{reference?.wallet}</Text>
                         </View>
                     </View>
                     <View style={styles.inputGroupContainer}>

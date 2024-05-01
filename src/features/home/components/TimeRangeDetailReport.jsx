@@ -21,6 +21,7 @@ const TimeRangeDetailReport = ({ route }) => {
     }).filter(item => item.transactions.length > 0); return (
         <View style={styles.container}>
             <ReportHeader
+                item={selectedItem}
                 onBackPress={() => {
                     navigation.navigate("ExpenseReport")
                 }}

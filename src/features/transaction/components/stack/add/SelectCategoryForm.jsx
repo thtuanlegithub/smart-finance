@@ -1,13 +1,13 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React from 'react'
 import { StyleSheet, View } from 'react-native';
-import AddTransactionInputViewHeader from '../AddTransactionInputViewHeader';
+import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../../../../styles/colors';
-import typography from '../../../../styles/typography';
-import ExpenseSelectCategoryList from '../../../category/components/ExpenseSelectCategoryList';
-import IncomeSelectCategoryList from '../../../category/components/IncomeSelectCategoryList';
-import DebtLoanSelectCategoryList from '../../../category/components/DebtLoanSelectCategoryList';
+import colors from '../../../../../styles/colors';
+import typography from '../../../../../styles/typography';
+import ExpenseSelectCategoryList from '../../../../category/components/ExpenseSelectCategoryList';
+import IncomeSelectCategoryList from '../../../../category/components/IncomeSelectCategoryList';
+import DebtLoanSelectCategoryList from '../../../../category/components/DebtLoanSelectCategoryList';
 import { useSelector } from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();

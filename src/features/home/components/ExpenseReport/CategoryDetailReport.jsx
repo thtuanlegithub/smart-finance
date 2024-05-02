@@ -39,17 +39,17 @@ const CategoryDetailReport = ({ route }) => {
                             <View style={styles.header}>
                                 <View style={styles.summary}>
                                     <Text style={styles.title}>Total</Text>
-                                    <Text style={styles.money}>{formatCurrency(data.datasets[0].data.reduce(getSum, 0))}</Text>
+                                    <Text style={styles.money}>{formatCurrency(fakeDataBarChart.datasets[0].data.reduce(getSum, 0))}</Text>
                                 </View>
                                 <View style={styles.summary}>
                                     <Text style={styles.title}>Daily Average</Text>
-                                    <Text style={styles.money}>{formatCurrency(Math.round(data.datasets[0].data.reduce(getSum, 0) / data.datasets[0].data.length))}</Text>
+                                    <Text style={styles.money}>{formatCurrency(Math.round(fakeDataBarChart.datasets[0].data.reduce(getSum, 0) / fakeDataBarChart.datasets[0].data.length))}</Text>
                                 </View>
                             </View>
                             <View style={styles.barChartContainer}>
                                 <BarChart
                                     bezier
-                                    data={data}
+                                    data={fakeDataBarChart}
                                     width={screenWidth * 0.95}
                                     height={220}
                                     chartConfig={chartConfig}
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     },
     listReportContainer: {
         backgroundColor: 'white',
+        flex: 1,
     },
     overall: {
         backgroundColor: 'white',

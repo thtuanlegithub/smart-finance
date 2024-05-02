@@ -4,4 +4,5 @@ export default inputIcons = {
     "wallet": 'wallet',
     "reminder": 'clock',
     "people": 'user-friends',
+    "tax": 'percentage',
 }

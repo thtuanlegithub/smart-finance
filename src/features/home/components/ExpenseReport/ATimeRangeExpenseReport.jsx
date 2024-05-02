@@ -4,7 +4,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import colors from '../../../../styles/colors';
 import typography from '../../../../styles/typography';
 import CategoryListReport from './CategoryListReport';
-import { NavigationContainer } from '@react-navigation/native';
 import TimeReport from './TimeReport';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 

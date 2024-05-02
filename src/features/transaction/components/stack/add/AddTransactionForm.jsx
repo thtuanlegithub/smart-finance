@@ -1,26 +1,26 @@
 import { View, Text, KeyboardAvoidingView } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-import styles from '../../styles/AddTransactionFormStyles'
-import MoneyInput from '../../../../components/MoneyInput'
-import SelectCategoryInput from '../SelectCategoryInput'
-import MediumTextIconInput from '../MediumTextIconInput'
-import NoOutlinedMediumTextIconInput from '../NoOutlinedMediumTextIconInput'
-import W1Button from '../../../../components/W1Button'
+import styles from '../../../styles/AddTransactionFormStyles'
+import MoneyInput from '../../../../../components/MoneyInput'
+import SelectCategoryInput from '../../SelectCategoryInput'
+import MediumTextIconInput from '../../MediumTextIconInput'
+import NoOutlinedMediumTextIconInput from '../../NoOutlinedMediumTextIconInput'
+import W1Button from '../../../../../components/W1Button'
 import DatePicker from 'react-native-date-picker'
 import ActionSheet from 'react-native-actions-sheet'
-import typography from '../../../../styles/typography'
-import colors from '../../../../styles/colors'
-import BottomMenuItem from '../../../../components/BottomMenuItem'
+import typography from '../../../../../styles/typography'
+import colors from '../../../../../styles/colors'
+import BottomMenuItem from '../../../../../components/BottomMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate, updateTransaction } from '../../services/addTransactionFormSlice'
-import { formatDate } from '../../../../utils/formatDate'
-import LoanInformation from '../../../category/components/LoanInformation'
-import DebtInformation from '../../../category/components/DebtInformation'
+import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate, updateTransaction } from '../../../services/addTransactionFormSlice'
+import { formatDate } from '../../../../../utils/formatDate'
+import LoanInformation from '../../../../category/components/LoanInformation'
+import DebtInformation from '../../../../category/components/DebtInformation'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { TransactionBuilder } from '../../../../patterns'
-import { setBalance, updateUserWallet } from '../../../setting'
-import transactionType from '../../data/transactionType'
-import { updateWallet } from '../../../setting'
+import { TransactionBuilder } from '../../../../../patterns'
+import { setBalance, updateUserWallet } from '../../../../setting'
+import transactionType from '../../../data/transactionType'
+import { updateWallet } from '../../../../setting'
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
@@ -174,6 +174,24 @@ const AddTransactionForm = ({ navigation }) => {
                             value={wallet.wallet_name} />
                     </TouchableOpacity>
                 </View>
+                {
+                    type == 'Income'
+                    &&
+                    <View
+                        style={{
+                            backgroundColor: 'white',
+                            marginTop: 8,
+                            paddingHorizontal: 16,
+                            paddingVertical: 2,
+                        }}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("Select Tax")}>
+                            <NoOutlinedMediumTextIconInput
+                                field='tax'
+                                placeholder='Tax' />
+                        </TouchableOpacity>
+                    </View>
+                }
                 {
                     category.name === 'Debt collection'
                     &&

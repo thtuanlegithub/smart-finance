@@ -9,6 +9,7 @@ import SignOutButton from '../components/SignOutButton';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import SettingButton from '../components/SettingButton';
+import PushNotification from 'react-native-push-notification';
 
 function SettingMain(props) {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function SettingMain(props) {
             } else if (providerId === 'google.com') {
                 await googleSignOut();
             }
+            PushNotification.cancelAllLocalNotifications();
             dispatch(clearUser());
         }
     };

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
 import formatCurrency from '../../../utils/formatCurrency';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
@@ -17,9 +17,10 @@ import AddTransactionInputViewHeader from '../../transaction/components/AddTrans
 import WalletItem from '../../../components/WalletItem';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import { useDispatch, useSelector } from 'react-redux';
-import { initiateUserSetting, initiateUserWallet } from '../../setting';
+import { initiateUserSetting, initiateUserWallet, popUpNotification } from '../../setting';
 import { selectWallet } from '../../setting';
 import BottomSheetReport from '../components/BottomSheetReport';
+
 const SpendingReportTab = createMaterialTopTabNavigator();
 
 const HIDE = false;
@@ -33,6 +34,7 @@ function Home(props) {
 
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const userWallet = useSelector(state => state.wallet.wallets);
+    const userSetting = useSelector(state => state.setting);
     const dispatch = useDispatch();
 
     const handleSelectWallet = (wallet) => {
@@ -73,6 +75,11 @@ function Home(props) {
         initiateUserSetting(currentUser, dispatch);
         initiateUserWallet(currentUser, dispatch);
     }, [currentUser]);
+
+    useEffect(() => {
+        console.log(userSetting.notify_time);
+        popUpNotification(userSetting.notify_time);
+    }, [userSetting]);
 
     return (
         <ScrollView>

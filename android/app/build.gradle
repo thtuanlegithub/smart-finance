@@ -109,6 +109,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation project(':react-native-push-notification')
     implementation("com.facebook.react:flipper-integration")
     implementation 'com.google.firebase:firebase-analytics:19.0.2'
     implementation 'com.google.firebase:firebase-auth:21.0.1'

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#E5E5E5',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     content: {
         ...typography.MediumInterH3,

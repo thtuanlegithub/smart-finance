@@ -1,7 +1,12 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { CardStyleInterpolators, TransitionSpecs, createStackNavigator } from '@react-navigation/stack';
 import SettingMain from './SettingMain';
+import SettingWallet from './SettingWallet';
+import SettingCategory from './SettingCategory';
+import SettingCurrency from './SettingCurrency';
+import SettingLanguage from './SettingLanguage';
+import AboutUs from './AboutUs';
+import SettingReminder from './SettingReminder';
 
 const SettingStack = createStackNavigator();
 
@@ -16,7 +21,13 @@ const SettingNavigator = () => {
           close: TransitionSpecs.TransitionIOSSpec,
         }
       }}>
-      <SettingStack.Screen name='Setting Main' component={SettingMain} />
+      <SettingStack.Screen name='SettingMain' component={SettingMain} />
+      <SettingStack.Screen name='SettingWallet' component={SettingWallet} />
+      <SettingStack.Screen name='SettingCategory' component={SettingCategory} />
+      <SettingStack.Screen name='SettingReminder' component={SettingReminder} />
+      <SettingStack.Screen name='SettingCurrency' component={SettingCurrency} />
+      <SettingStack.Screen name='SettingLanguage' component={SettingLanguage} />
+      <SettingStack.Screen name='AboutUs' component={AboutUs} />
     </SettingStack.Navigator>
   )
 }

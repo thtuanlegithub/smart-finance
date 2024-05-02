@@ -40,6 +40,9 @@ const AddTransactionForm = ({ navigation }) => {
     const category = useSelector(state => state.category.currentCategory);
     const type = useSelector(state => state.addTransactionForm.type);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
+    const reminderTime = useSelector(state => state.addTransactionForm.reminderTime);
+    const reminderDate = useSelector(state => state.addTransactionForm.reminderDate);
 
     // Handle Select Transaction Date
     const handlePress = (index) => {
@@ -133,21 +136,27 @@ const AddTransactionForm = ({ navigation }) => {
                             placeholder='Pick a day' />
                     </TouchableOpacity>
                     <ActionSheet ref={actionSheetRef}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36, }}>
                             <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select a day</Text>
-                            <TouchableOpacity
-                                onPress={() => handlePress(TODAY)}
-                                style={styles.bottomMenuItemContainer}>
-                                <BottomMenuItem title='Today' />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => handlePress(YESTERDAY)}
-                                style={styles.bottomMenuItemContainer}>
-                                <BottomMenuItem title='Yesterday' />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handlePress(CUSTOM)} style={styles.bottomMenuItemContainer}>
-                                <BottomMenuItem title='Custom' />
-                            </TouchableOpacity>
+                            <View style={{ width: '100%' }}>
+                                <TouchableOpacity
+                                    onPress={() => handlePress(TODAY)}
+                                    style={styles.bottomMenuItemContainer}>
+                                    <BottomMenuItem title='Today' />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ width: '100%' }}>
+                                <TouchableOpacity
+                                    onPress={() => handlePress(YESTERDAY)}
+                                    style={styles.bottomMenuItemContainer}>
+                                    <BottomMenuItem title='Yesterday' />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ width: '100%' }}>
+                                <TouchableOpacity onPress={() => handlePress(CUSTOM)} style={styles.bottomMenuItemContainer}>
+                                    <BottomMenuItem title='Custom' />
+                                </TouchableOpacity>
+                            </View>
                             <TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(false)} style={styles.bottomMenuItemContainer}>
                                 <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                             </TouchableOpacity>
@@ -175,7 +184,7 @@ const AddTransactionForm = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 {
-                    type == 'Income'
+                    type == 'income'
                     &&
                     <View
                         style={{
@@ -203,8 +212,18 @@ const AddTransactionForm = ({ navigation }) => {
                     <DebtInformation />
                 }
                 <View style={styles.form}>
-                    <MediumTextIconInput field='people' placeholder='People' />
-                    <NoOutlinedMediumTextIconInput field='reminder' placeholder='Reminder' />
+                    <TouchableOpacity onPress={() => navigation.navigate("People")}>
+                        <MediumTextIconInput field='people' placeholder='People' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Reminder")}>
+                        {
+                            hasReminder
+                                ?
+                                <NoOutlinedMediumTextIconInput field='reminder' value={reminderTime + ", " + reminderDate} />
+                                :
+                                <NoOutlinedMediumTextIconInput field='reminder' placeholder='No Reminder' />
+                        }
+                    </TouchableOpacity>
                 </View>
             </View>
             <W1Button

@@ -16,7 +16,7 @@ import CustomHandle from '../components/CustomHandle';
 import { useSnapPoints } from '../hooks/useSnapPoints';
 import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
 import BudgetNavigator from '../features/budget/pages/BudgetNavigator';
-import SettingMain from '../features/setting/pages/SettingMain';
+import SettingNavigator from '../features/setting/pages/SettingNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -105,7 +105,7 @@ const MainTabNavigation = (props) => {
                                 }} />
                             <Tab.Screen
                                 name="Setting"
-                                component={SettingMain}
+                                component={SettingNavigator}
                                 options={{
                                     headerShown: false
                                 }} />

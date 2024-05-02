@@ -9,6 +9,9 @@ export {
     setTransactionWallet,
     setTransactionPeople,
     setTransactionReference,
+    setTransactionReminderDate,
+    setTransactionReminderTime,
+    setTransactionHasReminder,
     clearInput,
     setDisplayModal
 } from './services/addTransactionFormSlice';

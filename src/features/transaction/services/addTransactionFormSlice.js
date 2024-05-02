@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { TransactionFields, FirebaseNodes } from "../../../data/firebaseConstant";
 import { FirestoreSingleton } from "../../../patterns";
+import formatTime from "../../../utils/formatTime";
+import { formatDate } from "../../../utils/formatDate";
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
 const transactionCollection = firestoreInstance.collection(FirebaseNodes.TRANSACTION);
 
@@ -34,6 +36,9 @@ const initialState = {
     created_at: '',
     wallet: '',
     displayModal: null,
+    reminderTime: formatTime(new Date()),
+    reminderDate: formatDate(new Date()),
+    hasReminder: false,
     reference: null,
 };
 
@@ -65,6 +70,15 @@ const addTransactionFormSlice = createSlice({
         setTransactionReference: (state, action) => {
             state.reference = action.payload;
         },
+        setTransactionReminderTime: (state, action) => {
+            state.reminderTime = action.payload;
+        },
+        setTransactionReminderDate: (state, action) => {
+            state.reminderDate = action.payload;
+        },
+        setTransactionHasReminder: (state, action) => {
+            state.hasReminder = action.payload;
+        },
         clearInput: (state) => {
             Object.assign(state, initialState);
         },
@@ -78,7 +92,7 @@ export {
     updateTransaction,
 }
 
-export const { 
+export const {
     setTransactionAmount,
     setTransactionNote,
     setTransactionDate,
@@ -87,6 +101,9 @@ export const {
     setTransactionPeople,
     setTransactionType,
     setTransactionReference,
+    setTransactionReminderDate,
+    setTransactionReminderTime,
+    setTransactionHasReminder,
     clearInput,
     setDisplayModal
 } = addTransactionFormSlice.actions;

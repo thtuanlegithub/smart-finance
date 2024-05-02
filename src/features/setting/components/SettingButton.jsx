@@ -9,14 +9,14 @@ const SettingButton = (props) => {
         <TouchableOpacity activeOpacity={0.5} onPress={props.onPress}>
             <View style={styles.container}>
                 <View style={styles.labelGroup}>
-                    <View style={{width: 24, alignItems:'center'}}>
-                    <FontAwesome5 color={colors.green07} solid name={props.icon} size={20} />
+                    <View style={{ width: 24, alignItems: 'center' }}>
+                        <FontAwesome5 color={colors.green07} solid name={props.icon} size={20} />
+                    </View>
+                    <Text style={styles.settingButtonText}>{props.title}</Text>
                 </View>
-                <Text style={styles.settingButtonText}>{props.title}</Text>
+                <FontAwesome5 opacity={0.7} name='chevron-right' size={16} color={colors.green08} />
             </View>
-            <FontAwesome5 opacity={0.7} name='chevron-right' size={16} color={colors.green08} />
-        </View>
-        </TouchableOpacity >
+        </TouchableOpacity>
     )
 }
 

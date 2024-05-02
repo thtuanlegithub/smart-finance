@@ -58,7 +58,7 @@ const DayTransactionsGroup = (props) => {
                 renderItem={({ item }) => <Transaction item={item} />}
                 keyExtractor={item => item.id}
             />
-        </View >
+        </View>
     )
 }
 

@@ -8,6 +8,8 @@ import WalletForm from './stack/add/WalletForm';
 import SelectLoanForm from './stack/add/SelectLoanForm';
 import SelectDebtForm from './stack/add/SelectDebtForm';
 import TaxForm from './stack/add/TaxForm';
+import PeopleForm from './stack/add/PeopleForm';
+import ReminderForm from './stack/add/ReminderForm';
 
 const AddTransactionStack = createStackNavigator();
 
@@ -29,6 +31,8 @@ const AddTransactionNavigator = () => {
             <AddTransactionStack.Screen name="Select Loan" component={SelectLoanForm} />
             <AddTransactionStack.Screen name="Select Debt" component={SelectDebtForm} />
             <AddTransactionStack.Screen name="Select Tax" component={TaxForm} />
+            <AddTransactionStack.Screen name="People" component={PeopleForm} />
+            <AddTransactionStack.Screen name="Reminder" component={ReminderForm} />
         </AddTransactionStack.Navigator>
     );
 }

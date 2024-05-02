@@ -9,8 +9,10 @@ import SignOutButton from '../components/SignOutButton';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import SettingButton from '../components/SettingButton';
+import { useNavigation } from '@react-navigation/native';
 
 function SettingMain(props) {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const user = useSelector(state => state.login.user);
     const [confirmSignOutDialogVisible, setConfirmSignOutDialogVisible] = useState(false);
@@ -33,16 +35,28 @@ function SettingMain(props) {
             <Image style={styles.profileImage} source={require('../../../assets/images/avatar.png')} />
             <Text style={styles.displayEmail}>{user.email}</Text>
             <View style={styles.buttonsGroup}>
-                <SettingButton icon='wallet' title='My wallets' />
-                <SettingButton icon='coins' title='Categories' />
-                <SettingButton icon='clock' title='Reminder' />
+                <SettingButton
+                    onPress={() => navigation.navigate("SettingWallet")}
+                    icon='wallet' title='My wallets' />
+                <SettingButton
+                    onPress={() => navigation.navigate("SettingCategory")}
+                    icon='coins' title='Categories' />
+                <SettingButton
+                    onPress={() => navigation.navigate("SettingReminder")}
+                    icon='clock' title='Reminder' />
             </View>
             <View style={styles.buttonsGroup}>
-                <SettingButton icon='money-bill' title='Currency Unit' />
-                <SettingButton icon='globe-americas' title='Languages' />
+                <SettingButton
+                    onPress={() => navigation.navigate("SettingCurrency")}
+                    icon='money-bill' title='Currency Unit' />
+                <SettingButton
+                    onPress={() => navigation.navigate("SettingLanguage")}
+                    icon='globe-americas' title='Languages' />
             </View>
             <View style={styles.buttonsGroup}>
-                <SettingButton icon='info-circle' title='About us' />
+                <SettingButton
+                    onPress={() => navigation.navigate("AboutUs")}
+                    icon='info-circle' title='About us' />
             </View>
             <View style={styles.buttonsGroup}>
             </View>

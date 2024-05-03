@@ -83,7 +83,7 @@ const TaxForm = () => {
                         <NumericInputHintText
                             onChange={handleInsuranceChange}
                             value={transactionInsurance}
-                            hint='Social Insurance' />
+                            hint='Other Insurance' />
                         <NumericInputIcon
                             onChange={handleDependentsChange}
                             value={transactionDependents}

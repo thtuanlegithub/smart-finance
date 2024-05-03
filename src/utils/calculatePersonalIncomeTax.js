@@ -1,8 +1,25 @@
-export default function calculatePersonalIncomeTax(salary, dependents, socialInsurance) {
-    // Calculate taxable income
-    let taxableIncome = salary - socialInsurance * 12 - 11 * 1000000 - dependents * 400000;
+export default function calculatePersonalIncomeTax(salary, dependents, insurance) {
+    // Mức lương cơ sở và mức lương tối đa để đóng BHXH, BHYT, BHTN
+    const baseSalary = 11000000;
+    const maxInsuranceSalary = 36000000;
 
-    // Calculate tax based on tax brackets
+    // Tính các khoản bảo hiểm và giảm trừ
+    let socialInsurance = Math.min(salary, maxInsuranceSalary) * 0.08;
+    let healthInsurance = Math.min(salary, maxInsuranceSalary) * 0.015;
+    let unemploymentInsurance = Math.min(salary, maxInsuranceSalary) * 0.01;
+    let totalInsurance = socialInsurance + healthInsurance + unemploymentInsurance * 0.04 + insurance;
+    let personalDeduction = 11000000;
+    let dependentDeduction = dependents * 4400000;
+
+    // Tính thu nhập chịu thuế
+    let taxableIncome = salary - totalInsurance - personalDeduction - dependentDeduction;
+
+    // Kiểm tra nếu thu nhập chịu thuế âm (dưới mức không đóng thuế)
+    if (taxableIncome <= 0) {
+        return 0;
+    }
+
+    // Tính thuế theo bảng thuế
     let tax = 0;
     if (taxableIncome <= 5000000) {
         tax = taxableIncome * 0.05;
@@ -20,9 +37,12 @@ export default function calculatePersonalIncomeTax(salary, dependents, socialIns
         tax = taxableIncome * 0.35 - 9850000;
     }
 
-    if (tax > 0) {
-        return Math.round(tax);
-    }
-    return '0';
+    return Math.round(tax);
 }
+
+// Example usage
+let salary = 10000000; // Example salary is 10,000,000 VND
+let dependents = 0; // Example 0 dependent
+let tax = calculatePersonalIncomeTax(salary, dependents);
+console.log("Personal Income Tax: ", tax);
 

@@ -10,6 +10,7 @@ import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import SettingButton from '../components/SettingButton';
 import { useNavigation } from '@react-navigation/native';
+import PushNotification from 'react-native-push-notification';
 
 function SettingMain(props) {
     const navigation = useNavigation();
@@ -26,6 +27,7 @@ function SettingMain(props) {
             } else if (providerId === 'google.com') {
                 await googleSignOut();
             }
+            PushNotification.cancelAllLocalNotifications();
             dispatch(clearUser());
         }
     };

@@ -37,3 +37,7 @@ export {
     setAccountId as setWalletAccountId,
     setWallet,
 } from './services/walletSlice';
+
+export {
+    popUpNotification,
+} from './utils/notification';

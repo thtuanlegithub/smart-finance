@@ -30,7 +30,7 @@ const AddTransactionNavigator = () => {
             <AddTransactionStack.Screen name="Wallet" component={WalletForm} />
             <AddTransactionStack.Screen name="Select Loan" component={SelectLoanForm} />
             <AddTransactionStack.Screen name="Select Debt" component={SelectDebtForm} />
-            <AddTransactionStack.Screen name="Select Tax" component={TaxForm} />
+            <AddTransactionStack.Screen name="Calculate Tax" component={TaxForm} />
             <AddTransactionStack.Screen name="People" component={PeopleForm} />
             <AddTransactionStack.Screen name="Reminder" component={ReminderForm} />
         </AddTransactionStack.Navigator>

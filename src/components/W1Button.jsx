@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        marginTop: 20,
         padding: 14,
+        marginTop: 16,
         marginHorizontal: 16,
+        width: '100%',
     },
     w1ButtonTitle: {
         ...typography.MediumInterH4,

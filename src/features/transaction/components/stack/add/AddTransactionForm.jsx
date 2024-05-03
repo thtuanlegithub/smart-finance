@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView } from 'react-native'
+import { View, Text, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import styles from '../../../styles/AddTransactionFormStyles'
 import MoneyInput from '../../../../../components/MoneyInput'
@@ -21,11 +21,15 @@ import { TransactionBuilder } from '../../../../../patterns'
 import { setBalance, updateUserWallet } from '../../../../setting'
 import transactionType from '../../../data/transactionType'
 import { updateWallet } from '../../../../setting'
+import formatCurrency from '../../../../../utils/formatCurrency'
+import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIncomeTax'
+
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
 
 const AddTransactionForm = ({ navigation }) => {
+    //
 
     // Handle Action Sheet - Bottom Menu
     const [open, setOpen] = useState(false)
@@ -43,6 +47,9 @@ const AddTransactionForm = ({ navigation }) => {
     const hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
     const reminderTime = useSelector(state => state.addTransactionForm.reminderTime);
     const reminderDate = useSelector(state => state.addTransactionForm.reminderDate);
+    const hasTax = useSelector(state => state.addTransactionForm.hasTax);
+    const insurance = useSelector(state => state.addTransactionForm.insurance);
+    const dependents = useSelector(state => state.addTransactionForm.dependents);
 
     // Handle Select Transaction Date
     const handlePress = (index) => {
@@ -113,7 +120,7 @@ const AddTransactionForm = ({ navigation }) => {
     return (
         <KeyboardAvoidingView
             style={styles.container}>
-            <View>
+            <ScrollView style={{ marginBottom: 60 }}>
                 <Text style={styles.title}>Add Transaction</Text>
                 <View style={styles.form}>
                     <View style={{ marginTop: 8 }}>
@@ -124,6 +131,23 @@ const AddTransactionForm = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate("Select Category")}>
                         <SelectCategoryInput />
                     </TouchableOpacity>
+                    {
+                        type == 'income'
+                        &&
+                        <TouchableOpacity onPress={() => navigation.navigate("Calculate Tax")}>
+                            {
+                                hasTax
+                                    ?
+                                    <MediumTextIconInput
+                                        field='tax'
+                                        value={formatCurrency(calculatePersonalIncomeTax(amount, dependents, insurance))} />
+                                    :
+                                    <MediumTextIconInput
+                                        field='tax'
+                                        placeholder='No tax' />
+                            }
+                        </TouchableOpacity>
+                    }
                     <TouchableOpacity onPress={() => navigation.navigate("Note")}>
                         <MediumTextIconInput value={note}
                             field='note'
@@ -184,24 +208,6 @@ const AddTransactionForm = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 {
-                    type == 'income'
-                    &&
-                    <View
-                        style={{
-                            backgroundColor: 'white',
-                            marginTop: 8,
-                            paddingHorizontal: 16,
-                            paddingVertical: 2,
-                        }}>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate("Select Tax")}>
-                            <NoOutlinedMediumTextIconInput
-                                field='tax'
-                                placeholder='Tax' />
-                        </TouchableOpacity>
-                    </View>
-                }
-                {
                     category.name === 'Debt collection'
                     &&
                     <LoanInformation />
@@ -225,12 +231,25 @@ const AddTransactionForm = ({ navigation }) => {
                         }
                     </TouchableOpacity>
                 </View>
+            </ScrollView>
+            <View style={{
+                position: 'absolute',
+                bottom: 0,
+                paddingBottom: 16,
+                width: '100%',
+                paddingHorizontal: 16,
+                backgroundColor: '#yourColor',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
+                backgroundColor: colors.gray02,
+            }}>
+                <W1Button
+                    title='Save'
+                    onPress={handleSaveTransaction}
+                />
             </View>
-            <W1Button
-                title='Save'
-                onPress={handleSaveTransaction}
-            />
-        </KeyboardAvoidingView>
+        </KeyboardAvoidingView >
     )
 }
 

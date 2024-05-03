@@ -1,8 +1,7 @@
 buildscript {
     ext {
         googlePlayServicesVersion = "+"
-        firebaseMessagingVersion = "+" 
-
+        firebaseMessagingVersion = "21.1.0" 
         buildToolsVersion = "34.0.0"
         minSdkVersion = 21
         compileSdkVersion = 34
@@ -21,5 +20,4 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
-
 apply plugin: "com.facebook.react.rootproject"

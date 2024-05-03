@@ -77,7 +77,7 @@ function Home(props) {
     }, [currentUser]);
 
     useEffect(() => {
-        console.log(userSetting.notify_time);
+        console.log(userSetting.notify_time)
         popUpNotification(userSetting.notify_time);
     }, [userSetting]);
 

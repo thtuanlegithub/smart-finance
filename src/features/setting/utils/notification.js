@@ -29,8 +29,8 @@ PushNotification.configure({
 
 PushNotification.createChannel(
     {
-        channelId: "channel-id",
-        channelName: "My channel", 
+        channelId: "reminder",
+        channelName: "Reminder", 
         channelDescription: "A channel to categorize your notifications", 
         playSound: true, 
         soundName: "default",
@@ -51,8 +51,10 @@ export const popUpNotification = (reminderAt) => {
         date.setDate(date.getDate() + 1);
     }
 
+    PushNotification.cancelAllLocalNotifications({id: 1000});
     PushNotification.localNotificationSchedule({
-        channelId: "channel-id", 
+        id: 1000,
+        channelId: 'reminder', 
         title: 'Reminder!', 
         message: 'Don\'t forget to add your spending for today!',
         date: date,

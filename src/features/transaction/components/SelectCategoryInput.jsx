@@ -5,8 +5,9 @@ import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
 import { getCategoryIcons } from '../../category'
-const SelectCategoryInput = () => {
-    const category = useSelector(state => state.category.currentCategory);
+const SelectCategoryInput = (props) => {
+    category = useSelector(state => state.category.currentCategory);
+
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
@@ -14,7 +15,7 @@ const SelectCategoryInput = () => {
                     category ?
                         <Image style={styles.labelIcon} source={getCategoryIcons(category.id)} />
                         :
-                        <Image style={styles.labelIcon} source={placeHolderIcon} />
+                        <Image style={styles.labelIcon} source={getCategoryIcons(null)} />
                 }
             </View>
             <View style={styles.inputGroup}>

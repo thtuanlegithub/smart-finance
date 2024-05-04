@@ -73,5 +73,6 @@ export const popUpNotification = (reminderAt) => {
         message: 'Don\'t forget to add your spending for today!',
         date: date,
         repeatType: 'day',
+        smallIcon: 'ic_launcher.png',
     });
 };

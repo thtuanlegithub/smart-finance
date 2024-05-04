@@ -17,6 +17,7 @@ import { useSnapPoints } from '../hooks/useSnapPoints';
 import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
 import BudgetNavigator from '../features/budget/pages/BudgetNavigator';
 import SettingNavigator from '../features/setting/pages/SettingNavigator';
+import AddLimitBottomSheetModal from '../features/limit/components/AddLimitBottomSheetModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -123,6 +124,7 @@ const MainTabNavigation = (props) => {
                                 <AddTransactionNavigator />
                             </NavigationContainer>
                         </BottomSheetModal>
+                        <AddLimitBottomSheetModal />
                     </View>
                 </NavigationContainer>
             </BottomSheetModalProvider>

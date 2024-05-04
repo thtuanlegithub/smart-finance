@@ -14,15 +14,16 @@ const WalletForm = () => {
 
     const handleSelectWallet = (wallet) => {
         dispatch(setTransactionWallet(wallet));
-        navigation.navigate('Add Transaction');
+        navigation.goBack();
     }
 
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Select Wallet'
                 onBackPress={() => {
-                    navigation.navigate('Add Transaction');
-                }} />
+                    navigation.goBack();
+                }}
+            />
             <View style={{ marginTop: 10 }}>
                 {listWallet.map((wallet, index) => {
                     return (

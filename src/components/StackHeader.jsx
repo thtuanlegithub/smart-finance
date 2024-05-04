@@ -8,9 +8,20 @@ import { useNavigation } from '@react-navigation/native'
 
 const StackHeader = (props) => {
     const navigation = useNavigation();
+    const handleBackPress = () => {
+        // Xử lý back press theo yêu cầu chuyển trang khác
+        if (props.onBackPress) {
+            props.onBackPress();
+        }
+        else {
+            // Xử lý back press về trang thức theo mặc định
+            navigation.goBack();
+        }
+    }
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={styles.back}
+                onPress={handleBackPress}>
                 {props.backContent
                     ?
                     <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{props.backContent}</Text>

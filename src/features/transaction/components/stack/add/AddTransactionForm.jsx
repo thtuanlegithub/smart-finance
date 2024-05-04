@@ -147,7 +147,7 @@ const AddTransactionForm = ({ navigation }) => {
                             value={amount} />
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate("Select Category")}>
-                        <SelectCategoryInput />
+                        <SelectCategoryInput feature='addtransaction' />
                     </TouchableOpacity>
                     {
                         type == 'income'
@@ -273,7 +273,7 @@ const AddTransactionForm = ({ navigation }) => {
                     onPress={handleSaveTransaction}
                 />
             </View>
-        </KeyboardAvoidingView >
+        </KeyboardAvoidingView>
     )
 }
 

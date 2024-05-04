@@ -17,7 +17,7 @@ import AddTransactionInputViewHeader from '../../transaction/components/AddTrans
 import WalletItem from '../../../components/WalletItem';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import { useDispatch, useSelector } from 'react-redux';
-import { initiateUserSetting, initiateUserWallet, popUpNotification } from '../../setting';
+import { initiateUserSetting, initiateUserWallet, popUpNotification, setReminderNotification } from '../../setting';
 import { selectWallet } from '../../setting';
 import BottomSheetReport from '../components/BottomSheetReport';
 
@@ -75,11 +75,6 @@ function Home(props) {
         initiateUserSetting(currentUser, dispatch);
         initiateUserWallet(currentUser, dispatch);
     }, [currentUser]);
-
-    useEffect(() => {
-        console.log(userSetting.notify_time)
-        popUpNotification(userSetting.notify_time);
-    }, [userSetting]);
 
     return (
         <ScrollView>

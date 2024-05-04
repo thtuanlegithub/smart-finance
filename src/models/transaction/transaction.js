@@ -6,6 +6,9 @@ class Transaction {
         this.note = '';
         this.created_at = '';
         this.wallet_id = '';
+        this.reminder = null;
+        this.type = null;   
+        this.people = null;
     }
 }
 

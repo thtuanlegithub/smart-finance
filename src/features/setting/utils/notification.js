@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import { convertToDateTime } from '../../../utils/convertToDateTime';
 PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: function (token) {
@@ -38,6 +39,18 @@ PushNotification.createChannel(
         vibrate: true,
     },
 );
+
+export const setReminderNotification = (reminder) => {
+    let date = convertToDateTime(reminder.date, reminder.notify_time);
+    PushNotification.cancelAllLocalNotifications({ id: reminder.id });
+    PushNotification.localNotificationSchedule({
+        id: reminder.id,
+        channelId: 'reminder',
+        title: reminder.title,
+        message: reminder.message,
+        date: date,
+    });
+};
 
 export const popUpNotification = (reminderAt) => {
     let date = new Date();

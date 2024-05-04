@@ -4,11 +4,10 @@ import CustomHandle from '../../../components/CustomHandle';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import AddTransactionInputViewHeader from '../../transaction/components/AddTransactionInputViewHeader';
-
-import { listWallet } from '../../../data/fakeDataListWallet';
 import WalletItem from '../../../components/WalletItem';
-import { useDispatch } from 'react-redux';
-import { setCurrentWallet } from '../../transaction';
+import { useDispatch, useSelector } from 'react-redux';
+import { FlatList } from 'react-native-actions-sheet';
+import { setWallet } from '../../setting';
 
 const HIDE = false;
 
@@ -16,9 +15,10 @@ const BottomSheetSelectWallet = (props) => {
     const dispatch = useDispatch();
     const snapPoints = useSnapPoints();
     const handleSelectWallet = (wallet) => {
-        dispatch(setCurrentWallet(wallet));
+        dispatch(setWallet(wallet.wallet_id));
         props.bottomSheetSelectWalletRef.current?.close();
     }
+
     const handleDisplayBottomSheetSelectWallet = (action) => {
         if (action == HIDE) {
             props.bottomSheetSelectWalletRef.current?.close();
@@ -27,6 +27,10 @@ const BottomSheetSelectWallet = (props) => {
             props.bottomSheetSelectWalletRef.current?.present();
         }
     }
+
+    const userWallet = useSelector(state => state.wallet.wallets);
+
+
     return (
         <BottomSheetModal
             backdropComponent={BottomSheetBackdrop}
@@ -42,14 +46,18 @@ const BottomSheetSelectWallet = (props) => {
                     handleDisplayBottomSheetSelectWallet(HIDE);
                 }} />
             <View style={{ marginTop: 10 }}>
-                {listWallet.map((wallet, index) => {
-                    return (
-                        <WalletItem
-                            onSelect={() => handleSelectWallet(wallet)}
-                            key={index}
-                            name={wallet.name} />
-                    )
-                })}
+                <FlatList
+                    data={userWallet}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <WalletItem
+                                keyExtractor={(item, index) => index.toString()}
+                                onSelect={() => handleSelectWallet(item)}
+                                name={item.name} />
+                        )
+                    }}
+                />
             </View>
         </BottomSheetModal>
     )

@@ -81,7 +81,7 @@ function Home(props) {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>
-                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet.balance.toString())}</Text>
+                        <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet?.balance.toString())}</Text>
                         <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>Total balances</Text>
                     </View>
                     <View style={styles.notificationContainer}>
@@ -100,7 +100,7 @@ function Home(props) {
                         <View style={styles.currentWallet}>
                             <View style={styles.currentWalletName}>
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
-                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet.wallet_name}</Text>
+                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet?.wallet_name}</Text>
                             </View>
                             <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet.amount)}</Text>
                         </View>

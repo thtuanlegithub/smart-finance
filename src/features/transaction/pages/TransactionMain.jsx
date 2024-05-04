@@ -21,17 +21,21 @@ import AddTransactionInputViewHeader from '../components/AddTransactionInputView
 import WalletItem from '../../../components/WalletItem';
 import { listWallet } from '../../../data/fakeDataListWallet';
 import ActionSheetSelectTimeRangeTransaction from '../components/ActionSheetSelectTimeRangeTransaction';
+import { selectWallet, setWallet } from '../../setting';
 
 const Tab = createMaterialTopTabNavigator();
 
 const DISPLAY = true;
 
 function TransactionMain(props) {
+
+    const userWallet = useSelector(state => state.wallet.wallets);
+
     const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
-    const currentWallet = useSelector(state => state.transaction.currentWallet);
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
 
     const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
 
@@ -43,7 +47,7 @@ function TransactionMain(props) {
     const bottomSheetSelectWalletRef = useRef(null);
     const snapPoints = useSnapPoints();
     const handleSelectWallet = (wallet) => {
-        dispatch(setCurrentWallet(wallet));
+        dispatch(selectWallet(wallet.wallet_id));
         bottomSheetSelectWalletRef.current?.close();
     }
 
@@ -57,12 +61,13 @@ function TransactionMain(props) {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.walletGroup}>
-                    <WalletSelect name={currentWallet.name} onSelect={() => bottomSheetSelectWalletRef.current?.present()} />
+                    <WalletSelect name={currentWallet.wallet_name}
+                        onSelect={() => bottomSheetSelectWalletRef.current?.present()} />
                     <View style={styles.balancesGroup}>
                         <Text style={[typography.RegularInterH5, { color: colors.green07, textAlign: 'right' }]}>Balances</Text>
                         <Text style={[typography.SemiBoldInterH5, {
                             color: colors.green07
-                        }]}>{formatCurrency(currentWallet.amount)} VND</Text>
+                        }]}>{formatCurrency(currentWallet.balance)} VND</Text>
                     </View>
                 </View>
                 <View style={styles.typeOfTransaction}>
@@ -115,12 +120,12 @@ function TransactionMain(props) {
                         bottomSheetSelectWalletRef.current?.close();
                     }} />
                 <View style={{ marginTop: 10 }}>
-                    {listWallet.map((wallet, index) => {
+                    {userWallet.map((wallet, index) => {
                         return (
                             <WalletItem
                                 onSelect={() => handleSelectWallet(wallet)}
                                 key={index}
-                                name={wallet.name} />
+                                name={wallet.wallet_name} />
                         )
                     })}
                 </View>

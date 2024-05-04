@@ -17,6 +17,8 @@ const WalletForm = () => {
         navigation.goBack();
     }
 
+    const userWallet = useSelector(state => state.wallet.wallets);
+
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Select Wallet'
@@ -25,7 +27,7 @@ const WalletForm = () => {
                 }}
             />
             <View style={{ marginTop: 10 }}>
-                {listWallet.map((wallet, index) => {
+                {userWallet.map((wallet, index) => {
                     return (
                         <WalletItem
                             onSelect={() => handleSelectWallet(wallet)}

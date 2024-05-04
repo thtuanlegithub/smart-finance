@@ -13,6 +13,9 @@ export {
     setTransactionReminderDate,
     setTransactionReminderTime,
     setTransactionHasReminder,
+    setTransactionHasTax,
+    setTransactionInsurance,
+    setTransactionDependents,
     clearInput,
     setDisplayModal
 } from './services/addTransactionFormSlice';

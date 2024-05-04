@@ -5,18 +5,18 @@ import colors from '../styles/colors'
 import formatCurrency from '../utils/formatCurrency'
 import removeCommas from '../utils/removeCommas'
 
-const MoneyInput = (props) => {
+const NumericInputHintText = (props) => {
 
     const [isFocused, setFocus] = useState(false);
-    const [money, setMoney] = React.useState(props.value ? parseInt(props.value).toString() : '0');
+    const [value, setValue] = React.useState(props.value ? parseInt(props.value).toString() : '0');
 
-    const handleMoneyChange = (text) => {
-        let newMoney = '0';
+    const handleValueChange = (text) => {
+        let newValue = '0';
         if (text.length > 0 && isNaN(removeCommas(text)) == false) {
-            newMoney = parseInt(removeCommas(text)).toString();
+            newValue = parseInt(removeCommas(text)).toString();
         }
-        setMoney(newMoney);
-        props.onChange(newMoney);
+        setValue(newValue);
+        props.onChange(newValue);
     }
     return (
         <View style={styles.transactionInputContainer}>
@@ -24,10 +24,11 @@ const MoneyInput = (props) => {
                 <Text style={styles.currencyUnitLabel}>VND</Text>
             </View>
             <View style={styles.inputGroup}>
-                <Text style={[typography.MediumInterH6, { color: colors.green08 }]}>Amount</Text>
+                <Text style={[typography.MediumInterH6, { color: colors.green08 }]}>{props.hint}</Text>
                 <TextInput
-                    value={formatCurrency(removeCommas(props.value.toString()))}
-                    onChangeText={handleMoneyChange}
+                    inputMode='numeric'
+                    value={formatCurrency(props.value ? parseInt(props.value).toString() : '0')}
+                    onChangeText={handleValueChange}
                     style={
                         [styles.input,
                         { borderBottomWidth: isFocused ? 1.5 : 0.5 },
@@ -72,4 +73,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default MoneyInput
+export default NumericInputHintText

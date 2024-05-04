@@ -1,7 +1,7 @@
 const typography = {
     SemiBoldInterH2: {
         fontFamily: 'Inter-SemiBold',
-        fontSize: 24,
+        fontSize: 20,
     },
     RegularInterH4: {
         fontFamily: 'Inter-Regular',
@@ -61,11 +61,11 @@ const typography = {
     },
     MediumInterH2: {
         fontFamily: 'Inter-Medium',
-        fontSize: 24,
+        fontSize: 20,
     },
     RegularInterH2: {
         fontFamily: 'Inter-Regular',
-        fontSize: 24,
+        fontSize: 20,
     },
     RegularInterH3: {
         fontFamily: 'Inter-Regular',

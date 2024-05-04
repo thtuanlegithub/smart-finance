@@ -71,6 +71,10 @@ const initialState = {
     hasReminder: false,
     people: [],
     reference: null,
+    hasTax: false,
+    insurance: 0,
+    dependents: 0,
+    people: [],
 };
 
 const addTransactionFormSlice = createSlice({
@@ -110,6 +114,15 @@ const addTransactionFormSlice = createSlice({
         setTransactionHasReminder: (state, action) => {
             state.hasReminder = action.payload;
         },
+        setTransactionHasTax: (state, action) => {
+            state.hasTax = action.payload;
+        },
+        setTransactionInsurance: (state, action) => {
+            state.insurance = action.payload;
+        },
+        setTransactionDependents: (state, action) => {
+            state.dependents = action.payload;
+        },
         clearInput: (state) => {
             Object.assign(state, initialState);
         },
@@ -136,6 +149,9 @@ export const {
     setTransactionReminderDate,
     setTransactionReminderTime,
     setTransactionHasReminder,
+    setTransactionHasTax,
+    setTransactionInsurance,
+    setTransactionDependents,
     clearInput,
     setDisplayModal
 } = addTransactionFormSlice.actions;

@@ -1,6 +1,6 @@
 export default function calculatePersonalIncomeTax(salary, dependents, insurance) {
     // Mức lương cơ sở và mức lương tối đa để đóng BHXH, BHYT, BHTN
-    const baseSalary = 11000000;
+    const baseSalary = 1100000;
     const maxInsuranceSalary = 36000000;
 
     // Tính các khoản bảo hiểm và giảm trừ
@@ -8,7 +8,7 @@ export default function calculatePersonalIncomeTax(salary, dependents, insurance
     let healthInsurance = Math.min(salary, maxInsuranceSalary) * 0.015;
     let unemploymentInsurance = Math.min(salary, maxInsuranceSalary) * 0.01;
     let totalInsurance = socialInsurance + healthInsurance + unemploymentInsurance * 0.04 + insurance;
-    let personalDeduction = 11000000;
+    let personalDeduction = baseSalary;
     let dependentDeduction = dependents * 4400000;
 
     // Tính thu nhập chịu thuế

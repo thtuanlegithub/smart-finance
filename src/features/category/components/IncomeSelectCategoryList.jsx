@@ -3,32 +3,18 @@ import React from 'react'
 import NewCategoryButton from './NewCategoryButton'
 import IncomeSelectCategoryItem from './IncomeSelectCategoryItem'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
-import { setTransactionType } from '../../transaction/services/addTransactionFormSlice'
-import { setCurrentCategory } from '../services/categorySlice'
-import transactionType from '../../transaction/data/transactionType'
 const incomeCategory = require('../data/incomeCategory.json');
 
-const IncomeSelectCategoryList = () => {
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
-
-    const handleSelectCategory = (category) => {
-        dispatch(setTransactionType(transactionType.INCOME));
-        dispatch(setCurrentCategory(category));
-        navigation.navigate('Add Transaction');
-    }
-    
+const IncomeSelectCategoryList = (props) => {
     return (
         <View style={styles.outerContainer}>
             <ScrollView contentContainerStyle={styles.container}>
                 <NewCategoryButton />
-                {incomeCategory.map((item, index) => { 
+                {incomeCategory.map((item, index) => {
                     return <IncomeSelectCategoryItem
-                        onSelect={() => handleSelectCategory(item)} 
+                        onSelect={() => props.onCategorySelect(item)}
                         key={index}
-                        category={item} /> 
+                        category={item} />
                 })}
                 <View style={{ height: 24 }}></View>
             </ScrollView>

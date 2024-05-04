@@ -9,17 +9,35 @@ import ExpenseSelectCategoryList from '../../../../category/components/ExpenseSe
 import IncomeSelectCategoryList from '../../../../category/components/IncomeSelectCategoryList';
 import DebtLoanSelectCategoryList from '../../../../category/components/DebtLoanSelectCategoryList';
 import { useSelector } from 'react-redux';
+import { setTransactionType } from '../../../services/addTransactionFormSlice';
+import { setCurrentCategory } from '../../../../category/services/categorySlice';
+import transactionType from '../../../data/transactionType';
 
 const Tab = createMaterialTopTabNavigator();
 
 const SelectCategoryForm = () => {
     const navigation = useNavigation();
     const type = useSelector(state => state.addTransactionForm.type);
+    const handleSelectExpenseCategory = (category) => {
+        dispatch(setTransactionType(transactionType.EXPENSE));
+        dispatch(setCurrentCategory(category));
+        navigation.goBack();
+    }
+    const handleSelectIncomeCategory = (category) => {
+        dispatch(setTransactionType(transactionType.INCOME));
+        dispatch(setCurrentCategory(category));
+        navigation.goBack();
+    }
+    const handleSelectDebtLoanCategory = (category) => {
+        dispatch(setTransactionType(transactionType.DEBT_LOAN));
+        dispatch(setCurrentCategory(category));
+        navigation.goBack();
+    }
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Select Category'
                 onBackPress={() => {
-                    navigation.navigate('Add Transaction');
+                    navigation.goBack();
                 }} />
             <View style={styles.navBar}>
                 <Tab.Navigator
@@ -54,9 +72,15 @@ const SelectCategoryForm = () => {
                         tabBarInactiveTintColor: colors.gray03,
                     }}
                 >
-                    <Tab.Screen name="Expense" component={ExpenseSelectCategoryList} />
-                    <Tab.Screen name="Income" component={IncomeSelectCategoryList} />
-                    <Tab.Screen name="Debt/ Loan" component={DebtLoanSelectCategoryList} />
+                    <Tab.Screen name="Expense">
+                        {props => <ExpenseSelectCategoryList {...props} onCategorySelect={handleSelectExpenseCategory} />}
+                    </Tab.Screen>
+                    <Tab.Screen name="Income">
+                        {props => <IncomeSelectCategoryList {...props} onCategorySelect={handleSelectIncomeCategory} />}
+                    </Tab.Screen>
+                    <Tab.Screen name="Debt/ Loan">
+                        {props => <DebtLoanSelectCategoryList {...props} onCategorySelect={handleSelectDebtLoanCategory} />}
+                    </Tab.Screen>
                 </Tab.Navigator>
             </View>
 

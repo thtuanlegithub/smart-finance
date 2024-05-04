@@ -1,8 +1,10 @@
 import { View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native'
 import colors from '../../../styles/colors'
-import typography from '../../../styles/typography'; import React from 'react'
+import typography from '../../../styles/typography'; import React, { useEffect, useRef } from 'react'
 import SemiCircularProgress from '../../../components/SemiCircularProgress'
 import LimitCard from './LimitCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAddLimitBottomSheetDisplay } from '../../limit';
 
 const limitList = [{
     id: '1',
@@ -27,32 +29,40 @@ const limitList = [{
 }];
 
 const LimitList = () => {
+    const dispatch = useDispatch();
+
     return (
-        <View style={styles.container}>
-            <FlatList
-                ListHeaderComponent={
-                    <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
-                        <View style={styles.limitBudgetQuickReport}>
-                            <SemiCircularProgress
-                                fill={70}
-                                mainColor={colors.red05}
-                                subColor={colors.red04}
-                                labelTextColor={colors.red05}
-                                contentTextColor={colors.red02} />
+        <>
+            <View style={styles.container}>
+                <FlatList
+                    ListHeaderComponent={
+                        <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
+                            <View style={styles.limitBudgetQuickReport}>
+                                <SemiCircularProgress
+                                    fill={70}
+                                    mainColor={colors.red05}
+                                    subColor={colors.red04}
+                                    labelTextColor={colors.red05}
+                                    contentTextColor={colors.red02} />
+                            </View>
+                            <View style={styles.createNewBudgetContainer}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        dispatch(setAddLimitBottomSheetDisplay(true))
+                                    }}
+                                    style={styles.btnCreateNewBudget}>
+                                    <Text style={{ ...typography.MediumInterH5, color: 'white' }}>Create new limit</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={styles.createNewBudgetContainer}>
-                            <TouchableOpacity style={styles.btnCreateNewBudget}>
-                                <Text style={{ ...typography.MediumInterH5, color: 'white' }}>Create new limit</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                }
-                data={limitList}
-                renderItem={({ item }) => <LimitCard {...item} />}
-                keyExtractor={item => item.id}
-                showsVerticalScrollIndicator={false}
-            />
-        </View>
+                    }
+                    data={limitList}
+                    renderItem={({ item }) => <LimitCard {...item} />}
+                    keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={false}
+                />
+            </View>
+        </>
     )
 }
 

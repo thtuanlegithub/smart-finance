@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ActionSheet from 'react-native-actions-sheet';
-import { clearBudgetTimeRange, setBudgetTimeRangeEnd, setBudgetTimeRangeStart } from '../services/budgetSlice';
+import { clearAddLimitTimeRange, setAddLimitTimeRange, setAddLimitTimeRangeEnd, setAddLimitTimeRangeStart } from '../../limit';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import BottomMenuItem from '../../../components/BottomMenuItem';
@@ -12,61 +12,62 @@ import { formatDate } from '../../../utils/formatDate';
 const DISPLAY = true;
 const HIDE = false;
 
-const ActionSheetSelectTimeRangeBudget = (props) => {
+const ActionSheetSelectTimeRangeAddLimit = (props) => {
 
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [pickDateForStart, setPickDateForStart] = useState(true);
 
     const dispatch = useDispatch();
 
-    const budgetTimeRangeStart = useSelector(state => state.budget.budgetTimeRangeStart);
-    const budgetTimeRangeEnd = useSelector(state => state.budget.budgetTimeRangeEnd);
+    const addLimitTimeRangeStart = useSelector(state => state.addLimit.addLimitTimeRangeStart);
+    const addLimitTimeRangeEnd = useSelector(state => state.addLimit.addLimitTimeRangeEnd);
 
-    const handleActionSheetSelectBudgetTimeRangeDisplay = (action) => {
-        props.actionSheetBudgetTimeRangeRef.current.setModalVisible(action);
+    const handleActionSheetSelectAddLimitTimeRangeDisplay = (action) => {
+        props.actionSheetAddLimitTimeRangeRef.current.setModalVisible(action);
     }
 
-    const actionSheetCustomizeBudgetTimeRangeRef = useRef();
-    const handleActionSheetCustomizeBudgetTimeRangeDisplay = (action) => {
-        actionSheetCustomizeBudgetTimeRangeRef.current.setModalVisible(action);
+    const actionSheetCustomizeAddLimitTimeRangeRef = useRef();
+    const handleActionSheetCustomizeAddLimitTimeRangeDisplay = (action) => {
+        actionSheetCustomizeAddLimitTimeRangeRef.current.setModalVisible(action);
     }
-    const handleBudgetTimeRangeSelect = (budgetTimeRange) => {
-        if (budgetTimeRange === 'Customize') {
-            handleActionSheetCustomizeBudgetTimeRangeDisplay(DISPLAY);
-            handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
+    const handleAddLimitTimeRangeSelect = (addLimitTimeRange) => {
+        if (addLimitTimeRange === 'Customize') {
+            dispatch(setAddLimitTimeRange(addLimitTimeRange));
+            handleActionSheetCustomizeAddLimitTimeRangeDisplay(DISPLAY);
+            handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE);
         }
         else {
-            dispatch(clearBudgetTimeRange());
-            handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
+            dispatch(setAddLimitTimeRange(addLimitTimeRange));
+            handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE);
         }
     }
 
     return (
         <>
-            <ActionSheet ref={props.actionSheetBudgetTimeRangeRef}>
+            <ActionSheet ref={props.actionSheetAddLimitTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
                     <BottomMenuItem
                         title='This week'
-                        onPress={() => handleBudgetTimeRangeSelect('This week')} />
+                        onPress={() => handleAddLimitTimeRangeSelect('This week')} />
                     <BottomMenuItem
                         title='This month'
-                        onPress={() => handleBudgetTimeRangeSelect('This month')} />
+                        onPress={() => handleAddLimitTimeRangeSelect('This month')} />
                     <BottomMenuItem
                         title='This year'
-                        onPress={() => handleBudgetTimeRangeSelect('This year')} />
+                        onPress={() => handleAddLimitTimeRangeSelect('This year')} />
                     <BottomMenuItem
                         title='Customize'
-                        onPress={() => handleBudgetTimeRangeSelect('Customize')} />
+                        onPress={() => handleAddLimitTimeRangeSelect('Customize')} />
                     <TouchableOpacity
-                        onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(HIDE)}
+                        onPress={() => handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>
                         <Text style={
                             [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetCustomizeBudgetTimeRangeRef}>
+            <ActionSheet ref={actionSheetCustomizeAddLimitTimeRangeRef}>
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
                     <TouchableOpacity onPress={() => {
@@ -74,9 +75,9 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                         setPickDateForStart(true);
                     }}>
                         {
-                            budgetTimeRangeStart
+                            addLimitTimeRangeStart
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {budgetTimeRangeStart}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {addLimitTimeRangeStart}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
                         }
@@ -88,9 +89,9 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                         setPickDateForStart(false);
                     }}>
                         {
-                            budgetTimeRangeEnd
+                            addLimitTimeRangeEnd
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {budgetTimeRangeEnd}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {addLimitTimeRangeEnd}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
                         }
@@ -98,17 +99,17 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                     <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY);
-                                dispatch(clearBudgetTimeRange());
+                                handleActionSheetCustomizeAddLimitTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectAddLimitTimeRangeDisplay(DISPLAY);
+                                dispatch(clearAddLimitTimeRange());
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeBudgetTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
+                                handleActionSheetCustomizeAddLimitTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE);
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
@@ -121,10 +122,10 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                         date={new Date()}
                         onConfirm={(date) => {
                             if (pickDateForStart) {
-                                dispatch(setBudgetTimeRangeStart(formatDate(date)));
+                                dispatch(setAddLimitTimeRangeStart(formatDate(date)));
                             }
                             else {
-                                dispatch(setBudgetTimeRangeEnd(formatDate(date)));
+                                dispatch(setAddLimitTimeRangeEnd(formatDate(date)));
                             }
                             setDatePickerOpen(false)
                         }}
@@ -138,4 +139,4 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
     )
 }
 
-export default ActionSheetSelectTimeRangeBudget
+export default ActionSheetSelectTimeRangeAddLimit

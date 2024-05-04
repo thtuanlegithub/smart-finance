@@ -9,6 +9,7 @@ class Transaction {
         this.reminder = null;
         this.type = null;   
         this.people = null;
+        this.tax = null;
     }
 }
 

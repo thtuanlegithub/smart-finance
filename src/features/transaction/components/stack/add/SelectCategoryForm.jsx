@@ -8,7 +8,7 @@ import typography from '../../../../../styles/typography';
 import ExpenseSelectCategoryList from '../../../../category/components/ExpenseSelectCategoryList';
 import IncomeSelectCategoryList from '../../../../category/components/IncomeSelectCategoryList';
 import DebtLoanSelectCategoryList from '../../../../category/components/DebtLoanSelectCategoryList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionType } from '../../../services/addTransactionFormSlice';
 import { setCurrentCategory } from '../../../../category/services/categorySlice';
 import transactionType from '../../../data/transactionType';
@@ -17,6 +17,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const SelectCategoryForm = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const type = useSelector(state => state.addTransactionForm.type);
     const handleSelectExpenseCategory = (category) => {
         dispatch(setTransactionType(transactionType.EXPENSE));

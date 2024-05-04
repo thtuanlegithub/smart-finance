@@ -50,6 +50,11 @@ class TransactionBuilder {
         return this;
     }
 
+    setTax(tax) {
+        this.transaction.tax = tax;
+        return this;
+    }
+
     build() {
         return this.transaction;
     }

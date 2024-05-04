@@ -81,8 +81,17 @@ const AddTransactionForm = ({ navigation }) => {
         dispatch(setDisplayModal(false));
         dispatch(clearInput());
 
+        let tax = 0;
+        if (hasTax) {
+            tax = {
+                total_tax: calculatePersonalIncomeTax(amount, dependents, insurance),
+                insurance: insurance,
+                dependents: dependents,
+            }
+        }
+
         const newTransaction = new TransactionBuilder()
-            .setAmount(amount)
+            .setAmount(amount - calculatePersonalIncomeTax(amount, dependents, insurance))
             .setCategoryId(category.id)
             .setCreatedAt(created_at)
             .setNote(note)
@@ -90,6 +99,7 @@ const AddTransactionForm = ({ navigation }) => {
             .setType(type)
             .setPeople(people)
             .setReminder(reminderTime+ ', ' + reminderDate) 
+            .setTax(tax)
             .build();
 
         // Set local notification

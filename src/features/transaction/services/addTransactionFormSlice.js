@@ -4,28 +4,41 @@ import { FirestoreSingleton } from "../../../patterns";
 import formatTime from "../../../utils/formatTime";
 import { formatDate } from "../../../utils/formatDate";
 import { getCurrentUser } from "../../authentication";
+import { firebase } from "@react-native-firebase/firestore";
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
-const transactionCollection = firestoreInstance.collection(FirebaseNodes.TRANSACTION);
+const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
 
 // Firebase services
 async function updateTransaction(trans_id, newTransaction) {
-    let docRef;
-    if (trans_id) {
-        docRef = transactionCollection.doc(trans_id);
-        const doc = await docRef.get();
+    const [month, day, year] = newTransaction.created_at.split(' ');
+    const userId = getCurrentUser().uid;
+    const dayDocRef = userCollection.doc(userId).collection(FirebaseNodes.TRANSACTION).doc(year).collection(month).doc(`Day ${day}`);
 
-        if (doc.exists) {
-            await docRef.update(newTransaction);
-        }
-    } else {
-        docRef = await transactionCollection.add(newTransaction);
-        const id = docRef.id;
-        newTransaction.trans_id = id;
-        await docRef.update(newTransaction);
+    let dayDoc = await dayDocRef.get();
+    if (!dayDoc.exists) {
+        await dayDocRef.set({ transactions: [] });
+        dayDoc = await dayDocRef.get();
     }
 
-    const updatedTransaction = await docRef.get();
-    return { id: docRef.id, ...updatedTransaction.data() };
+    const transactions = dayDoc.data().transactions || [];
+    let updatedTransactions;
+
+    if (trans_id) {
+        const existingTransactionIndex = transactions.findIndex(t => t.trans_id === trans_id);
+        if (existingTransactionIndex !== -1) {
+            updatedTransactions = [...transactions];
+            updatedTransactions[existingTransactionIndex] = newTransaction;
+        } else {
+            updatedTransactions = [...transactions, newTransaction];
+        }
+    } else {
+        newTransaction.trans_id = firebase.firestore().collection('dummy').doc().id; // Generate a new Firestore document ID
+        updatedTransactions = [...transactions, newTransaction];
+    }
+
+    await dayDocRef.update({ transactions: updatedTransactions });
+
+    return newTransaction;
 }
 
 async function updateReminder(reminder) {

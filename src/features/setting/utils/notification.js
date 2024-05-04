@@ -42,12 +42,13 @@ PushNotification.createChannel(
 
 export const setReminderNotification = (reminder) => {
     let date = convertToDateTime(reminder.date, reminder.notify_time);
+    let message = reminder.message || 'Check your spending now!';
     PushNotification.cancelAllLocalNotifications({ id: reminder.id });
     PushNotification.localNotificationSchedule({
         id: reminder.id,
         channelId: 'reminder',
         title: reminder.title,
-        message: reminder.message,
+        message: message,
         date: date,
     });
 };

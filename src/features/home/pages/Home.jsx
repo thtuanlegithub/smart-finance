@@ -34,7 +34,6 @@ function Home(props) {
 
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const userWallet = useSelector(state => state.wallet.wallets);
-    const userSetting = useSelector(state => state.setting);
     const dispatch = useDispatch();
 
     const handleSelectWallet = (wallet) => {

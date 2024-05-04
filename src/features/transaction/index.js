@@ -1,5 +1,6 @@
 export {
     updateTransaction,
+    updateReminder,
     default as addTransactionFormReducer,
     setTransactionAmount,
     setTransactionType,

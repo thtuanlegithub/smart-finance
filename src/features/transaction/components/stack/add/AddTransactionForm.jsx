@@ -12,15 +12,16 @@ import typography from '../../../../../styles/typography'
 import colors from '../../../../../styles/colors'
 import BottomMenuItem from '../../../../../components/BottomMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate, updateTransaction } from '../../../services/addTransactionFormSlice'
+import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate, updateReminder, updateTransaction } from '../../../services/addTransactionFormSlice'
 import { formatDate } from '../../../../../utils/formatDate'
 import LoanInformation from '../../../../category/components/LoanInformation'
 import DebtInformation from '../../../../category/components/DebtInformation'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TransactionBuilder } from '../../../../../patterns'
-import { setBalance, updateUserWallet } from '../../../../setting'
+import { setBalance, setReminderNotification, updateUserWallet } from '../../../../setting'
 import transactionType from '../../../data/transactionType'
 import { updateWallet } from '../../../../setting'
+import { getCurrentUser } from '../../../../authentication'
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
@@ -43,6 +44,7 @@ const AddTransactionForm = ({ navigation }) => {
     const hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
     const reminderTime = useSelector(state => state.addTransactionForm.reminderTime);
     const reminderDate = useSelector(state => state.addTransactionForm.reminderDate);
+    const people = useSelector(state => state.addTransactionForm.people);
 
     // Handle Select Transaction Date
     const handlePress = (index) => {
@@ -58,7 +60,7 @@ const AddTransactionForm = ({ navigation }) => {
             setOpen(true)
         }
     }
-
+    
     const handleAmountChange = (amount) => {
         amount = parseInt(amount);
         dispatch(setTransactionAmount(amount));
@@ -79,8 +81,25 @@ const AddTransactionForm = ({ navigation }) => {
             .setCreatedAt(created_at)
             .setNote(note)
             .setWalletId(wallet.wallet_id)
+            .setType(type)
+            .setPeople(people)
+            .setReminder(reminderTime+ ', ' + reminderDate) 
             .build();
 
+        // Set local notification
+        if (hasReminder) {
+            const currentTimestamp = () => Math.floor(Date.now() / 1000);
+            const newReminder = {
+                id: currentTimestamp(),
+                title: category.name, 
+                message: note, 
+                notify_time: reminderTime, 
+                date: reminderDate
+            }
+            setReminderNotification(newReminder);
+            updateReminder(newReminder);
+        }
+        
         let newWallet = { ...wallet };
         switch (type) {
             case transactionType.EXPENSE:
@@ -213,7 +232,13 @@ const AddTransactionForm = ({ navigation }) => {
                 }
                 <View style={styles.form}>
                     <TouchableOpacity onPress={() => navigation.navigate("People")}>
-                        <MediumTextIconInput field='people' placeholder='People' />
+                        {
+                            people.length > 0
+                                ?
+                                <MediumTextIconInput field='people' value={people.map(person => person.name).join(', ')} />
+                                :
+                                <MediumTextIconInput field='people' placeholder='People' />
+                        }
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("Reminder")}>
                         {

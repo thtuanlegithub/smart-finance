@@ -12,6 +12,7 @@ export {
     createUserSetting,
     updateUserSetting,
     initiateUserSetting,
+    loadReminders,
     setSettingId,
     setNotificationTime,
     setLanguage,
@@ -39,5 +40,6 @@ export {
 } from './services/walletSlice';
 
 export {
+    setReminderNotification,
     popUpNotification,
 } from './utils/notification';

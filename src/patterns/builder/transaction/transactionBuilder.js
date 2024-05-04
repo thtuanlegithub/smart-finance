@@ -35,6 +35,21 @@ class TransactionBuilder {
         return this;
     }
 
+    setReminder(reminder) {
+        this.transaction.reminder = reminder;
+        return this;
+    }
+
+    setType(type) {
+        this.transaction.type = type;
+        return this;
+    }
+
+    setPeople(people) {
+        this.transaction.people = people;
+        return this;
+    }
+
     build() {
         return this.transaction;
     }

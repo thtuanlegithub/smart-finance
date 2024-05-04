@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import { convertToDateTime } from '../../../utils/convertToDateTime';
 PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: function (token) {
@@ -30,14 +31,26 @@ PushNotification.configure({
 PushNotification.createChannel(
     {
         channelId: "reminder",
-        channelName: "Reminder", 
-        channelDescription: "A channel to categorize your notifications", 
-        playSound: true, 
+        channelName: "Reminder",
+        channelDescription: "A channel to categorize your notifications",
+        playSound: true,
         soundName: "default",
-        importance: 4, 
-        vibrate: true, 
+        importance: 4,
+        vibrate: true,
     },
 );
+
+export const setReminderNotification = (reminder) => {
+    let date = convertToDateTime(reminder.date, reminder.notify_time);
+    PushNotification.cancelAllLocalNotifications({ id: reminder.id });
+    PushNotification.localNotificationSchedule({
+        id: reminder.id,
+        channelId: 'reminder',
+        title: reminder.title,
+        message: reminder.message,
+        date: date,
+    });
+};
 
 export const popUpNotification = (reminderAt) => {
     let date = new Date();
@@ -51,13 +64,13 @@ export const popUpNotification = (reminderAt) => {
         date.setDate(date.getDate() + 1);
     }
 
-    PushNotification.cancelAllLocalNotifications({id: 1000});
+    PushNotification.cancelAllLocalNotifications({ id: 1000 });
     PushNotification.localNotificationSchedule({
         id: 1000,
-        channelId: 'reminder', 
-        title: 'Reminder!', 
+        channelId: 'reminder',
+        title: 'Reminder!',
         message: 'Don\'t forget to add your spending for today!',
         date: date,
-        repeatType: 'day', 
+        repeatType: 'day',
     });
 };

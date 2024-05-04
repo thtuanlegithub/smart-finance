@@ -7,6 +7,7 @@ import { getCurrentUser, setUser, emailPasswordSignIn } from '../../authenticati
 import { isValidAccount } from '../../../utils/validateAccount';
 import { googleSignIn } from '../../authentication';
 import LoadingItem from '../../../components/LoadingItem';
+import { loadReminders } from '../../setting';
 
 function SignIn(props) {
     const [email, setEmail] = useState('');
@@ -22,6 +23,7 @@ function SignIn(props) {
                 const userCredential = await strategy.signIn();
                 if (userCredential) {
                     dispatch(setUser(userCredential.user.toJSON()));
+                    loadReminders();
                     setLoading(false);
                 }
             } catch (error) {

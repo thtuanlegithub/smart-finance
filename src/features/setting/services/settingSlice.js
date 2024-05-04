@@ -1,8 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SettingFields, FirebaseNodes } from "../../../data/firebaseConstant";
 import { FirestoreSingleton } from "../../../patterns";
+import { convertToDateTime } from "../../../utils/convertToDateTime";
+import { getCurrentUser } from "../../authentication";
+import { setReminderNotification } from "../utils/notification";
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
 const settingCollection = firestoreInstance.collection(FirebaseNodes.SETTING);
+const usersCollection = firestoreInstance.collection(FirebaseNodes.USERS);
 
 // Firebase services
 async function getUserSetting(accountId) {
@@ -33,6 +37,23 @@ function createUserSetting(accountId) {
         language: 'en',
         account_id: accountId,
     };
+}
+
+export const loadReminders = async () => {
+    const userRef = usersCollection.doc(getCurrentUser().uid);
+    const doc = await userRef.get();
+    const user = doc.data();
+    const reminders = user.reminders;
+
+    // Schedule notifications for each reminder
+    reminders.forEach(reminder => {
+        const { id, title, message, notify_time, date } = reminder;
+        const reminderDate = convertToDateTime(date, notify_time);
+        if (reminderDate > new Date()) {
+            console.log('Set reminder này: ', reminder);
+            setReminderNotification(reminder);
+        }
+    });
 }
 
 async function initiateUserSetting(currentUser, dispatch) {

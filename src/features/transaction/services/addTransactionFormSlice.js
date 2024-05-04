@@ -3,6 +3,7 @@ import { TransactionFields, FirebaseNodes } from "../../../data/firebaseConstant
 import { FirestoreSingleton } from "../../../patterns";
 import formatTime from "../../../utils/formatTime";
 import { formatDate } from "../../../utils/formatDate";
+import { getCurrentUser } from "../../authentication";
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
 const transactionCollection = firestoreInstance.collection(FirebaseNodes.TRANSACTION);
 
@@ -27,6 +28,35 @@ async function updateTransaction(trans_id, newTransaction) {
     return { id: docRef.id, ...updatedTransaction.data() };
 }
 
+async function updateReminder(reminder) {
+    const usersCollection = firestoreInstance.collection(FirebaseNodes.USERS);
+    const userId = getCurrentUser().uid;
+    const userDocRef = usersCollection.doc(userId);
+
+    let userDoc = await userDocRef.get();
+    if (!userDoc.exists) {
+        // Create new user
+        await userDocRef.set({ reminders: [] });
+        userDoc = await userDocRef.get();
+    }
+
+    const reminders = userDoc.data().reminders || [];
+    let updatedReminders;
+
+    const existingReminderIndex = reminders.findIndex(r => r.id === reminder.id);
+    if (existingReminderIndex !== -1) {
+        // Update existing reminder
+        updatedReminders = [...reminders];
+        updatedReminders[existingReminderIndex] = reminder;
+    } else {
+        // Add new reminder
+        updatedReminders = [...reminders, reminder];
+    }
+    await userDocRef.update({ reminders: updatedReminders });
+
+    return reminder;
+}
+
 const initialState = {
     trans_id: '',
     type: 'expense',
@@ -39,6 +69,7 @@ const initialState = {
     reminderTime: formatTime(new Date()),
     reminderDate: formatDate(new Date()),
     hasReminder: false,
+    people: [],
     reference: null,
 };
 
@@ -90,6 +121,7 @@ const addTransactionFormSlice = createSlice({
 
 export {
     updateTransaction,
+    updateReminder,
 }
 
 export const {

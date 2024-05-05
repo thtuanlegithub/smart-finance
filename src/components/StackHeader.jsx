@@ -41,9 +41,13 @@ const StackHeader = (props) => {
                 }
                 <Text style={styles.title}>{props.title}</Text>
             </View>
-            <TouchableOpacity>
-                <Text style={styles.edit}>Edit</Text>
-            </TouchableOpacity>
+            {
+                props.onEditPress
+                &&
+                <TouchableOpacity>
+                    <Text style={styles.edit}>Edit</Text>
+                </TouchableOpacity>
+            }
         </View>
     )
 }

@@ -2,9 +2,9 @@ import { View, Text, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import styles from '../../../styles/AddTransactionFormStyles'
 import MoneyInput from '../../../../../components/MoneyInput'
-import SelectCategoryInput from '../../SelectCategoryInput'
-import MediumTextIconInput from '../../MediumTextIconInput'
-import NoOutlinedMediumTextIconInput from '../../NoOutlinedMediumTextIconInput'
+import SelectCategoryInput from '../../../components/SelectCategoryInput'
+import MediumTextIconInput from '../../../components/MediumTextIconInput'
+import NoOutlinedMediumTextIconInput from '../../../components/NoOutlinedMediumTextIconInput'
 import W1Button from '../../../../../components/W1Button'
 import DatePicker from 'react-native-date-picker'
 import ActionSheet from 'react-native-actions-sheet'
@@ -66,7 +66,7 @@ const AddTransactionForm = ({ navigation }) => {
             setOpen(true)
         }
     }
-    
+
     const handleAmountChange = (amount) => {
         amount = parseInt(amount);
         dispatch(setTransactionAmount(amount));
@@ -98,7 +98,7 @@ const AddTransactionForm = ({ navigation }) => {
             .setWalletId(wallet.wallet_id)
             .setType(type)
             .setPeople(people)
-            .setReminder(reminderTime+ ', ' + reminderDate) 
+            .setReminder(reminderTime + ', ' + reminderDate)
             .setTax(tax)
             .build();
 
@@ -107,15 +107,15 @@ const AddTransactionForm = ({ navigation }) => {
             const currentTimestamp = () => Math.floor(Date.now() / 1000);
             const newReminder = {
                 id: currentTimestamp(),
-                title: category.name, 
-                message: note, 
-                notify_time: reminderTime, 
+                title: category.name,
+                message: note,
+                notify_time: reminderTime,
                 date: reminderDate
             }
             setReminderNotification(newReminder);
             updateReminder(newReminder);
         }
-        
+
         let newWallet = { ...wallet };
         switch (type) {
             case transactionType.EXPENSE:

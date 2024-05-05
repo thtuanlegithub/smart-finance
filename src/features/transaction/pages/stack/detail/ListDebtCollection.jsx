@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import TransactionNavigationHeader from '../../TransactionNavigationHeader'
+import TransactionNavigationHeader from '../../../components/TransactionNavigationHeader'
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import ListDebtCollectionItem from './ListDebtCollectionItem';

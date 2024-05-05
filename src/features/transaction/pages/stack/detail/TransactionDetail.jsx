@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import TransactionNavigationHeader from '../../TransactionNavigationHeader'
+import TransactionNavigationHeader from '../../../components/TransactionNavigationHeader'
 import { useNavigation } from '@react-navigation/native'
 import ExpenseDetail from './ExpenseDetail'
 import IncomeDetail from './IncomeDetail'

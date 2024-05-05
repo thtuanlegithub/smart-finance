@@ -27,5 +27,26 @@ export {
     setTransactionTimeRangeStart,
     setTransactionTimeRangeEnd,
     setCurrentWallet,
+    setCurrentCRUDAction,
     clearTransactionTimeRange
 } from './services/transactionSlice';
+
+export {
+    default as updateTransactionReducer,
+    setUpdateTransactionAmount,
+    setUpdateTransactionNote,
+    setUpdateTransactionDate,
+    setUpdateTransactionWallet,
+    setUpdateTransactionPeople,
+    setUpdateTransactionCategory,
+    setUpdateTransactionType,
+    setUpdateTransactionReference,
+    setUpdateTransactionReminderTime,
+    setUpdateTransactionReminderDate,
+    setUpdateTransactionHasReminder,
+    setUpdateTransactionHasTax,
+    setUpdateTransactionInsurance,
+    setUpdateTransactionDependents,
+    clearInput,
+    setDisplayModal,
+} from './services/updateTransactionFormSlice';

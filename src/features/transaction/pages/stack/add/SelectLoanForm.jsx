@@ -1,20 +1,20 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader'
+import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader'
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../../../../styles/colors';
-import DebtCard from '../../../../category/components/DebtCard';
+import LoanCard from '../../../../category/components/LoanCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { setTransactionReference } from '../../../services/addTransactionFormSlice';
 
-const SelectDebtForm = () => {
+const SelectLoanForm = () => {
     const navigation = useNavigation();
-    const DebtList = [{
+    const LoanList = [{
         id: 1,
         amount: 200000,
         remain: 100000,
-        note: 'Debt note',
+        note: 'Loan note',
         date: 'March 20, 2024',
         wallet: 'Wallet 1',
     },
@@ -22,7 +22,7 @@ const SelectDebtForm = () => {
         id: 2,
         amount: 100000,
         remain: 50000,
-        note: 'Debt note',
+        note: 'Loan note',
         date: 'March 20, 2024',
         wallet: 'Wallet 2',
     },
@@ -30,7 +30,7 @@ const SelectDebtForm = () => {
         id: 3,
         amount: 125000,
         remain: 125000,
-        note: 'Debt note',
+        note: 'Loan note',
         date: 'March 20, 2024',
         wallet: 'Wallet 3',
     },
@@ -38,7 +38,7 @@ const SelectDebtForm = () => {
         id: 4,
         amount: 200000,
         remain: 100000,
-        note: 'Debt note',
+        note: 'Loan note',
         date: 'March 20, 2024',
         wallet: 'Wallet 4',
     },
@@ -46,27 +46,27 @@ const SelectDebtForm = () => {
         id: 5,
         amount: 200000,
         remain: 100000,
-        note: 'Debt note',
+        note: 'Loan note',
         date: 'March 20, 2024',
         wallet: 'Wallet 5',
     },
     ]
     const dispatch = useDispatch();
-    const handleSelectDebt = (debt) => {
-        dispatch(setTransactionReference(debt));
+    const handleSelectLoan = (loan) => {
+        dispatch(setTransactionReference(loan));
     }
     return (
         <View style={styles.container}>
-            <AddTransactionInputViewHeader title='Select Debt'
+            <AddTransactionInputViewHeader title='Select Loan'
                 onBackPress={() => {
                     navigation.navigate('Add Transaction');
                 }}
             />
             <View style={{ marginTop: 10, gap: 1 }}>
                 <FlatList
-                    data={DebtList}
+                    data={LoanList}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <DebtCard onSelect={() => handleSelectDebt(item)} debt={item} />}
+                    renderItem={({ item }) => <LoanCard onSelect={() => handleSelectLoan(item)} loan={item} />}
                 />
             </View>
         </View>
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default SelectDebtForm
+export default SelectLoanForm

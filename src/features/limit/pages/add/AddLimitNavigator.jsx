@@ -2,8 +2,8 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { CardStyleInterpolators, TransitionSpecs, createStackNavigator } from '@react-navigation/stack'
 import AddLimitForm from './AddLimitForm';
-import SelectCategoryForm from '../../../transaction/components/stack/add/SelectCategoryForm';
-import WalletForm from '../../../transaction/components/stack/add/WalletForm';
+import SelectCategoryForm from '../../../transaction/pages/stack/add/SelectCategoryForm';
+import WalletForm from '../../../transaction/pages/stack/add/WalletForm';
 
 const AddLimitStack = createStackNavigator();
 

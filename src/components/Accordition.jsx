@@ -5,7 +5,7 @@ import colors from '../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import inputIcons from '../data/inputIcons';
 import { TextInput } from 'react-native-gesture-handler';
-import TaxForm from '../features/transaction/components/stack/add/TaxForm';
+import TaxForm from '../features/transaction/pages/stack/add/TaxForm';
 const Accordition = (props) => {
     const [isFocused, setFocus] = useState(false);
     return (

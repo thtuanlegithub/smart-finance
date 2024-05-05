@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { createStackNavigator, CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack'
-import AddTransactionForm from './stack/add/AddTransactionForm';
+import AddTransactionForm from '../pages/stack/add/AddTransactionForm';
 
-import SelectCategoryForm from './stack/add/SelectCategoryForm';
-import NoteForm from './stack/add/NoteForm';
-import WalletForm from './stack/add/WalletForm';
-import SelectLoanForm from './stack/add/SelectLoanForm';
-import SelectDebtForm from './stack/add/SelectDebtForm';
-import TaxForm from './stack/add/TaxForm';
-import PeopleForm from './stack/add/PeopleForm';
-import ReminderForm from './stack/add/ReminderForm';
+import SelectCategoryForm from '../pages/stack/add/SelectCategoryForm';
+import NoteForm from '../pages/stack/add/NoteForm';
+import WalletForm from '../pages/stack/add/WalletForm';
+import SelectLoanForm from '../pages/stack/add/SelectLoanForm';
+import SelectDebtForm from '../pages/stack/add/SelectDebtForm';
+import TaxForm from '../pages/stack/add/TaxForm';
+import PeopleForm from '../pages/stack/add/PeopleForm';
+import ReminderForm from '../pages/stack/add/ReminderForm';
 
 const AddTransactionStack = createStackNavigator();
 

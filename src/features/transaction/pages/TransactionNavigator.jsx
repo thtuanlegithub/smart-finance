@@ -2,9 +2,9 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createStackNavigator, CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack'
 import TransactionMain from './TransactionMain'
-import TransactionDetail from '../components/stack/detail/TransactionDetail'
-import ListRepayment from '../components/stack/detail/ListRepayment'
-import ListDebtCollection from '../components/stack/detail/ListDebtCollection'
+import TransactionDetail from './stack/detail/TransactionDetail'
+import ListRepayment from './stack/detail/ListRepayment'
+import ListDebtCollection from './stack/detail/ListDebtCollection'
 
 const TransactionStack = createStackNavigator()
 

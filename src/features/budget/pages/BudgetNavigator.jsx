@@ -3,7 +3,7 @@ import React from 'react'
 import { CardStyleInterpolators, TransitionSpecs, createStackNavigator } from '@react-navigation/stack'
 import BudgetMain from './BudgetMain';
 import LimitDetail from '../../limit/LimitDetail';
-import TransactionDetail from '../../transaction/components/stack/detail/TransactionDetail';
+import TransactionDetail from '../../transaction/pages/stack/detail/TransactionDetail';
 
 const BudgetStack = createStackNavigator();
 

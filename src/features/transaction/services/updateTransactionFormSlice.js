@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import formatTime from "../../../utils/formatTime";
+import { formatDate } from "../../../utils/formatDate";
 
 const initialState = {
     trans_id: '',
@@ -67,10 +69,10 @@ const updateTransactionFormSlice = createSlice({
         setUpdateTransactionDependents: (state, action) => {
             state.dependents = action.payload;
         },
-        clearInput: (state) => {
+        clearUpdateInput: (state) => {
             Object.assign(state, initialState);
         },
-        setDisplayModal: (state, action) => {
+        setDisplayUpdateTransactionModal: (state, action) => {
             state.displayModal = action.payload;
         }
     }
@@ -92,8 +94,8 @@ export const {
     setUpdateTransactionHasTax,
     setUpdateTransactionInsurance,
     setUpdateTransactionDependents,
-    clearInput,
-    setDisplayModal,
+    clearUpdateInput,
+    setDisplayUpdateTransactionModal,
 } = updateTransactionFormSlice.actions;
 
 export default updateTransactionFormSlice.reducer;

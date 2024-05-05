@@ -32,7 +32,7 @@ export {
 } from './services/transactionSlice';
 
 export {
-    default as updateTransactionReducer,
+    default as updateTransactionFormReducer,
     setUpdateTransactionAmount,
     setUpdateTransactionNote,
     setUpdateTransactionDate,
@@ -47,6 +47,6 @@ export {
     setUpdateTransactionHasTax,
     setUpdateTransactionInsurance,
     setUpdateTransactionDependents,
-    clearInput,
-    setDisplayModal,
+    clearUpdateInput,
+    setDisplayUpdateTransactionModal,
 } from './services/updateTransactionFormSlice';

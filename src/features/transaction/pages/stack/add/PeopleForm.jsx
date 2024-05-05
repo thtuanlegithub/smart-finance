@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, TextInput, Linking } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import React, { useState, useEffect } from 'react';
-import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
+import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../../../../styles/colors';
 import typography from '../../../../../styles/typography';

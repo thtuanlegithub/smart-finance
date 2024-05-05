@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React from 'react'
 import { StyleSheet, View } from 'react-native';
-import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
+import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../../../../styles/colors';
 import typography from '../../../../../styles/typography';

@@ -20,6 +20,7 @@ import CustomHandle from '../../../components/CustomHandle';
 import AddTransactionInputViewHeader from '../components/AddTransactionInputViewHeader';
 import WalletItem from '../../../components/WalletItem';
 import ActionSheetSelectTimeRangeTransaction from '../components/ActionSheetSelectTimeRangeTransaction';
+import { selectWallet } from '../../setting';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -33,7 +34,7 @@ function TransactionMain(props) {
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
-    const currentWallet = useSelector(state => state.transaction.currentWallet);
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
 
     const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
 
@@ -59,7 +60,7 @@ function TransactionMain(props) {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.walletGroup}>
-                    <WalletSelect name={currentWallet.name} onSelect={() => bottomSheetSelectWalletRef.current?.present()} />
+                    <WalletSelect name={currentWallet.wallet_name} onSelect={() => bottomSheetSelectWalletRef.current?.present()} />
                     <View style={styles.balancesGroup}>
                         <Text style={[typography.RegularInterH5, { color: colors.green07, textAlign: 'right' }]}>Balances</Text>
                         <Text style={[typography.SemiBoldInterH5, {

@@ -7,7 +7,7 @@ import AddTransactionInputViewHeader from '../../transaction/components/AddTrans
 import WalletItem from '../../../components/WalletItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from 'react-native-actions-sheet';
-import { setWallet } from '../../setting';
+import { selectWallet } from '../../setting';
 
 const HIDE = false;
 
@@ -15,7 +15,7 @@ const BottomSheetSelectWallet = (props) => {
     const dispatch = useDispatch();
     const snapPoints = useSnapPoints();
     const handleSelectWallet = (wallet) => {
-        dispatch(setWallet(wallet.wallet_id));
+        dispatch(selectWallet(wallet.wallet_id));
         props.bottomSheetSelectWalletRef.current?.close();
     }
 

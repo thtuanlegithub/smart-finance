@@ -1,6 +1,6 @@
 import { View, Text, Switch, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader'
+import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader'
 import { useNavigation } from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';

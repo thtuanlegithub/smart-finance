@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    budgetTypeFilter: 'Saving',
+    budgetTypeFilter: 'Limit',
     budgetTimeRange: null,
     budgetTimeRangeStart: null,
     budgetTimeRangeEnd: null,
+    selectedLimitItem: null,
 }
 const budgetSlice = createSlice({
     name: 'budget',
@@ -22,6 +23,9 @@ const budgetSlice = createSlice({
         setBudgetTimeRangeEnd: (state, action) => {
             state.budgetTimeRangeEnd = action.payload
         },
+        setSelectedLimitItem: (state, action) => {
+            state.selectedLimitItem = action.payload
+        },
         clearBudgetTimeRange(state) {
             state.budgetTimeRange = null
             state.budgetTimeRangeStart = null
@@ -30,6 +34,6 @@ const budgetSlice = createSlice({
     }
 })
 
-export const { setBudgetTypeFilter, setBudgetTimeRange, setBudgetTimeRangeStart, setBudgetTimeRangeEnd, clearBudgetTimeRange } = budgetSlice.actions;
+export const { setBudgetTypeFilter, setBudgetTimeRange, setBudgetTimeRangeStart, setBudgetTimeRangeEnd, setSelectedLimitItem, clearBudgetTimeRange } = budgetSlice.actions;
 
 export default budgetSlice.reducer;

@@ -41,6 +41,13 @@ const StackHeader = (props) => {
                 }
                 <Text style={styles.title}>{props.title}</Text>
             </View>
+            {
+                props.onEditPress
+                &&
+                <TouchableOpacity>
+                    <Text style={styles.edit}>Edit</Text>
+                </TouchableOpacity>
+            }
         </View>
     )
 }
@@ -76,6 +83,20 @@ const styles = StyleSheet.create({
         gap: 8
     },
     title: {
+        ...typography.MediumInterH4,
+        color: 'black',
+    },
+    edit: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        bottom: 0,
+        paddingVertical: 18,
+        paddingHorizontal: 16,
         ...typography.MediumInterH4,
         color: 'black',
     },

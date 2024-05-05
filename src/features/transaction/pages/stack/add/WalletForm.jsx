@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionWallet } from '../../../services/addTransactionFormSlice';
-import AddTransactionInputViewHeader from '../../AddTransactionInputViewHeader';
+import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
 import WalletItem from '../../../../../components/WalletItem';
 import colors from '../../../../../styles/colors';
 

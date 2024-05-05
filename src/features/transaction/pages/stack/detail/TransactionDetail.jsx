@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import TransactionNavigationHeader from '../../TransactionNavigationHeader'
+import TransactionNavigationHeader from '../../../components/TransactionNavigationHeader'
 import { useNavigation } from '@react-navigation/native'
 import ExpenseDetail from './ExpenseDetail'
 import IncomeDetail from './IncomeDetail'
@@ -8,6 +8,7 @@ import DebtLoanDetail from './DebtLoanDetail'
 import colors from '../../../../../styles/colors'
 import typography from '../../../../../styles/typography'
 import ConfirmDialog from '../../../../../components/ConfirmDialog'
+import StackHeader from '../../../../../components/StackHeader'
 
 const TransactionDetail = ({ route }) => {
     const navigation = useNavigation();
@@ -16,12 +17,9 @@ const TransactionDetail = ({ route }) => {
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     return (
         <View style={styles.container}>
-            <TransactionNavigationHeader
-                onBackPress={
-                    () => {
-                        navigation.navigate("Transaction Main")
-                    }}
-                title='Transaction Detail' />
+            <StackHeader
+                title='Transaction Detail'
+            />
             {
                 transaction?.type == 'Expense'
                 &&

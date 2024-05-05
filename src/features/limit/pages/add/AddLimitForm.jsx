@@ -42,7 +42,7 @@ const AddLimitForm = () => {
     }
     useEffect(() => {
         handleAddLimitTimeRange();
-    }, [addLimitTimeRange])
+    }, [addLimitTimeRange, addLimitTimeRangeStart, addLimitTimeRangeEnd])
     return (
         <KeyboardAvoidingView style={{ flex: 1, position: 'relative' }}>
             <StackHeader

@@ -5,12 +5,34 @@ import typography from '../styles/typography';
 import colors from '../styles/colors';
 import formatCurrency from '../utils/formatCurrency';
 import globalStyles from '../styles/globalStyles';
-const SemiCircularProgress = ({ fill, mainColor, subColor, labelTextColor, contentTextColor }) => {
+const SemiCircularProgress = ({ fill }) => {
     const size = 328;
     const strokeWidth = 28;
     const radius = (size - strokeWidth) / 2;
     const circumference = Math.PI * radius;
     const progress = circumference - (fill / 100) * circumference;
+    let mainColor;
+    let subColor;
+    let labelTextColor;
+    let contentTextColor;
+    if (fill >= 75) {
+        mainColor = colors.red05;
+        subColor = colors.red04;
+        labelTextColor = colors.red05;
+        contentTextColor = colors.red02;
+    }
+    else if (fill >= 50) {
+        mainColor = colors.orange04;
+        subColor = colors.orange02;
+        labelTextColor = colors.orange05;
+        contentTextColor = colors.orange04;
+    }
+    else {
+        mainColor = colors.green07;
+        subColor = colors.green03;
+        labelTextColor = colors.green08;
+        contentTextColor = colors.green07;
+    }
     return (
         <View>
             <View style={{ position: 'relative' }}>

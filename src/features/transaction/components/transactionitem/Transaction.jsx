@@ -8,11 +8,9 @@ import { useNavigation } from '@react-navigation/native'
 
 const Transaction = ({ item }) => {
     const navigation = useNavigation();
-    const handleDisplayItemDetail = () => {
-        navigation.navigate("Transaction Detail", { transaction: item })
-    }
+
     return (
-        <TouchableOpacity onPress={handleDisplayItemDetail}>
+        <View>
             {
                 item.type == 'Expense'
                 &&
@@ -28,7 +26,7 @@ const Transaction = ({ item }) => {
                 &&
                 <DebtLoanTransaction item={item} />
             }
-        </TouchableOpacity>
+        </View>
     )
 }
 

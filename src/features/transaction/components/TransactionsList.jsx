@@ -98,7 +98,7 @@ const TransactionsList = (props) => {
                     </View>
                 }
                 data={fakeDataTransactionListFilter}
-                renderItem={({ item }) => <DayTransactionsGroup {...item} />}
+                renderItem={({ item }) => <DayTransactionsGroup nestFrom='Transaction' {...item} />}
                 keyExtractor={item => item.id}
                 showsVerticalScrollIndicator={false}
             />

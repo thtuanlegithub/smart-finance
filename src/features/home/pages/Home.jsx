@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initiateUserSetting, initiateUserWallet, popUpNotification, setReminderNotification } from '../../setting';
 import { selectWallet } from '../../setting';
 import BottomSheetReport from '../components/BottomSheetReport';
+import { localNotification } from '../../setting/utils/notification';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
@@ -74,7 +75,7 @@ function Home(props) {
         initiateUserSetting(currentUser, dispatch);
         initiateUserWallet(currentUser, dispatch);
     }, [currentUser]);
-
+    
     return (
         <ScrollView>
             <View style={styles.container}>

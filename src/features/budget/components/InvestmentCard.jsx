@@ -22,13 +22,13 @@ const InvestmentCard = (props) => {
                     {
                         props.type == 'dynamic'
                             ?
-                            <View style={{ marginLeft: 8, backgroundColor: colors.green06, padding: 2, borderRadius: 16, paddingHorizontal: 16 }}>
+                            <View style={{ marginLeft: 8, backgroundColor: colors.orange04, padding: 2, borderRadius: 16, paddingHorizontal: 16 }}>
                                 <Text style={{ color: 'white', ...typography.MediumInterH6 }}>
                                     Dynamic
                                 </Text>
                             </View>
                             :
-                            <View style={{ marginLeft: 8, backgroundColor: colors.orange01, padding: 2, borderRadius: 16, paddingHorizontal: 16 }}>
+                            <View style={{ marginLeft: 8, backgroundColor: colors.green06, padding: 2, borderRadius: 16, paddingHorizontal: 16 }}>
                                 <Text style={{ color: 'white', ...typography.MediumInterH6 }}>
                                     Fixed
                                 </Text>

@@ -6,6 +6,8 @@ import { getDate } from '../../../../utils/getDate';
 import { getDayName } from '../../../../utils/getDayName';
 import { getMonthYear } from '../../../../utils/getMonthYear';
 import Transaction from './Transaction';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 const DayTransactionsGroup = (props) => {
     const getSum = (total, item) => {
         if (item.type == 'Income') {
@@ -22,6 +24,13 @@ const DayTransactionsGroup = (props) => {
                 return total - item.amount;
             }
         }
+    }
+    const navigation = useNavigation();
+    const handleDisplayTransactionDetail = (item) => {
+        if (props.nestFrom == 'Transaction')
+            navigation.navigate("Transaction Detail", { transaction: item })
+        else
+            navigation.navigate("Limit Transaction Detail", { transaction: item })
     }
     return (
         <View style={styles.container}>
@@ -55,7 +64,11 @@ const DayTransactionsGroup = (props) => {
             <FlatList
                 gap={10}
                 data={props.transactions}
-                renderItem={({ item }) => <Transaction item={item} />}
+                renderItem={({ item }) =>
+                    <TouchableOpacity onPress={() => handleDisplayTransactionDetail(item)}>
+                        <Transaction item={item} />
+                    </TouchableOpacity>
+                }
                 keyExtractor={item => item.id}
             />
         </View>

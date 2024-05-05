@@ -5,6 +5,8 @@ import SemiCircularProgress from '../../../components/SemiCircularProgress'
 import LimitCard from './LimitCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddLimitBottomSheetDisplay } from '../../limit';
+import { useNavigation } from '@react-navigation/native';
+import { setSelectedLimitItem } from '../services/budgetSlice';
 
 const limitList = [{
     id: '1',
@@ -30,7 +32,7 @@ const limitList = [{
 
 const LimitList = () => {
     const dispatch = useDispatch();
-
+    const navigation = useNavigation();
     return (
         <>
             <View style={styles.container}>
@@ -39,9 +41,7 @@ const LimitList = () => {
                         <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                             <View style={styles.limitBudgetQuickReport}>
                                 <SemiCircularProgress
-                                    fill={70}
-                                    mainColor={colors.red05}
-                                    subColor={colors.red04}
+                                    fill={25}
                                     labelTextColor={colors.red05}
                                     contentTextColor={colors.red02} />
                             </View>
@@ -57,7 +57,20 @@ const LimitList = () => {
                         </View>
                     }
                     data={limitList}
-                    renderItem={({ item }) => <LimitCard {...item} />}
+                    renderItem={({ item }) =>
+                        <TouchableOpacity
+                            onPress={() => {
+                                dispatch(setSelectedLimitItem(item))
+                                navigation.navigate('Limit Detail', { ...item })
+                            }}
+                            style={{
+                                paddingTop: 16,
+                                paddingHorizontal: 16,
+                            }}>
+                            <LimitCard
+                                {...item} />
+                        </TouchableOpacity>
+                    }
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={false}
                 />
@@ -83,7 +96,7 @@ const styles = StyleSheet.create({
     btnCreateNewBudget: {
         paddingVertical: 8,
         paddingHorizontal: 16,
-        backgroundColor: colors.red05,
+        backgroundColor: colors.green07,
         borderRadius: 24,
     }
 })

@@ -21,5 +21,10 @@ export default colors = {
     blue02: "#6FA8DD",
     blue03: "#3D85C5",
     blue04: "#0b5394",
-    blue05: "#0b5394"
+    blue05: "#0b5394",
+    orange05: "#FF4D00",
+    orange04: "#FF7A29",
+    orange03: "#FFA352",
+    orange02: "#FFD07B",
+    orange01: "#FFFEA4",
 }

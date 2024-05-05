@@ -106,12 +106,10 @@ function BudgetMain(props) {
                                 switch (budgetTypeFilter) {
                                     case 'Investment':
                                         return <InvestmentList />;
-                                    case 'Saving':
-                                        return <SavingList />;
                                     case 'Limit':
                                         return <LimitList />;
                                     default:
-                                        return <SavingList />;
+                                        return <LimitList />;
                                 }
                             }}
                         </Tab.Screen>
@@ -121,7 +119,6 @@ function BudgetMain(props) {
             <ActionSheet ref={actionSheetBudgetTypeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>Select budget type</Text>
-                    <BottomMenuItem title='Saving' onPress={() => handleSelectBudgetType('Saving')} />
                     <BottomMenuItem title='Limit' onPress={() => handleSelectBudgetType('Limit')} />
                     <BottomMenuItem title='Investment' onPress={() => handleSelectBudgetType('Investment')} />
                     <TouchableOpacity

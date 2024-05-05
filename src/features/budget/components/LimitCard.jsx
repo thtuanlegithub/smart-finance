@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import formatCurrency from '../../../utils/formatCurrency'
 import expenseCategoryIcons from '../../../data/expenseCategoryIcons'
@@ -7,8 +7,20 @@ import colors from '../../../styles/colors'
 import LineProgressBar from '../../../components/LineProgressBar'
 
 const LimitCard = (props) => {
+    let progressLabelColor;
+    const fill = props.current / props.limit * 100;
+    if (fill >= 75) {
+        progressLabelColor = colors.red05;
+    }
+    else if (fill >= 50) {
+        progressLabelColor = colors.orange05;
+    }
+    else {
+        progressLabelColor = colors.green07;
+    }
     return (
-        <View style={styles.container}>
+        <View
+            style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image}
                     source={expenseCategoryIcons[props.category]} />
@@ -24,8 +36,6 @@ const LimitCard = (props) => {
                 </View>
                 <View style={{ marginVertical: 8 }}>
                     <LineProgressBar
-                        mainColor={colors.red03}
-                        subColor={colors.red04}
                         completeColor={colors.red05}
                         current={props.current}
                         limit={props.limit} />
@@ -37,7 +47,7 @@ const LimitCard = (props) => {
                     </View>
                     ||
                     <View style={{ alignItems: 'flex-end' }}>
-                        <Text style={[typography.RegularInterH4, { color: colors.red05 }]}>{formatCurrency(props.limit - props.current)} left to reach the limit</Text>
+                        <Text style={[typography.RegularInterH4, { color: progressLabelColor }]}>{formatCurrency(props.limit - props.current)} left to reach the limit</Text>
                     </View>
                 }
             </View>
@@ -47,11 +57,8 @@ const LimitCard = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 16,
-        marginTop: 12,
         backgroundColor: 'white',
         paddingVertical: 16,
         paddingHorizontal: 16,

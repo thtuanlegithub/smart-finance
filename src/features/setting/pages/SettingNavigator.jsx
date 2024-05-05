@@ -7,6 +7,9 @@ import SettingCurrency from './SettingCurrency';
 import SettingLanguage from './SettingLanguage';
 import AboutUs from './AboutUs';
 import SettingReminder from './SettingReminder';
+import { Setting } from '../../../models';
+import AddWallet from './AddWallet';
+import UpdateWallet from './UpdateWallet';
 
 const SettingStack = createStackNavigator();
 
@@ -23,6 +26,8 @@ const SettingNavigator = () => {
       }}>
       <SettingStack.Screen name='SettingMain' component={SettingMain} />
       <SettingStack.Screen name='SettingWallet' component={SettingWallet} />
+      <SettingStack.Screen name='AddWallet' component={AddWallet} />
+      <SettingStack.Screen name='UpdateWallet' component={UpdateWallet} />
       <SettingStack.Screen name='SettingCategory' component={SettingCategory} />
       <SettingStack.Screen name='SettingReminder' component={SettingReminder} />
       <SettingStack.Screen name='SettingCurrency' component={SettingCurrency} />

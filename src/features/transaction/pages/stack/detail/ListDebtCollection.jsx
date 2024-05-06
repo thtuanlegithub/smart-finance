@@ -57,6 +57,7 @@ const ListDebtCollection = () => {
                 }}
                 title='Debt Collection List' />
             <FlatList
+                keyExtractor={item => item.id.toString()}
                 data={listDebtCollection}
                 renderItem={({ item }) => <ListDebtCollectionItem transaction={item} />}
             />

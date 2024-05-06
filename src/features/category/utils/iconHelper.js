@@ -1,7 +1,7 @@
 const getCategoryIcons = (id) => {
-    switch(id) {
+    switch (id) {
         case "foodandbeverage":
-            return require("../../../assets/images/salary.png");
+            return require("../../../assets/images/burger.png");
         case "shopping":
             return require("../../../assets/images/bag.png");
         case "transportation":

@@ -20,6 +20,11 @@ const StackHeader = (props) => {
             navigation.goBack();
         }
     }
+    const handleEditPress = () => {
+        if (props.onEditPress) {
+            props.onEditPress();
+        }
+    }
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.back}
@@ -46,7 +51,7 @@ const StackHeader = (props) => {
             {
                 props.onEditPress
                 &&
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleEditPress}>
                     <Text style={styles.edit}>Edit</Text>
                 </TouchableOpacity>
             }

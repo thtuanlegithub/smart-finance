@@ -14,10 +14,14 @@ const LimitDetail = () => {
             transactions: item.transactions.filter(transaction => transaction.category == selectedLimitItem.category)
         };
     }).filter(item => item.transactions.length > 0);
+    const handleEditLimit = (selectedLimitItem) => {
+        console.log('Edit limit', selectedLimitItem)
+    }
     return (
         <View style={{ flex: 1 }}>
             <StackHeader
                 title='Limit Detail'
+                onEditPress={() => { handleEditLimit(selectedLimitItem) }}
             />
             <View>
                 <FlatList

@@ -9,9 +9,10 @@ import ExpenseSelectCategoryList from '../../../../category/components/ExpenseSe
 import IncomeSelectCategoryList from '../../../../category/components/IncomeSelectCategoryList';
 import DebtLoanSelectCategoryList from '../../../../category/components/DebtLoanSelectCategoryList';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTransactionType } from '../../../services/addTransactionFormSlice';
+import { setTransactionCategory, setTransactionType } from '../../../services/addTransactionFormSlice';
 import { setCurrentCategory } from '../../../../category/services/categorySlice';
 import transactionType from '../../../data/transactionType';
+import { setUpdateTransactionCategory, setUpdateTransactionType } from '../../../services/updateTransactionFormSlice';
 import { useTranslation } from 'react-i18next';
 
 const Tab = createMaterialTopTabNavigator();
@@ -21,18 +22,40 @@ const SelectCategoryForm = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const type = useSelector(state => state.addTransactionForm.type);
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction)
     const handleSelectExpenseCategory = (category) => {
-        dispatch(setTransactionType(transactionType.EXPENSE));
+        if (currentTransactionCRUDAction == 'create') {
+            dispatch(setTransactionType(transactionType.EXPENSE));
+            dispatch(setTransactionCategory(category.id));
+        }
+        else if (currentTransactionCRUDAction == 'update') {
+            dispatch(setUpdateTransactionType(transactionType.EXPENSE));
+            dispatch(setUpdateTransactionCategory(category.id));
+        }
         dispatch(setCurrentCategory(category));
         navigation.goBack();
     }
     const handleSelectIncomeCategory = (category) => {
-        dispatch(setTransactionType(transactionType.INCOME));
+        if (currentTransactionCRUDAction == 'create') {
+            dispatch(setTransactionType(transactionType.INCOME));
+            dispatch(setTransactionCategory(category.id));
+        }
+        else if (currentTransactionCRUDAction == 'update') {
+            dispatch(setUpdateTransactionType(transactionType.INCOME));
+            dispatch(setUpdateTransactionCategory(category.id));
+        }
         dispatch(setCurrentCategory(category));
         navigation.goBack();
     }
     const handleSelectDebtLoanCategory = (category) => {
-        dispatch(setTransactionType(transactionType.DEBT_LOAN));
+        if (currentTransactionCRUDAction == 'create') {
+            dispatch(setTransactionType(transactionType.DEBT_LOAN));
+            dispatch(setTransactionCategory(category.id));
+        }
+        else if (currentTransactionCRUDAction == 'update') {
+            dispatch(setUpdateTransactionType(transactionType.DEBT_LOAN));
+            dispatch(setUpdateTransactionCategory(category.id));
+        }
         dispatch(setCurrentCategory(category));
         navigation.goBack();
     }

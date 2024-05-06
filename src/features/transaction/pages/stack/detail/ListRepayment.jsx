@@ -59,6 +59,7 @@ const ListRepayment = () => {
                 title='Repayment List' />
             <FlatList
                 data={listRepayment}
+                keyExtractor={item => item.id}
                 renderItem={
                     ({ item }) => <ListRepaymentItem transaction={item} />
                 } />

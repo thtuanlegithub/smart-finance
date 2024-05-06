@@ -45,6 +45,7 @@ const SettingWallet = () => {
                         }}>{t('all-wallets')}</Text>
                     </TouchableOpacity>
                 }
+                keyExtractor={item => item.wallet_id.toString()}
                 data={userWallet}
                 renderItem={({ item, index }) => (
                     <WalletItem

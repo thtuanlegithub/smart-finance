@@ -64,8 +64,10 @@ const InvestmentList = () => {
                         </View>
                     </View>
                 }
+
                 data={investmentList}
                 renderItem={({ item }) => <InvestmentCard {...item} />}
+                keyExtractor={item => item.id}
             />
         </View>
     )

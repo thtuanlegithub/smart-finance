@@ -5,13 +5,15 @@ import styles from '../../styles/TransactionItem';
 import formatCurrency from '../../../../utils/formatCurrency';
 import incomeCategoryIcons from '../../../../data/incomeCategoryIcons';
 import colors from '../../../../styles/colors';
+import { getCategoryIcons } from '../../../category';
+import getCategoryNameById from '../../../../utils/getCategoryNameById';
 const IncomeTransaction = ({ item }) => {
     return (
         <View style={styles.container}>
-            <Image style={globalStyles.transactionIcon} source={incomeCategoryIcons[item.category]} />
+            <Image style={globalStyles.transactionIcon} source={getCategoryIcons(item.category)} />
             <View style={styles.transactionInformation}>
                 <View style={styles.detailInformation}>
-                    <Text style={styles.transactionType}>{item.category}</Text>
+                    <Text style={styles.transactionType}>{getCategoryNameById(item.category)}</Text>
                     <Text style={styles.transactionNote}>{item.note}</Text>
                 </View>
                 <Text style={{

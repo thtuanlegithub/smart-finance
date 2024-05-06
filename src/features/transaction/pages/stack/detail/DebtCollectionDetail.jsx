@@ -8,6 +8,9 @@ import formatCurrency from '../../../../../utils/formatCurrency'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import getCategoryNameById from '../../../../../utils/getCategoryNameById'
+import { getCategoryIcons } from '../../../../category'
+import getTypeNameById from '../../../../../utils/getTypeNameById'
 
 const DebtCollectionDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
@@ -20,10 +23,10 @@ const DebtCollectionDetail = ({ transaction }) => {
                     <View style={{ flexDirection: 'row', gap: 12 }}>
                         <FastImage
                             style={{ width: 24, height: 24 }}
-                            source={transactionCategoryIcons[transaction.category]}
+                            source={getCategoryIcons(transaction.category)}
                             resizeMode='contain'
                         />
-                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{transaction.category}</Text>
+                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{getCategoryNameById(transaction.category)}</Text>
                     </View>
                     <View style={{
                         backgroundColor: colors.blue05,
@@ -31,7 +34,7 @@ const DebtCollectionDetail = ({ transaction }) => {
                         paddingHorizontal: 16,
                         paddingVertical: 4,
                     }}>
-                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{transaction.type}</Text>
+                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{getTypeNameById[transaction.type]}</Text>
                     </View>
                 </View>
                 <Text style={{

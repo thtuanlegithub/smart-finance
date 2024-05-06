@@ -5,24 +5,41 @@ import typography from '../../../../../styles/typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionNote } from '../../../services/addTransactionFormSlice';
 import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
+import { setUpdateTransactionNote } from '../../../services/updateTransactionFormSlice';
 
 
 const NoteForm = () => {
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const node = useSelector(state => state.addTransactionForm.note);
-    const [localNote, setLocalNote] = useState(node);
+    var note;
+    if (currentTransactionCRUDAction == 'create') {
+        note = useSelector(state => state.addTransactionForm.note);
+        console.log(">>> create: ", note);
+
+    }
+    else if (currentTransactionCRUDAction == 'update') {
+        note = useSelector(state => state.updateTransactionForm.note);
+        console.log(">>> update: ", note);
+    }
+    else {
+        console.log("??")
+    }
+    const [localNote, setLocalNote] = useState(note);
 
     const handleNoteTransaction = () => {
-        dispatch(setTransactionNote(localNote));
-        navigation.navigate('Add Transaction');
+        if (currentTransactionCRUDAction == 'create')
+            dispatch(setTransactionNote(localNote));
+        else if (currentTransactionCRUDAction == 'update')
+            dispatch(setUpdateTransactionNote(localNote));
+        navigation.goBack();
     }
 
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader title='Add Note'
                 onBackPress={() => {
-                    navigation.navigate('Add Transaction');
+                    navigation.goBack();
                 }} />
             <TextInput
                 multiline={false}

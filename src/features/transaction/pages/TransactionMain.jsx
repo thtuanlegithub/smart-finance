@@ -75,7 +75,9 @@ function TransactionMain(props) {
                             <TransactionSelect selected={transactionTypeFilter} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(DISPLAY)} style={styles.calendar}>
+                    <TouchableOpacity
+                        onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(DISPLAY)}
+                        style={styles.calendar}>
                         <FontAwesome5 name="calendar-alt" size={24} color={colors.green07} solid />
                     </TouchableOpacity>
                 </View>
@@ -85,14 +87,14 @@ function TransactionMain(props) {
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>{t('select-transaction-type')}</Text>
                     <BottomMenuItem
                         title={t('expense')}
-                        onPress={() => handleSelectTransactionType('Expense')} />
+                        onPress={() => handleSelectTransactionType('expense')} />
                     <BottomMenuItem
                         title={t('income')}
-                        onPress={() => handleSelectTransactionType('Income')}
+                        onPress={() => handleSelectTransactionType('income')}
                     />
                     <BottomMenuItem
                         title={t('debt/loan')}
-                        onPress={() => handleSelectTransactionType('Debt/ Loan')} />
+                        onPress={() => handleSelectTransactionType('debt_loan')} />
                     <BottomMenuItem
                         title={t('all')}
                         onPress={() => handleSelectTransactionType(null)} />

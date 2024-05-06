@@ -10,14 +10,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 const DayTransactionsGroup = (props) => {
     const getSum = (total, item) => {
-        if (item.type == 'Income') {
+        if (item.type == 'income') {
             return total + item.amount;
         }
-        else if (item.type == 'Expense') {
+        else if (item.type == 'expense') {
             return total - item.amount;
         }
-        else if (item.type == 'Debt/ Loan') {
-            if (item.category == 'Debt' || item.category == 'Debt collection') {
+        else if (item.type == 'debt_loan') {
+            if (item.category == 'debt' || item.category == 'debtcollection') {
                 return total + item.amount;
             }
             else {
@@ -69,7 +69,7 @@ const DayTransactionsGroup = (props) => {
                         <Transaction item={item} />
                     </TouchableOpacity>
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.trans_id.toString()}
             />
         </View>
     )

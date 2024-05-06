@@ -6,6 +6,7 @@ import { setTransactionWallet } from '../../../services/addTransactionFormSlice'
 import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
 import WalletItem from '../../../../../components/WalletItem';
 import colors from '../../../../../styles/colors';
+import { setUpdateTransactionWallet } from '../../../services/updateTransactionFormSlice';
 import { useTranslation } from 'react-i18next';
 
 const WalletForm = () => {
@@ -13,9 +14,15 @@ const WalletForm = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const userWallet = useSelector(state => state.wallet.wallets);
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction)
     
     const handleSelectWallet = (wallet) => {
-        dispatch(setTransactionWallet(wallet));
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionWallet(wallet));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionWallet(wallet));
+        }
         navigation.goBack();
     }
 

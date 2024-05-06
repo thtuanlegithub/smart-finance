@@ -23,6 +23,7 @@ import transactionType from '../../../data/transactionType'
 import { updateWallet } from '../../../../setting'
 import formatCurrency from '../../../../../utils/formatCurrency'
 import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIncomeTax'
+import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { useTranslation } from 'react-i18next'
 
 const TODAY = 0;
@@ -41,7 +42,7 @@ const AddTransactionForm = ({ navigation }) => {
     const created_at = useSelector(state => state.addTransactionForm.created_at);
     const amount = useSelector(state => state.addTransactionForm.amount);
     const wallet = useSelector(state => state.addTransactionForm.wallet);
-    const category = useSelector(state => state.category.currentCategory);
+    const categoryId = useSelector(state => state.addTransactionForm.category_id);
     const type = useSelector(state => state.addTransactionForm.type);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
@@ -53,7 +54,7 @@ const AddTransactionForm = ({ navigation }) => {
     const dependents = useSelector(state => state.addTransactionForm.dependents);
 
     // Handle Select Transaction Date
-    const handlePress = (index) => {
+    const handleSelectTransactionDay = (index) => {
         if (index === TODAY) {
             dispatch(setTransactionDate(formatDate(new Date())));
             actionSheetRef.current?.setModalVisible(false)
@@ -73,7 +74,7 @@ const AddTransactionForm = ({ navigation }) => {
     }
 
     const handleSaveTransaction = () => {
-        if (!created_at || !amount || !wallet || !category) {
+        if (!created_at || !amount || !wallet || !categoryId) {
             alert('Please fill in all required fields');
             return;
         }
@@ -96,7 +97,7 @@ const AddTransactionForm = ({ navigation }) => {
             const currentTimestamp = () => Math.floor(Date.now() / 1000);
             const newReminder = {
                 id: currentTimestamp(),
-                title: category.name,
+                title: getCategoryNameById(categoryId),
                 message: note,
                 notify_time: reminderTime,
                 date: reminderDate
@@ -130,7 +131,7 @@ const AddTransactionForm = ({ navigation }) => {
                 newWallet.balance += amount;
                 break;
             case transactionType.DEBT_LOAN:
-                switch (category.id) {
+                switch (categoryId) {
                     case 'debt':
                     case 'debtcollection':
                         newWallet.balance += amount;
@@ -197,20 +198,20 @@ const AddTransactionForm = ({ navigation }) => {
                             <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-a-day')}</Text>
                             <View style={{ width: '100%' }}>
                                 <TouchableOpacity
-                                    onPress={() => handlePress(TODAY)}
+                                    onPress={() => handleSelectTransactionDay(TODAY)}
                                     style={styles.bottomMenuItemContainer}>
                                     <BottomMenuItem title={t('today')}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={{ width: '100%' }}>
                                 <TouchableOpacity
-                                    onPress={() => handlePress(YESTERDAY)}
+                                    onPress={() => handleSelectTransactionDay(YESTERDAY)}
                                     style={styles.bottomMenuItemContainer}>
                                     <BottomMenuItem title={t('yesterday')} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{ width: '100%' }}>
-                                <TouchableOpacity onPress={() => handlePress(CUSTOM)} style={styles.bottomMenuItemContainer}>
+                                <TouchableOpacity onPress={() => handleSelectTransactionDay(CUSTOM)} style={styles.bottomMenuItemContainer}>
                                     <BottomMenuItem title={t('customize')}/>
                                 </TouchableOpacity>
                             </View>
@@ -241,12 +242,12 @@ const AddTransactionForm = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 {
-                    category.name === 'Debt collection'
+                    categoryId === 'debtcollection'
                     &&
                     <LoanInformation />
                 }
                 {
-                    category.name === 'Repayment'
+                    categoryId === 'repayment'
                     &&
                     <DebtInformation />
                 }
@@ -257,7 +258,7 @@ const AddTransactionForm = ({ navigation }) => {
                                 ?
                                 <MediumTextIconInput field='people' value={people.map(person => person.name).join(', ')} />
                                 :
-                                <MediumTextIconInput field='people' placeholder={t('people')} />
+                                <MediumTextIconInput field='people' placeholder={t('contact')} />
                         }
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("Reminder")}>

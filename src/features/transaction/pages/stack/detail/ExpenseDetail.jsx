@@ -7,6 +7,9 @@ import transactionCategoryIcons from '../../../../../data/transactionCategoryIco
 import formatCurrency from '../../../../../utils/formatCurrency'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
+import { getCategoryIcons } from '../../../../category'
+import getCategoryNameById from '../../../../../utils/getCategoryNameById'
+import getTypeNameById from '../../../../../utils/getTypeNameById'
 
 const ExpenseDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
@@ -16,10 +19,10 @@ const ExpenseDetail = ({ transaction }) => {
                 <View style={{ flexDirection: 'row', gap: 12 }}>
                     <FastImage
                         style={{ width: 30, height: 30 }}
-                        source={transactionCategoryIcons[transaction.category]}
+                        source={getCategoryIcons(transaction.category)}
                         resizeMode='contain'
                     />
-                    <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{transaction.category}</Text>
+                    <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{getCategoryNameById(transaction.category)}</Text>
                 </View>
                 <View style={{
                     backgroundColor: colors.red05,
@@ -27,7 +30,7 @@ const ExpenseDetail = ({ transaction }) => {
                     paddingHorizontal: 16,
                     paddingVertical: 4,
                 }}>
-                    <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{transaction.type}</Text>
+                    <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{getTypeNameById[transaction.type]}</Text>
                 </View>
             </View>
             {

@@ -11,7 +11,7 @@ import AddTransactionNavigator from '../features/transaction/components/AddTrans
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayModal } from '../features/transaction';
+import { setCurrentTransactionCRUDAction, setDisplayModal } from '../features/transaction';
 import CustomHandle from '../components/CustomHandle';
 import { useSnapPoints } from '../hooks/useSnapPoints';
 import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
@@ -111,7 +111,13 @@ const MainTabNavigation = (props) => {
                             <Tab.Screen
                                 name="Center"
                                 component={NullComponent}
-                                options={{ tabBarButton: () => <CenterButton onDisplayModal={() => dispatch(setDisplayModal(true))} /> }}
+                                options={{
+                                    tabBarButton: () => <CenterButton onDisplayModal={() => {
+                                        dispatch(setCurrentTransactionCRUDAction('create'));
+                                        dispatch(setDisplayModal(true))
+                                    }
+                                    } />
+                                }}
                             />
                             <Tab.Screen
                                 name="Budget"
@@ -132,7 +138,11 @@ const MainTabNavigation = (props) => {
                             ref={bottomSheetModalRef}
                             snapPoints={snapPoints}
                             index={2}
-                            style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
+                            style={{
+                                borderTopLeftRadius: 20,
+                                borderTopRightRadius: 20,
+                                opacity: 0
+                            }}
                             handleComponent={CustomHandle} // Use the custom handle
                         >
                             <NavigationContainer independent={true}>

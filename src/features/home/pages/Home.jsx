@@ -95,7 +95,7 @@ function Home(props) {
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
                                 <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet?.wallet_name}</Text>
                             </View>
-                            <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet?.balance)}</Text>
+                            {/* <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet.balance)}</Text> */}
                         </View>
                     </TouchableOpacity>
                 </View>

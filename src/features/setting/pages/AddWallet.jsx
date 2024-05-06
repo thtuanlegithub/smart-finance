@@ -13,11 +13,11 @@ const AddWallet = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [walletName, setWalletName] = useState('');
-    const handleAddNewWallet = () => {
+    const handleAddNewWallet = async () => {
         const accountId = getCurrentUser().uid;
         const newWallet = createUserWallet(accountId, walletName, false);
-        updateUserWallet('', newWallet);
-        dispatch(addNewWallet(newWallet));
+        const updatedWallet = await updateUserWallet('', newWallet);
+        dispatch(addNewWallet(updatedWallet));
         navigation.goBack();
     }
     return (

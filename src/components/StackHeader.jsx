@@ -5,9 +5,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import FastImage from 'react-native-fast-image'
 import { getCategoryIcons } from '../features/category'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 const StackHeader = (props) => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const handleBackPress = () => {
         // Xử lý back press theo yêu cầu chuyển trang khác
         if (props.onBackPress) {
@@ -28,7 +30,7 @@ const StackHeader = (props) => {
                     :
                     <>
                         <FontAwesome5 name='chevron-left' size={16} color='black' style={{ alignSelf: 'center', marginTop: 8 }} />
-                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>Back</Text>
+                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{t('back')}</Text>
                     </>
                 }
             </TouchableOpacity>

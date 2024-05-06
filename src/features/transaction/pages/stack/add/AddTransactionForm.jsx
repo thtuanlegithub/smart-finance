@@ -23,14 +23,14 @@ import transactionType from '../../../data/transactionType'
 import { updateWallet } from '../../../../setting'
 import formatCurrency from '../../../../../utils/formatCurrency'
 import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIncomeTax'
+import { useTranslation } from 'react-i18next'
 
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;
 
 const AddTransactionForm = ({ navigation }) => {
-    //
-
+    const { t } = useTranslation();
     // Handle Action Sheet - Bottom Menu
     const [open, setOpen] = useState(false)
     const actionSheetRef = useRef(null)
@@ -90,19 +90,8 @@ const AddTransactionForm = ({ navigation }) => {
             }
         }
 
-        const newTransaction = new TransactionBuilder()
-            .setAmount(amount - calculatePersonalIncomeTax(amount, dependents, insurance))
-            .setCategoryId(category.id)
-            .setCreatedAt(created_at)
-            .setNote(note)
-            .setWalletId(wallet.wallet_id)
-            .setType(type)
-            .setPeople(people)
-            .setReminder(reminderTime + ', ' + reminderDate)
-            .setTax(tax)
-            .build();
-
         // Set local notification
+        let reminder;
         if (hasReminder) {
             const currentTimestamp = () => Math.floor(Date.now() / 1000);
             const newReminder = {
@@ -112,9 +101,25 @@ const AddTransactionForm = ({ navigation }) => {
                 notify_time: reminderTime,
                 date: reminderDate
             }
+            reminder = {
+                id: currentTimestamp(),
+                time: reminderTime + ', ' + reminderDate,
+            }
             setReminderNotification(newReminder);
             updateReminder(newReminder);
         }
+        
+        const newTransaction = new TransactionBuilder()
+            .setAmount(amount - calculatePersonalIncomeTax(amount, dependents, insurance))
+            .setCategoryId(category.id)
+            .setCreatedAt(created_at)
+            .setNote(note)
+            .setWalletId(wallet.wallet_id)
+            .setType(type)
+            .setPeople(people)
+            .setReminder(reminder)
+            .setTax(tax)
+            .build();
 
         let newWallet = { ...wallet };
         switch (type) {
@@ -149,7 +154,7 @@ const AddTransactionForm = ({ navigation }) => {
         <KeyboardAvoidingView
             style={styles.container}>
             <ScrollView style={{ marginBottom: 60 }}>
-                <Text style={styles.title}>Add Transaction</Text>
+                <Text style={styles.title}>{t('add-transaction')}</Text>
                 <View style={styles.form}>
                     <View style={{ marginTop: 8 }}>
                         <MoneyInput
@@ -172,45 +177,45 @@ const AddTransactionForm = ({ navigation }) => {
                                     :
                                     <MediumTextIconInput
                                         field='tax'
-                                        placeholder='No tax' />
+                                        placeholder={t('no-tax')} />
                             }
                         </TouchableOpacity>
                     }
                     <TouchableOpacity onPress={() => navigation.navigate("Note")}>
                         <MediumTextIconInput value={note}
                             field='note'
-                            placeholder='Note' />
+                            placeholder={t('note')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(true)}>
                         <MediumTextIconInput
                             value={created_at}
                             field='date'
-                            placeholder='Pick a day' />
+                            placeholder={t('pick-a-date')} />
                     </TouchableOpacity>
                     <ActionSheet ref={actionSheetRef}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36, }}>
-                            <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select a day</Text>
+                            <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-a-day')}</Text>
                             <View style={{ width: '100%' }}>
                                 <TouchableOpacity
                                     onPress={() => handlePress(TODAY)}
                                     style={styles.bottomMenuItemContainer}>
-                                    <BottomMenuItem title='Today' />
+                                    <BottomMenuItem title={t('today')}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={{ width: '100%' }}>
                                 <TouchableOpacity
                                     onPress={() => handlePress(YESTERDAY)}
                                     style={styles.bottomMenuItemContainer}>
-                                    <BottomMenuItem title='Yesterday' />
+                                    <BottomMenuItem title={t('yesterday')} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{ width: '100%' }}>
                                 <TouchableOpacity onPress={() => handlePress(CUSTOM)} style={styles.bottomMenuItemContainer}>
-                                    <BottomMenuItem title='Custom' />
+                                    <BottomMenuItem title={t('customize')}/>
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(false)} style={styles.bottomMenuItemContainer}>
-                                <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                             </TouchableOpacity>
                         </View>
                     </ActionSheet>
@@ -231,7 +236,7 @@ const AddTransactionForm = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate("Wallet")}>
                         <NoOutlinedMediumTextIconInput
                             field='wallet'
-                            placeholder='Select wallet'
+                            placeholder={t('select-wallet')}
                             value={wallet.wallet_name} />
                     </TouchableOpacity>
                 </View>
@@ -252,7 +257,7 @@ const AddTransactionForm = ({ navigation }) => {
                                 ?
                                 <MediumTextIconInput field='people' value={people.map(person => person.name).join(', ')} />
                                 :
-                                <MediumTextIconInput field='people' placeholder='People' />
+                                <MediumTextIconInput field='people' placeholder={t('people')} />
                         }
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("Reminder")}>
@@ -261,7 +266,7 @@ const AddTransactionForm = ({ navigation }) => {
                                 ?
                                 <NoOutlinedMediumTextIconInput field='reminder' value={reminderTime + ", " + reminderDate} />
                                 :
-                                <NoOutlinedMediumTextIconInput field='reminder' placeholder='No Reminder' />
+                                <NoOutlinedMediumTextIconInput field='reminder' placeholder={t('no-reminder')} />
                         }
                     </TouchableOpacity>
                 </View>
@@ -279,7 +284,7 @@ const AddTransactionForm = ({ navigation }) => {
                 backgroundColor: colors.gray02,
             }}>
                 <W1Button
-                    title='Save'
+                    title={t('save')}
                     onPress={handleSaveTransaction}
                 />
             </View>

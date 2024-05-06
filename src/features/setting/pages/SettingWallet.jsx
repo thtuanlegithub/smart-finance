@@ -8,10 +8,12 @@ import { selectWallet } from '../services/walletSlice'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { useTranslation } from 'react-i18next'
 
 const SettingWallet = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const userWallet = useSelector(state => state.wallet.wallets);
     const handleSelectWallet = (wallet) => {
         dispatch(selectWallet(wallet.wallet_id));
@@ -25,7 +27,8 @@ const SettingWallet = () => {
         <View style={{
             gap: 4,
         }}>
-            <StackHeader title='Wallet'
+            <StackHeader 
+                title={t('my-wallets')}
                 onBackPress={() => {
                     navigation.goBack();
                 }}
@@ -39,7 +42,7 @@ const SettingWallet = () => {
                         <Text style={{
                             ...typography.MediumInterH4,
                             paddingVertical: 16,
-                        }}>All wallet</Text>
+                        }}>{t('all-wallets')}</Text>
                     </TouchableOpacity>
                 }
                 data={userWallet}
@@ -53,7 +56,7 @@ const SettingWallet = () => {
                 onPress={() => navigation.navigate('AddWallet')}
                 style={styles.newCategoryContainer}>
                 <FontAwesome5 style={{ backgroundColor: colors.green05, paddingHorizontal: 6, paddingVertical: 4, borderRadius: 6 }} name='plus' size={16} color='white' />
-                <Text style={[typography.SemiBoldInterH4, { color: colors.green06 }]}>New wallet</Text>
+                <Text style={[typography.SemiBoldInterH4, { color: colors.green06 }]}>{t('new-wallet')}</Text>
             </TouchableOpacity>
         </View>
     )

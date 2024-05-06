@@ -2,8 +2,10 @@ import React from 'react';
 import { Modal, View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import typography from '../styles/typography';
 import colors from '../styles/colors';
+import { useTranslation } from 'react-i18next';
 
 const ConfirmDialog = ({ visible, title, message, onConfirm, onCancel }) => {
+    const { t } = useTranslation();
     return (
         <Modal
             animationType="none"
@@ -23,13 +25,13 @@ const ConfirmDialog = ({ visible, title, message, onConfirm, onCancel }) => {
                                 borderColor: colors.gray03
                             }]}
                             onPress={onCancel}>
-                            <Text style={styles.controlCancelText}>Cancel</Text>
+                            <Text style={styles.controlCancelText}>{t('cancel')}</Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             underlayColor="#E6FFF2"
                             style={styles.controlConfirm}
                             onPress={onConfirm}>
-                            <Text style={styles.controlConfirmText}>Confirm</Text>
+                            <Text style={styles.controlConfirmText}>{t('confirm')}</Text>
                         </TouchableHighlight>
                     </View>
                 </View>

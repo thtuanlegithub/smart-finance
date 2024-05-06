@@ -5,6 +5,7 @@ import colors from '../../../../styles/colors'
 import { BarChart } from 'react-native-chart-kit'
 import incomeChartConfig from './incomeChartConfig'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -19,6 +20,7 @@ const data = {
 };
 
 const GeneralIncomeReportCard = () => {
+    const { t } = useTranslation();
     const navigation = useNavigation();
     const handleNavigationTransactionReport = (type) => {
         navigation.navigate(type);
@@ -29,12 +31,12 @@ const GeneralIncomeReportCard = () => {
                 <Text style={{
                     ...typography.SemiBoldInterH3,
                     color: colors.green08,
-                }}>Income</Text>
+                }}>{t('income')}</Text>
                 <TouchableOpacity onPress={() => handleNavigationTransactionReport("IncomeReport")}>
                     <Text style={{
                         ...typography.SemiBoldInterH4,
                         color: colors.green06,
-                    }}>See details</Text>
+                    }}>{t('see-details')}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.incomeReport}>

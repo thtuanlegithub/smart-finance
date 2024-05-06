@@ -4,19 +4,21 @@ import typography from '../../../styles/typography'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import FastImage from 'react-native-fast-image'
 import { getCategoryIcons } from '../../category'
+import { useTranslation } from 'react-i18next'
 
 const ReportHeader = (props) => {
     const item = props.item;
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.back} onPress={props.onBackPress}>
                 {props.backContent
                     ?
-                    <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{props.backContent}</Text>
+                    <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{t(props.backContent)}</Text>
                     :
                     <>
                         <FontAwesome5 name='chevron-left' size={16} color='black' style={{ alignSelf: 'center', marginTop: 8 }} />
-                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>Back</Text>
+                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{t('back')}</Text>
                     </>
                 }
             </TouchableOpacity>

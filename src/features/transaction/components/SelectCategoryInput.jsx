@@ -5,10 +5,11 @@ import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
 import { getCategoryIcons } from '../../category'
+import { useTranslation } from 'react-i18next'
 const SelectCategoryInput = (props) => {
     category = useSelector(state => state.category.currentCategory);
-
-    return (
+    const { t } = useTranslation();
+    return (    
         <View style={styles.container}>
             <View style={styles.labelGroup}>
                 {
@@ -21,9 +22,9 @@ const SelectCategoryInput = (props) => {
             <View style={styles.inputGroup}>
                 {category && category.id !== 'placeholdericon'
                     ?
-                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{category.name}</Text>
+                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{t(category.id)}</Text>
                     :
-                    <Text style={[typography.RegularInterH4, { color: colors.green08, opacity: 0.5 }]}>Select category</Text>
+                    <Text style={[typography.RegularInterH4, { color: colors.green08, opacity: 0.5 }]}>{t('select-category')}</Text>
                 }
                 <FontAwesome5 name="chevron-right" size={16} color={colors.green08} opacity={0.5} />
             </View>

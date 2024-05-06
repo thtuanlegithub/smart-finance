@@ -28,6 +28,7 @@ export {
     initiateUserWallet,
     selectWallet,
     addWallet,
+    addNewWallet,
     updateWallet,
     setCurrentWallet,
     setWalletId,

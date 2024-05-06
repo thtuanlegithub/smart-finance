@@ -8,12 +8,14 @@ import WalletItem from '../../../components/WalletItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from 'react-native-actions-sheet';
 import { selectWallet } from '../../setting';
+import { useTranslation } from 'react-i18next';
 
 const HIDE = false;
 
 const BottomSheetSelectWallet = (props) => {
     const dispatch = useDispatch();
     const snapPoints = useSnapPoints();
+    const { t } = useTranslation();
     const handleSelectWallet = (wallet) => {
         dispatch(selectWallet(wallet.wallet_id));
         props.bottomSheetSelectWalletRef.current?.close();
@@ -40,8 +42,8 @@ const BottomSheetSelectWallet = (props) => {
             style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
             handleComponent={CustomHandle}>
             <AddTransactionInputViewHeader
-                backContent='Close'
-                title='Select Wallet'
+                backContent={t('close')}
+                title={t('select-wallet')}
                 onBackPress={() => {
                     handleDisplayBottomSheetSelectWallet(HIDE);
                 }} />

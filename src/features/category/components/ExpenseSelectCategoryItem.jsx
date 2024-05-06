@@ -3,14 +3,16 @@ import React from 'react'
 import colors from '../../../styles/colors'
 import typography from '../../../styles/typography'
 import getCategoryIcons from '../utils/iconHelper'
+import { useTranslation } from 'react-i18next'
 
 const ExpenseSelectCategoryItem = (props) => {
+    const { t } = useTranslation();
     const category = props.category;
     return (
         <TouchableOpacity onPress={props.onSelect} style={styles.container}>
             <Image style={{ height: 24, width: 24, paddingHorizontal: 6, paddingVertical: 4, borderRadius: 6 }}
                 source={getCategoryIcons(category.id)} />
-            <Text style={[typography.MediumInterH5, { color: colors.green07 }]}>{category.name}</Text>
+            <Text style={[typography.MediumInterH5, { color: colors.green07 }]}>{t(category.id)}</Text>
         </TouchableOpacity>
     )
 }

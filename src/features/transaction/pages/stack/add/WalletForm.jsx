@@ -6,22 +6,22 @@ import { setTransactionWallet } from '../../../services/addTransactionFormSlice'
 import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
 import WalletItem from '../../../../../components/WalletItem';
 import colors from '../../../../../styles/colors';
+import { useTranslation } from 'react-i18next';
 
 const WalletForm = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const listWallet = useSelector(state => state.wallet.wallets);
-
+    const { t } = useTranslation();
+    const userWallet = useSelector(state => state.wallet.wallets);
+    
     const handleSelectWallet = (wallet) => {
         dispatch(setTransactionWallet(wallet));
         navigation.goBack();
     }
 
-    const userWallet = useSelector(state => state.wallet.wallets);
-
     return (
         <View style={styles.container}>
-            <AddTransactionInputViewHeader title='Select Wallet'
+            <AddTransactionInputViewHeader title={t('select-wallet')}
                 onBackPress={() => {
                     navigation.goBack();
                 }}

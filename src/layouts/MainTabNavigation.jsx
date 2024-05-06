@@ -18,6 +18,9 @@ import TransactionNavigator from '../features/transaction/pages/TransactionNavig
 import BudgetNavigator from '../features/budget/pages/BudgetNavigator';
 import SettingNavigator from '../features/setting/pages/SettingNavigator';
 import AddLimitBottomSheetModal from '../features/limit/components/AddLimitBottomSheetModal';
+import i18next from '../lib/i18next';
+import { initiateUserSetting, initiateUserWallet } from '../features/setting';
+import { useTranslation } from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +28,10 @@ const MainTabNavigation = (props) => {
     const bottomSheetModalRef = useRef(null);
     const snapPoints = useSnapPoints();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const displayModal = useSelector(state => state.addTransactionForm.displayModal);
+    const userSetting = useSelector(state => state.setting);
+    const currentUser = useSelector(state => state.login.user);
 
     useEffect(() => {
         if (displayModal) {
@@ -35,6 +41,15 @@ const MainTabNavigation = (props) => {
             bottomSheetModalRef.current.dismiss();
         }
     }, [displayModal]);
+
+    useEffect(() => {
+        i18next.changeLanguage(userSetting.language);   
+    }, [userSetting]);
+
+    useEffect(() => {
+        initiateUserSetting(currentUser, dispatch);
+        initiateUserWallet(currentUser, dispatch);
+    }, [currentUser]);
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -64,13 +79,13 @@ const MainTabNavigation = (props) => {
                                     let labelName;
                                     let labelOpacity = focused ? 1 : 0.5;
                                     if (route.name === 'Home') {
-                                        labelName = 'Home';
+                                        labelName = t('label-home');
                                     } else if (route.name === 'Setting') {
-                                        labelName = 'Setting';
+                                        labelName = t('label-setting');
                                     } else if (route.name === 'Transaction') {
-                                        labelName = 'Transactions';
+                                        labelName = t('label-transaction');
                                     } else if (route.name == 'Budget') {
-                                        labelName = 'Budgets';
+                                        labelName = t('label-budget');
                                     }
 
                                     return <Text style={{ color, opacity: labelOpacity, fontSize: 12, padding: 5 }}>{labelName}</Text>;

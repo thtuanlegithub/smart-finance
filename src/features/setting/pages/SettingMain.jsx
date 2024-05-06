@@ -11,10 +11,12 @@ import colors from '../../../styles/colors';
 import SettingButton from '../components/SettingButton';
 import { useNavigation } from '@react-navigation/native';
 import PushNotification from 'react-native-push-notification';
+import { useTranslation } from 'react-i18next';
 
 function SettingMain(props) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const user = useSelector(state => state.login.user);
     const [confirmSignOutDialogVisible, setConfirmSignOutDialogVisible] = useState(false);
 
@@ -39,26 +41,26 @@ function SettingMain(props) {
             <View style={styles.buttonsGroup}>
                 <SettingButton
                     onPress={() => navigation.navigate("SettingWallet")}
-                    icon='wallet' title='My wallets' />
+                    icon='wallet' title={t('my-wallets')} />
                 <SettingButton
                     onPress={() => navigation.navigate("SettingCategory")}
-                    icon='coins' title='Categories' />
+                    icon='coins' title={t('category')} />
                 <SettingButton
                     onPress={() => navigation.navigate("SettingReminder")}
-                    icon='clock' title='Reminder' />
+                    icon='clock' title={t('reminder')} />
             </View>
             <View style={styles.buttonsGroup}>
                 <SettingButton
                     onPress={() => navigation.navigate("SettingCurrency")}
-                    icon='money-bill' title='Currency Unit' />
+                    icon='money-bill' title={t('currency-unit')} />
                 <SettingButton
                     onPress={() => navigation.navigate("SettingLanguage")}
-                    icon='globe-americas' title='Languages' />
+                    icon='globe-americas' title={t('language')} />
             </View>
             <View style={styles.buttonsGroup}>
                 <SettingButton
                     onPress={() => navigation.navigate("AboutUs")}
-                    icon='info-circle' title='About us' />
+                    icon='info-circle' title={t('about-us')} />
             </View>
             <View style={styles.buttonsGroup}>
             </View>
@@ -67,8 +69,8 @@ function SettingMain(props) {
                 visible={confirmSignOutDialogVisible}
                 onCancel={() => setConfirmSignOutDialogVisible(false)}
                 onConfirm={handleSignOut}
-                title="Sign out confirm"
-                message={"Are you actually want to \n sign out?"}
+                title={t('sign-out-title')}
+                message={t('sign-out-message')}
             />
         </View>
     );

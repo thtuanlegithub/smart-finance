@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearTransactionTimeRange, setTransactionTimeRangeEnd, setTransactionTimeRangeStart } from '../services/transactionSlice'
 import DatePicker from 'react-native-date-picker'
 import { formatDate } from '../../../utils/formatDate'
+import { useTranslation } from 'react-i18next'
 
 const DISPLAY = true;
 const HIDE = false;
 
 const ActionSheetSelectTimeRangeTransaction = (props) => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
     const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
 
@@ -44,30 +46,30 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
         <>
             <ActionSheet ref={props.actionSheetTransactionTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <BottomMenuItem
-                        title='This week'
+                        title={t('this-week')}
                         onPress={() => handleTransactionTimeRangeSelect('This week')} />
                     <BottomMenuItem
-                        title='This month'
+                        title={t('this-month')}
                         onPress={() => handleTransactionTimeRangeSelect('This month')} />
                     <BottomMenuItem
-                        title='This year'
+                        title={t('this-year')}
                         onPress={() => handleTransactionTimeRangeSelect('This year')} />
                     <BottomMenuItem
-                        title='Customize'
+                        title={t('customize')}
                         onPress={() => handleTransactionTimeRangeSelect('Customize')} />
                     <TouchableOpacity
                         onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>
                         <Text style={
-                            [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                            [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
             <ActionSheet ref={actionSheetCustomizeTransactionTimeRangeRef}>
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('customize-time-range')}</Text>
                     <TouchableOpacity onPress={() => {
                         setDatePickerOpen(true);
                         setPickDateForStart(true);
@@ -75,9 +77,9 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
                         {
                             transactionTimeRangeStart
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {transactionTimeRangeStart}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('start-date')}: {transactionTimeRangeStart}</Text>
                                 :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>{t('select-start-date')}</Text>
                         }
                     </TouchableOpacity>
                     <View style={styles.border}>
@@ -89,9 +91,9 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
                         {
                             transactionTimeRangeEnd
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {transactionTimeRangeEnd}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('end-date')}: {transactionTimeRangeEnd}</Text>
                                 :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>{t('select-end-date')}</Text>
                         }
                     </TouchableOpacity>
                     <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
@@ -102,7 +104,7 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
                                 dispatch(clearTransactionTimeRange());
                             }}>
                             <Text style={
-                                [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                                [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
@@ -110,7 +112,7 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
                                 handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
                             }}>
                             <Text style={
-                                [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
+                                [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>{t('confirm')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

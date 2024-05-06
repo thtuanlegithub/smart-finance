@@ -8,6 +8,7 @@ import colors from '../../../styles/colors';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import DatePicker from 'react-native-date-picker';
 import { formatDate } from '../../../utils/formatDate';
+import { useTranslation } from 'react-i18next';
 
 const DISPLAY = true;
 const HIDE = false;
@@ -16,7 +17,7 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
 
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [pickDateForStart, setPickDateForStart] = useState(true);
-
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     const budgetTimeRangeStart = useSelector(state => state.budget.budgetTimeRangeStart);
@@ -45,30 +46,30 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
         <>
             <ActionSheet ref={props.actionSheetBudgetTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Select time range</Text>
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <BottomMenuItem
-                        title='This week'
+                        title={t('this-week')}
                         onPress={() => handleBudgetTimeRangeSelect('This week')} />
                     <BottomMenuItem
-                        title='This month'
+                        title={t('this-month')}
                         onPress={() => handleBudgetTimeRangeSelect('This month')} />
                     <BottomMenuItem
-                        title='This year'
+                        title={t('this-year')}
                         onPress={() => handleBudgetTimeRangeSelect('This year')} />
                     <BottomMenuItem
-                        title='Customize'
+                        title={t('customize')}
                         onPress={() => handleBudgetTimeRangeSelect('Customize')} />
                     <TouchableOpacity
                         onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>
                         <Text style={
-                            [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                            [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
             <ActionSheet ref={actionSheetCustomizeBudgetTimeRangeRef}>
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>Customize time range</Text>
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <TouchableOpacity onPress={() => {
                         setDatePickerOpen(true);
                         setPickDateForStart(true);
@@ -76,9 +77,9 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                         {
                             budgetTimeRangeStart
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>Start date: {budgetTimeRangeStart}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('start-date')}: {budgetTimeRangeStart}</Text>
                                 :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select start date </Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>{t('select-start-date')}</Text>
                         }
                     </TouchableOpacity>
                     <View style={styles.border}>
@@ -90,9 +91,9 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                         {
                             budgetTimeRangeEnd
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>End date: {budgetTimeRangeEnd}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('end-date')}: {budgetTimeRangeEnd}</Text>
                                 :
-                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>Select end date </Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>{t('select-end-date')}</Text>
                         }
                     </TouchableOpacity>
                     <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
@@ -103,7 +104,7 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                                 dispatch(clearBudgetTimeRange());
                             }}>
                             <Text style={
-                                [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                                [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
@@ -111,7 +112,7 @@ const ActionSheetSelectTimeRangeBudget = (props) => {
                                 handleActionSheetSelectBudgetTimeRangeDisplay(HIDE);
                             }}>
                             <Text style={
-                                [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>Confirm</Text>
+                                [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>{t('confirm')}</Text>
                         </TouchableOpacity>
                     </View>
                     <DatePicker

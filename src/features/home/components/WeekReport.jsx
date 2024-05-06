@@ -6,14 +6,16 @@ import formatCurrency from '../../../utils/formatCurrency'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import SpendingCategoryReport from '../../../components/SpendingCategoryReport'
 import styles from '../HomeStyles'
+import { useTranslation } from 'react-i18next'
 const WeekReport = () => {
+    const { t } = useTranslation();
     const [spendingMoney, setSpendingMoney] = useState(500000);
     return (
         <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 4 }}>
             <View>
                 <Text style={[typography.BoldInterH3, { color: colors.green07 }]}>{formatCurrency(spendingMoney)} VND</Text>
                 <View style={styles.summaryGroup}>
-                    <Text style={[typography.RegularInterH5]}>Total spend of this week</Text>
+                    <Text style={[typography.RegularInterH5]}>{t('total-spend-of-this-week')}</Text>
                     <View style={styles.changeReport}>
                         <View style={styles.changeIcon}>
                             <FontAwesome5 name="arrow-up" size={11} color={colors.red03} />

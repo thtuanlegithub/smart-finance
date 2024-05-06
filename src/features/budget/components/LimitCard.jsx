@@ -5,9 +5,11 @@ import expenseCategoryIcons from '../../../data/expenseCategoryIcons'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import LineProgressBar from '../../../components/LineProgressBar'
+import { useTranslation } from 'react-i18next'
 
 const LimitCard = (props) => {
     let progressLabelColor;
+    const { t } = useTranslation();
     const fill = props.current / props.limit * 100;
     if (fill >= 75) {
         progressLabelColor = colors.red05;
@@ -31,8 +33,8 @@ const LimitCard = (props) => {
                     <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(props.current)}</Text>
                 </View>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>Due day: 31/03/2024</Text>
-                    <Text style={[typography.SemiBoldInterH5, { color: colors.green07 }]}>Limit: {formatCurrency(props.limit)}</Text>
+                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('due-day')}: 31/03/2024</Text>
+                    <Text style={[typography.SemiBoldInterH5, { color: colors.green07 }]}>{t('limit')}: {formatCurrency(props.limit)}</Text>
                 </View>
                 <View style={{ marginVertical: 8 }}>
                     <LineProgressBar
@@ -43,7 +45,7 @@ const LimitCard = (props) => {
                 {
                     props.current >= props.limit &&
                     <View style={{ alignItems: 'flex-end' }}>
-                        <Text style={[typography.MediumInterH4, { color: colors.red05 }]}>You have reached the limit</Text>
+                        <Text style={[typography.MediumInterH4, { color: colors.red05 }]}>{t('you-have-reach-the-limit')}</Text>
                     </View>
                     ||
                     <View style={{ alignItems: 'flex-end' }}>

@@ -7,10 +7,12 @@ import formatCurrency from '../../../utils/formatCurrency';
 import GeneralIncomeReportCard from './IncomeReport/GeneralIncomeReportCard';
 import GeneralExpenseReportCard from './ExpenseReport/GeneralExpenseReportCard';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
 
 
 const ATimeRangeGeneralReport = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const handleNavigationTransactionReport = (type) => {
         navigation.navigate(type);
     }
@@ -21,17 +23,17 @@ const ATimeRangeGeneralReport = () => {
                 <GeneralExpenseReportCard />
                 <View style={styles.reportCard}>
                     <View style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Debt</Text>
+                        <Text style={styles.cardTitle}>{t('debt')}</Text>
                         <TouchableOpacity>
-                            <Text style={styles.cardAction}>See alls</Text>
+                            <Text style={styles.cardAction}>{t('see-all')}</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.debtLoanSummary}>{formatCurrency(500000)}</Text>
                     <View style={styles.debtLoanBorder}></View>
                     <View style={styles.cardHeader}>
-                        <Text style={styles.cardTitle}>Loan</Text>
+                        <Text style={styles.cardTitle}>{t('loan')}</Text>
                         <TouchableOpacity>
-                            <Text style={styles.cardAction}>See alls</Text>
+                            <Text style={styles.cardAction}>{t('see-all')}</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.debtLoanSummary}>{formatCurrency(500000)}</Text>

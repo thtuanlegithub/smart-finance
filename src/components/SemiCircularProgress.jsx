@@ -5,12 +5,14 @@ import typography from '../styles/typography';
 import colors from '../styles/colors';
 import formatCurrency from '../utils/formatCurrency';
 import globalStyles from '../styles/globalStyles';
+import { useTranslation } from 'react-i18next';
 const SemiCircularProgress = ({ fill }) => {
     const size = 328;
     const strokeWidth = 28;
     const radius = (size - strokeWidth) / 2;
     const circumference = Math.PI * radius;
     const progress = circumference - (fill / 100) * circumference;
+    const { t } = useTranslation();
     let mainColor;
     let subColor;
     let labelTextColor;
@@ -66,22 +68,22 @@ const SemiCircularProgress = ({ fill }) => {
                     alignItems: 'center',
                     flex: 1,
                 }}>
-                    <Text style={[typography.MediumInterH4, { color: labelTextColor }]}>Total spending</Text>
+                    <Text style={[typography.MediumInterH4, { color: labelTextColor }]}>{t('total-spending')}</Text>
                     <Text style={[typography.SemiBoldInterH2, { color: contentTextColor }]}>{formatCurrency(2500000)}</Text>
                 </View>
             </View>
             <View style={styles.quickReportThreeColumn}>
                 <View style={globalStyles.centerAlign}>
-                    <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>Limit budget</Text>
+                    <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>{t('limit-budget')}</Text>
                     <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{formatCurrency(3000000)}</Text>
                 </View>
                 <View style={globalStyles.centerAlign}>
-                    <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>Remain money</Text>
+                    <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>{t('remaining-budget')}</Text>
                     <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{formatCurrency(500000)}</Text>
                 </View>
                 <View style={globalStyles.centerAlign}>
-                    <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>Due day</Text>
-                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>4 days</Text>
+                    <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>{t('due-day')}</Text>
+                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>4 {t('days')}</Text>
                 </View>
             </View>
         </View>

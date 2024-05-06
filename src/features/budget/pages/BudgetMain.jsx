@@ -18,6 +18,7 @@ import DatePicker from 'react-native-date-picker';
 import { formatDate } from '../../../utils/formatDate';
 import InvestmentList from '../components/InvestmentList';
 import ActionSheetSelectTimeRangeBudget from '../components/ActionSheetSelectTimeRangeBudget';
+import { useTranslation } from 'react-i18next';
 const DISPLAY = true;
 const HIDE = false;
 
@@ -27,8 +28,7 @@ function BudgetMain(props) {
 
     const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week'];
     const budgetTypeFilter = useSelector(state => state.budget.budgetTypeFilter);
-
-
+    const { t } = useTranslation(); 
     const actionSheetBudgetTypeRef = useRef();
     const handleDisplayActionSheetBudgetType = (DISPLAY) => {
         actionSheetBudgetTypeRef.current?.setModalVisible(DISPLAY);
@@ -118,13 +118,13 @@ function BudgetMain(props) {
             </View>
             <ActionSheet ref={actionSheetBudgetTypeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>Select budget type</Text>
-                    <BottomMenuItem title='Limit' onPress={() => handleSelectBudgetType('Limit')} />
-                    <BottomMenuItem title='Investment' onPress={() => handleSelectBudgetType('Investment')} />
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>{t('select-budget-type')}</Text>
+                    <BottomMenuItem title={t('limit')} onPress={() => handleSelectBudgetType('Limit')} />
+                    <BottomMenuItem title={t('investment')} onPress={() => handleSelectBudgetType('Investment')} />
                     <TouchableOpacity
                         onPress={() => handleDisplayActionSheetBudgetType(HIDE)}
                         style={styles.bottomMenuItemContainer}>
-                        <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                        <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>

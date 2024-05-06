@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAddLimitBottomSheetDisplay } from '../../limit';
 import { useNavigation } from '@react-navigation/native';
 import { setSelectedLimitItem } from '../services/budgetSlice';
+import { useTranslation } from 'react-i18next';
 
 const limitList = [{
     id: '1',
@@ -33,6 +34,7 @@ const limitList = [{
 const LimitList = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const { t } = useTranslation(); 
     return (
         <>
             <View style={styles.container}>
@@ -51,7 +53,7 @@ const LimitList = () => {
                                         dispatch(setAddLimitBottomSheetDisplay(true))
                                     }}
                                     style={styles.btnCreateNewBudget}>
-                                    <Text style={{ ...typography.MediumInterH5, color: 'white' }}>Create new limit</Text>
+                                    <Text style={{ ...typography.MediumInterH5, color: 'white' }}>{t('create-new-limit')}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

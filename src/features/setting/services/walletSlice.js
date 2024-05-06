@@ -72,14 +72,14 @@ const selectWallet = createAsyncThunk(
     }
 );
 
-function createUserWallet(accountId, walletName) {
+function createUserWallet(accountId, walletName, inUse = true) {
     return {
         wallet_id: '',
         wallet_name: walletName,
         balance: 0,
         currency_id: 'VND',
         account_id: accountId,
-        in_use: true,
+        in_use: inUse,
     };
 }
 
@@ -99,6 +99,9 @@ const walletSlice = createSlice({
     reducers: {  
         addWallet: (state, action) => {
             state.wallets = action.payload;
+        },
+        addNewWallet: (state, action) => {
+            state.wallets.push(action.payload);
         },
         updateWallet: (state, action) => {
             const index = state.wallets.findIndex(wallet => wallet.wallet_id === action.payload.wallet_id);
@@ -146,6 +149,7 @@ export {
 };
 export const {
     addWallet,
+    addNewWallet,
     updateWallet,
     setCurrentWallet,
     setWalletId,

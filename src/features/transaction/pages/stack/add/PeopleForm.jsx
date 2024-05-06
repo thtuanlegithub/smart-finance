@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import call from 'react-native-phone-call';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionPeople } from '../../../services/addTransactionFormSlice';
+import { t } from 'i18next';
 
 const PeopleForm = () => {
     const navigation = useNavigation();
@@ -77,7 +78,7 @@ const PeopleForm = () => {
         <ScrollView>
             <AddTransactionInputViewHeader
                 onBackPress={handleBackPress}
-                title='People' />
+                title={t('contact')} />
             <View>
                 <TextInput
                     value={searchKeyword}
@@ -85,7 +86,7 @@ const PeopleForm = () => {
                         setSearchKeyword(text);
                         setListSearchPeople(listPeople.filter(person => person.name.toLowerCase().includes(text.toLowerCase())));
                     }}
-                    placeholder="Search people"
+                    placeholder={t('search-contact')}
                     placeholderTextColor={colors.gray03}
                     style={{
                         borderBottomColor: colors.gray02,

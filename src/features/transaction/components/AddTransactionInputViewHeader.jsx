@@ -3,7 +3,9 @@ import React from 'react'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { useTranslation } from 'react-i18next'
 const AddTransactionInputViewHeader = (props) => {
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.back} onPress={props.onBackPress}>
@@ -13,7 +15,7 @@ const AddTransactionInputViewHeader = (props) => {
                     :
                     <>
                         <FontAwesome5 name='chevron-left' size={16} color='black' style={{ alignSelf: 'center', marginTop: 8 }} />
-                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>Back</Text>
+                        <Text style={[typography.RegularInterH4, { color: 'black', marginTop: 4, marginLeft: 8 }]}>{t('back')}</Text>
                     </>
                 }
             </TouchableOpacity>

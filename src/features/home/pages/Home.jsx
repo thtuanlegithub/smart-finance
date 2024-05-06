@@ -17,10 +17,9 @@ import AddTransactionInputViewHeader from '../../transaction/components/AddTrans
 import WalletItem from '../../../components/WalletItem';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import { useDispatch, useSelector } from 'react-redux';
-import { initiateUserSetting, initiateUserWallet, popUpNotification, setReminderNotification } from '../../setting';
 import { selectWallet } from '../../setting';
 import BottomSheetReport from '../components/BottomSheetReport';
-import { localNotification } from '../../setting/utils/notification';
+import { useTranslation } from 'react-i18next';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
@@ -31,10 +30,9 @@ function Home(props) {
     const navigation = useNavigation();
     const bottomSheetSelectWalletRef = useRef(null);
     const snapPoints = useSnapPoints();
-    const currentUser = useSelector(state => state.login.user);
-
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const userWallet = useSelector(state => state.wallet.wallets);
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     const handleSelectWallet = (wallet) => {
@@ -71,18 +69,13 @@ function Home(props) {
         }
     }
 
-    useEffect(() => {
-        initiateUserSetting(currentUser, dispatch);
-        initiateUserWallet(currentUser, dispatch);
-    }, [currentUser]);
-    
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>
                         <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet?.balance.toString())}</Text>
-                        <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>Total balances</Text>
+                        <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>{t('total-balance')}</Text>
                     </View>
                     <View style={styles.notificationContainer}>
                         <FontAwesome5 name="bell" size={24} color={colors.green07} solid />
@@ -90,9 +83,9 @@ function Home(props) {
                 </View>
                 <View style={styles.wallet}>
                     <View style={styles.walletHeader}>
-                        <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>My wallet</Text>
+                        <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('my-wallets')}</Text>
                         <TouchableOpacity onPress={() => handleDisplayBottomSheetSelectWallet(DISPLAY)}>
-                            <Text style={[typography.SemiBoldInterH4, { color: colors.green06 }]}>See all</Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green06 }]}>{t('see-all')}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.border}></View>
@@ -102,17 +95,17 @@ function Home(props) {
                                 <Image style={styles.currentWalletIcon} source={require('../../../assets/images/wallet.png')} />
                                 <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{currentWallet?.wallet_name}</Text>
                             </View>
-                            <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet?.amount)}</Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(currentWallet?.balance)}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.spendingReport}>
                     <View style={styles.spendingReportHeader}>
-                        <Text style={[typography.MediumInterH4, { color: colors.green08, paddingVertical: 8 }]}>Spending Report</Text>
+                        <Text style={[typography.MediumInterH4, { color: colors.green08, paddingVertical: 8 }]}>{t('spending-report')}</Text>
                         <TouchableOpacity onPress={
                             () => handleDisplayBottomSheetReport(DISPLAY)
                         }>
-                            <Text style={[typography.SemiBoldInterH4, { color: colors.green06, paddingVertical: 8 },]}>Detail reports</Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green06, paddingVertical: 8 },]}>{t('detail-report')}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.spendingReportCard}>
@@ -146,16 +139,16 @@ function Home(props) {
                                 tabBarActiveTintColor: colors.green08,
                                 tabBarInactiveTintColor: colors.gray03,
                             }}>
-                            <SpendingReportTab.Screen name="Month" component={MonthReport} />
-                            <SpendingReportTab.Screen name="Week" component={WeekReport} />
+                            <SpendingReportTab.Screen name={t('month')} component={MonthReport} />
+                            <SpendingReportTab.Screen name={t('week')} component={WeekReport} />
                         </SpendingReportTab.Navigator>
                     </View>
                 </View>
                 <View style={styles.targetProgress}>
                     <View style={styles.targetProgressReportHeader}>
-                        <Text style={[typography.MediumInterH4, { color: colors.green08, paddingVertical: 8 }]}>Target Progress</Text>
+                        <Text style={[typography.MediumInterH4, { color: colors.green08, paddingVertical: 8 }]}>{t('target-progress')}</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('Budget')}>
-                            <Text style={[typography.SemiBoldInterH4, { color: colors.green06, paddingVertical: 8 }]}>See all</Text>
+                            <Text style={[typography.SemiBoldInterH4, { color: colors.green06, paddingVertical: 8 }]}>{t('see-all')}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.targetProgressCard}>
@@ -175,8 +168,8 @@ function Home(props) {
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
                 handleComponent={CustomHandle}>
                 <AddTransactionInputViewHeader
-                    backContent='Close'
-                    title='Select Wallet'
+                    backContent={t('close')}
+                    title={t('select-wallet')}
                     onBackPress={() => {
                         handleBottomSheetSelectWallet(HIDE);
                     }} />

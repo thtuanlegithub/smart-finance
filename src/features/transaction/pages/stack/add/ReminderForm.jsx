@@ -10,11 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionHasReminder, setTransactionReminderDate, setTransactionReminderTime } from '../../../services/addTransactionFormSlice';
 import { formatDate } from '../../../../../utils/formatDate';
 import formatTime from '../../../../../utils/formatTime';
+import { useTranslation } from 'react-i18next';
 
 const ReminderForm = () => {
     const navigation = useNavigation();
     const [datePickerOpen, setDatePickerOpen] = useState(false);
     const [timePickerOpen, setTimePickerOpen] = useState(false);
+    const { t } = useTranslation(); 
     const hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
 
     const toggleSwitch = () => {
@@ -29,7 +31,7 @@ const ReminderForm = () => {
         <View>
             <AddTransactionInputViewHeader
                 onBackPress={() => navigation.goBack()}
-                title='Reminder' />
+                title={t('reminder')}/>
             <View style={{
                 backgroundColor: 'white',
                 flexDirection: 'row',
@@ -42,7 +44,7 @@ const ReminderForm = () => {
                 <Text style={{
                     ...typography.MediumInterH4,
                     color: colors.green07,
-                }}>Reminder</Text>
+                }}>{t('reminder')}</Text>
                 <Switch
                     trackColor={{ false: colors.gray03, true: colors.green05 }}
                     thumbColor={hasReminder ? 'white' : 'white'}
@@ -74,7 +76,7 @@ const ReminderForm = () => {
                                 :
                                 <TouchableOpacity
                                     onPress={() => setTimePickerOpen(true)}>
-                                    <Text style={styles.dateTimePickerBtnText}>Pick time</Text>
+                                    <Text style={styles.dateTimePickerBtnText}>{t('select-time')}</Text>
                                 </TouchableOpacity>
                         }
 
@@ -90,7 +92,7 @@ const ReminderForm = () => {
                                 :
                                 <TouchableOpacity
                                     onPress={() => setDatePickerOpen(true)}>
-                                    <Text style={styles.dateTimePickerBtnText}>Pick date</Text>
+                                    <Text style={styles.dateTimePickerBtnText}>{t('select-date')}</Text>
                                 </TouchableOpacity>
                         }
                     </View>

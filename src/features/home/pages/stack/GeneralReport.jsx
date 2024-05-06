@@ -6,16 +6,18 @@ import typography from '../../../../styles/typography'
 import colors from '../../../../styles/colors'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import ATimeRangeGeneralReport from '../../components/ATimeRangeGeneralReport'
+import { useTranslation } from 'react-i18next'
 
 const TimeTab = createMaterialTopTabNavigator();
 
 const GeneralReport = (props) => {
+    const { t } = useTranslation(); 
     const reportTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader
-                backContent='Close'
-                title='Detail Reports'
+                backContent={t('close')}
+                title={t('detail-report')}
                 onBackPress={() => {
                     props.handleDisplayBottomSheetReport(false);
                 }}

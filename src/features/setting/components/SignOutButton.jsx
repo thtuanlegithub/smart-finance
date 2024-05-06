@@ -2,7 +2,9 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import typography from '../../../styles/typography'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { useTranslation } from 'react-i18next'
 const SignOutButton = (props) => {
+    const { t } = useTranslation(); 
     return (
         <TouchableOpacity
             onPress={props.onPress}
@@ -10,7 +12,7 @@ const SignOutButton = (props) => {
             <FontAwesome5
                 name='sign-out-alt' size={20}
                 style={{ transform: [{ rotate: '180deg' }], color: colors.red02 }} />
-            <Text style={styles.signOutButtonText}>Sign out</Text>
+            <Text style={styles.signOutButtonText}>{t('sign-out')}</Text>
         </TouchableOpacity>
     )
 }

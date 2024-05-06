@@ -12,12 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionType } from '../../../services/addTransactionFormSlice';
 import { setCurrentCategory } from '../../../../category/services/categorySlice';
 import transactionType from '../../../data/transactionType';
+import { useTranslation } from 'react-i18next';
 
 const Tab = createMaterialTopTabNavigator();
 
 const SelectCategoryForm = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const type = useSelector(state => state.addTransactionForm.type);
     const handleSelectExpenseCategory = (category) => {
         dispatch(setTransactionType(transactionType.EXPENSE));
@@ -36,7 +38,7 @@ const SelectCategoryForm = () => {
     }
     return (
         <View style={styles.container}>
-            <AddTransactionInputViewHeader title='Select Category'
+            <AddTransactionInputViewHeader title={t('select-category')}
                 onBackPress={() => {
                     navigation.goBack();
                 }} />
@@ -73,13 +75,13 @@ const SelectCategoryForm = () => {
                         tabBarInactiveTintColor: colors.gray03,
                     }}
                 >
-                    <Tab.Screen name="Expense">
+                    <Tab.Screen name={t('expense')}>
                         {props => <ExpenseSelectCategoryList {...props} onCategorySelect={handleSelectExpenseCategory} />}
                     </Tab.Screen>
-                    <Tab.Screen name="Income">
+                    <Tab.Screen name={t('income')}>
                         {props => <IncomeSelectCategoryList {...props} onCategorySelect={handleSelectIncomeCategory} />}
                     </Tab.Screen>
-                    <Tab.Screen name="Debt/ Loan">
+                    <Tab.Screen name={t('debt/loan')}>
                         {props => <DebtLoanSelectCategoryList {...props} onCategorySelect={handleSelectDebtLoanCategory} />}
                     </Tab.Screen>
                 </Tab.Navigator>

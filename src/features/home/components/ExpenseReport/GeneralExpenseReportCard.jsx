@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image'
 import calculatePercentage from '../../../../utils/calculatePercentage'
 import getSum from '../../../../utils/getSum'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 const data = {
     labels: ['Rentals', 'Food & Beverage', 'Shopping', 'Transportation', 'Medical Check-up', 'Other Expense'],
     datasets: [
@@ -24,6 +25,7 @@ const series = data.datasets[0].data;
 
 const GeneralExpenseReportCard = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const handleNavigationTransactionReport = (type) => {
         navigation.navigate(type);
     }
@@ -33,12 +35,12 @@ const GeneralExpenseReportCard = () => {
                 <Text style={{
                     ...typography.SemiBoldInterH3,
                     color: colors.green08,
-                }}>Expense</Text>
+                }}>{t('expense')}</Text>
                 <TouchableOpacity onPress={() => handleNavigationTransactionReport("ExpenseReport")}>
                     <Text style={{
                         ...typography.SemiBoldInterH4,
                         color: colors.green06,
-                    }}>See details</Text>
+                    }}>{t('see-details')}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.expenseReport}>

@@ -21,6 +21,7 @@ import AddTransactionInputViewHeader from '../components/AddTransactionInputView
 import WalletItem from '../../../components/WalletItem';
 import ActionSheetSelectTimeRangeTransaction from '../components/ActionSheetSelectTimeRangeTransaction';
 import { selectWallet } from '../../setting';
+import { useTranslation } from 'react-i18next';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,7 +30,7 @@ const DISPLAY = true;
 function TransactionMain(props) {
 
     const userWallet = useSelector(state => state.wallet.wallets);
-
+    const { t } = useTranslation();
     const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
     const actionSheetTransactionTypeRef = useRef();
 
@@ -62,7 +63,7 @@ function TransactionMain(props) {
                 <View style={styles.walletGroup}>
                     <WalletSelect name={currentWallet.wallet_name} onSelect={() => bottomSheetSelectWalletRef.current?.present()} />
                     <View style={styles.balancesGroup}>
-                        <Text style={[typography.RegularInterH5, { color: colors.green07, textAlign: 'right' }]}>Balances</Text>
+                        <Text style={[typography.RegularInterH5, { color: colors.green07, textAlign: 'right' }]}>{t('total-balance')}</Text>
                         <Text style={[typography.SemiBoldInterH5, {
                             color: colors.green07
                         }]}>{formatCurrency(currentWallet.balance)} VND</Text>
@@ -81,24 +82,24 @@ function TransactionMain(props) {
             </View>
             <ActionSheet ref={actionSheetTransactionTypeRef}>
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32 }}>
-                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>Select transaction type</Text>
+                    <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16, textAlign: 'center' }]}>{t('select-transaction-type')}</Text>
                     <BottomMenuItem
-                        title='Expense'
+                        title={t('expense')}
                         onPress={() => handleSelectTransactionType('Expense')} />
                     <BottomMenuItem
-                        title='Income'
+                        title={t('income')}
                         onPress={() => handleSelectTransactionType('Income')}
                     />
                     <BottomMenuItem
-                        title='Debt/ Loan'
+                        title={t('debt/loan')}
                         onPress={() => handleSelectTransactionType('Debt/ Loan')} />
                     <BottomMenuItem
-                        title='All'
+                        title={t('all')}
                         onPress={() => handleSelectTransactionType(null)} />
                     <TouchableOpacity
                         onPress={() => actionSheetTransactionTypeRef.current?.setModalVisible(false)}
                         style={styles.bottomMenuItemContainer}>
-                        <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>Cancel</Text>
+                        <Text style={[typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
@@ -112,8 +113,8 @@ function TransactionMain(props) {
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, opacity: 0 }}
                 handleComponent={CustomHandle}>
                 <AddTransactionInputViewHeader
-                    backContent='Close'
-                    title='Select Wallet'
+                    backContent={t('close')}
+                    title={t('select-wallet')}
                     onBackPress={() => {
                         bottomSheetSelectWalletRef.current?.close();
                     }} />

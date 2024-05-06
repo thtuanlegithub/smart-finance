@@ -1,26 +1,38 @@
 import { View, Text, TextInput } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import StackHeader from '../../../components/StackHeader';
 import W1Button from '../../../components/W1Button';
+import { addNewWallet, createUserWallet, updateUserWallet } from '../services/walletSlice';
+import { getCurrentUser } from '../../authentication';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const AddWallet = () => {
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
     const navigation = useNavigation();
+    const [walletName, setWalletName] = useState('');
     const handleAddNewWallet = () => {
-        // Add new wallet
+        const accountId = getCurrentUser().uid;
+        const newWallet = createUserWallet(accountId, walletName, false);
+        updateUserWallet('', newWallet);
+        dispatch(addNewWallet(newWallet));
         navigation.goBack();
     }
     return (
         <View style={{
             flex: 1,
         }}>
-            <StackHeader title='Add Wallet'
+            <StackHeader title={t('new-wallet')}
                 onBackPress={() => {
                     navigation.goBack();
                 }}
             />
             <TextInput
-                placeholder='Enter wallet name'
+                placeholder={t('enter-wallet-name')}
+                value={walletName}
+                onChangeText={(text) => setWalletName(text)}
                 style={{
                     margin: 16,
                     paddingVertical: 8,
@@ -40,7 +52,7 @@ const AddWallet = () => {
             }}>
                 <W1Button
                     onPress={handleAddNewWallet}
-                    title='Save' />
+                    title={t('save')} />
             </View>
         </View>
     )

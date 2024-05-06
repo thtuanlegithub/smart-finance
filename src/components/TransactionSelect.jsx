@@ -4,7 +4,9 @@ import globalStyles from '../styles/globalStyles'
 import typography from '../styles/typography'
 import colors from '../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { useTranslation } from 'react-i18next'
 const TransactionSelect = (props) => {
+    const { t } = useTranslation();
     return (
         <View style={globalStyles.borderSelectContainer}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -12,7 +14,7 @@ const TransactionSelect = (props) => {
                     ?
                     <Text style={[typography.SemiBoldInterH5, { color: colors.green08, textTransform: 'capitalize' }]}>{props.selected}</Text>
                     :
-                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>- All transaction types -</Text>
+                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('all-transaction-type')}</Text>
                 }
             </View>
 

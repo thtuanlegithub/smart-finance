@@ -10,6 +10,7 @@ import NoOutlinedMediumTextIconInput from '../../../transaction/components/NoOut
 import W1Button from '../../../../components/W1Button'
 import { useNavigation } from '@react-navigation/native'
 import ActionSheetSelectTimeRangeAddLimit from '../../components/ActionSheetSelectTimeRangeLimit'
+import { useTranslation } from 'react-i18next'
 
 const AddLimitForm = () => {
     dispatch = useDispatch();
@@ -20,6 +21,7 @@ const AddLimitForm = () => {
     const addLimitTimeRangeEnd = useSelector(state => state.addLimit.addLimitTimeRangeEnd);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const [addLimitTimeRangeInputDisplay, setAddLimitTimeRangeInputDisplay] = useState(null);
+    const { t } = useTranslation(); 
     function handleAddLimitTimeRange() {
         if (addLimitTimeRange === 'Customize') {
             setAddLimitTimeRangeInputDisplay(`${addLimitTimeRangeStart} - ${addLimitTimeRangeEnd}`);
@@ -46,8 +48,8 @@ const AddLimitForm = () => {
     return (
         <KeyboardAvoidingView style={{ flex: 1, position: 'relative' }}>
             <StackHeader
-                backContent='Close'
-                title='Add Limit'
+                backContent={t('close')}
+                title={t('add-limit')}
                 onBackPress={() => {
                     dispatch(setAddLimitBottomSheetDisplay(false));
                 }} />
@@ -62,7 +64,8 @@ const AddLimitForm = () => {
                     <MoneyInput value={0} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Select Category")}>
+                    onPress={() => navigation.navigate("Select Category")}
+                    >
                     <SelectCategoryInput />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -72,7 +75,7 @@ const AddLimitForm = () => {
                     <MediumTextIconInput
                         value={addLimitTimeRangeInputDisplay}
                         field='date'
-                        placeholder='Select time range' />
+                        placeholder={t('select-time-range')}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -81,7 +84,7 @@ const AddLimitForm = () => {
                     <NoOutlinedMediumTextIconInput
                         value={currentWallet.wallet_name}
                         field='wallet'
-                        placeholder='Select wallet'
+                        placeholder={t('select-wallet')}
                     />
                 </TouchableOpacity>
             </View>
@@ -95,7 +98,7 @@ const AddLimitForm = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
             }}>
-                <W1Button title='Save' />
+                <W1Button title={t('save')} />
             </View>
             <ActionSheetSelectTimeRangeAddLimit
                 actionSheetAddLimitTimeRangeRef={actionSheetAddLimitTimeRangeRef}

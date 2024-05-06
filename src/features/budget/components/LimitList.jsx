@@ -10,22 +10,25 @@ import { setSelectedLimitItem } from '../services/budgetSlice';
 
 const limitList = [{
     id: '1',
-    category: 'Shopping',
-    dueDay: '31/03/2024',
+    category: 'shopping',
+    limitTimeRangeStart: '25/03/2024',
+    limitTimeRangeEnd: '31/03/2024',
     limit: 2200000,
     current: 1500000,
 },
 {
     id: '2',
-    category: 'Food & Beverage',
-    dueDay: '31/03/2024',
+    category: 'foodandbeverage',
+    limitTimeRangeStart: '25/03/2024',
+    limitTimeRangeEnd: '31/03/2024',
     limit: 2000000,
     current: 500000,
 },
 {
     id: '3',
-    category: 'Transportation',
-    dueDay: '31/03/2024',
+    category: 'transportation',
+    limitTimeRangeStart: '25/03/2024',
+    limitTimeRangeEnd: '31/03/2024',
     limit: 300000,
     current: 300000,
 }];

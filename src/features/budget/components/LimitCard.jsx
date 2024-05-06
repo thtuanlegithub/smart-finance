@@ -5,6 +5,8 @@ import expenseCategoryIcons from '../../../data/expenseCategoryIcons'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import LineProgressBar from '../../../components/LineProgressBar'
+import { getCategoryIcons } from '../../category'
+import getCategoryNameById from '../../../utils/getCategoryNameById'
 
 const LimitCard = (props) => {
     let progressLabelColor;
@@ -23,15 +25,15 @@ const LimitCard = (props) => {
             style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image}
-                    source={expenseCategoryIcons[props.category]} />
+                    source={getCategoryIcons(props.category)} />
             </View>
             <View style={{ flex: 1 }}>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{props.category}</Text>
+                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{getCategoryNameById(props.category)}</Text>
                     <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(props.current)}</Text>
                 </View>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>Due day: 31/03/2024</Text>
+                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>Due day: {props.limitTimeRangeEnd}</Text>
                     <Text style={[typography.SemiBoldInterH5, { color: colors.green07 }]}>Limit: {formatCurrency(props.limit)}</Text>
                 </View>
                 <View style={{ marginVertical: 8 }}>

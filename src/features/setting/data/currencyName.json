@@ -639,6 +639,10 @@
     "displayName": "Venezuelan Bolívar Soberano",
     "symbol": "Bs."
   },
+  "VEF": {
+    "displayName": "Venezuela",
+    "symbol": "Bs."
+  },
   "VND": {
     "displayName": "Vietnamese Dong",
     "symbol": "₫"

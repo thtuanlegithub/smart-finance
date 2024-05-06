@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 const PATH_TO_CURRENCY_API = '../data/currencyApi.json';
@@ -87,12 +87,16 @@ const initialState = {
     data: {},
     searchResult: {},
     exchangeResult: 0,
+    currentCurrency: 'VND',
 };
 
 const currencySlice = createSlice({
     name: 'currency',
     initialState,
     reducers: {
+        setCurrentCurrency: (state, action) => {
+            state.currentCurrency = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -111,7 +115,10 @@ const currencySlice = createSlice({
     }
 });
 
-export { fetchCurrencyData, updateExchangeRate, searchCurrencyUnit, convertCurrencyUnit };
+export { fetchCurrencyData, updateExchangeRate, searchCurrencyUnit, convertCurrencyUnit, };
+
+export const { setCurrentCurrency } = currencySlice.actions;
+
 export default currencySlice.reducer;
 
 

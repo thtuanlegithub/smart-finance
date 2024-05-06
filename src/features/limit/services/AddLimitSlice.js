@@ -5,6 +5,8 @@ const initialState = {
     addLimitTimeRange: null,
     addLimitTimeRangeStart: null,
     addLimitTimeRangeEnd: null,
+    addLimitCategory: null,
+    addLimitWallet: null,
 }
 const addLimitSlice = createSlice({
     name: 'addLimit',
@@ -21,6 +23,12 @@ const addLimitSlice = createSlice({
         },
         setAddLimitTimeRangeEnd: (state, action) => {
             state.addLimitTimeRangeEnd = action.payload;
+        },
+        setAddLimitCategory: (state, action) => {
+            state.addLimitCategory = action.payload;
+        },
+        setAddLimitWallet: (state, action) => {
+            state.addLimitWallet = action.payload;
         },
         clearAddLimitTimeRange: (state) => {
             state.addLimitTimeRange = null;

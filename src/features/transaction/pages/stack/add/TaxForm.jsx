@@ -11,27 +11,58 @@ import { Switch } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionAmount, setTransactionDependents, setTransactionHasTax, setTransactionInsurance } from '../../../services/addTransactionFormSlice';
 import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIncomeTax';
+import { setUpdateTransactionAmount, setUpdateTransactionDependents, setUpdateTransactionHasTax, setUpdateTransactionInsurance } from '../../../services/updateTransactionFormSlice';
 
 const TaxForm = () => {
-    const hasTax = useSelector(state => state.addTransactionForm.hasTax);
-    const transactionAmount = useSelector(state => state.addTransactionForm.amount);
-    const transactionInsurance = useSelector(state => state.addTransactionForm.insurance);
-    const transactionDependents = useSelector(state => state.addTransactionForm.dependents);
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
+    if (currentTransactionCRUDAction === 'create') {
+        var hasTax = useSelector(state => state.addTransactionForm.hasTax);
+        var transactionAmount = useSelector(state => state.addTransactionForm.amount);
+        var transactionInsurance = useSelector(state => state.addTransactionForm.insurance);
+        var transactionDependents = useSelector(state => state.addTransactionForm.dependents);
+    }
+    else if (currentTransactionCRUDAction === 'update') {
+        var hasTax = useSelector(state => state.updateTransactionForm.hasTax);
+        var transactionAmount = useSelector(state => state.updateTransactionForm.amount);
+        var transactionInsurance = useSelector(state => state.updateTransactionForm.insurance);
+        var transactionDependents = useSelector(state => state.updateTransactionForm.dependents);
+    }
+
     const dispatch = useDispatch();
     const toggleSwitch = () => {
-        dispatch(setTransactionHasTax(!hasTax));
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionHasTax(!hasTax));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionHasTax(!hasTax));
+        }
     }
     const handleSalaryChange = (amount) => {
         amount = parseInt(amount);
-        dispatch(setTransactionAmount(amount));
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionAmount(amount));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionAmount(amount));
+        }
     }
     const handleInsuranceChange = (amount) => {
         amount = parseInt(amount);
-        dispatch(setTransactionInsurance(amount));
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionInsurance(amount));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionInsurance(amount));
+        }
     }
     const handleDependentsChange = (amount) => {
         amount = parseInt(amount);
-        dispatch(setTransactionDependents(amount));
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionDependents(amount));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionDependents(amount));
+        }
     }
     const navigation = useNavigation();
     return (

@@ -27,7 +27,7 @@ export {
     setTransactionTimeRangeStart,
     setTransactionTimeRangeEnd,
     setCurrentWallet,
-    setCurrentCRUDAction,
+    setCurrentTransactionCRUDAction,
     clearTransactionTimeRange
 } from './services/transactionSlice';
 

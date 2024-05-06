@@ -5,23 +5,30 @@ import colors from '../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
 import { getCategoryIcons } from '../../category'
+import getCategoryNameById from '../../../utils/getCategoryNameById'
 const SelectCategoryInput = (props) => {
-    category = useSelector(state => state.category.currentCategory);
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
+    if (currentTransactionCRUDAction == 'create') {
+        var categoryId = useSelector(state => state.addTransactionForm.category_id);
+    }
+    else if (currentTransactionCRUDAction == 'update') {
+        var categoryId = useSelector(state => state.updateTransactionForm.category_id);
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
                 {
-                    category ?
-                        <Image style={styles.labelIcon} source={getCategoryIcons(category.id)} />
+                    categoryId ?
+                        <Image style={styles.labelIcon} source={getCategoryIcons(categoryId)} />
                         :
                         <Image style={styles.labelIcon} source={getCategoryIcons(null)} />
                 }
             </View>
             <View style={styles.inputGroup}>
-                {category && category.id !== 'placeholdericon'
+                {categoryId && categoryId !== 'placeholdericon'
                     ?
-                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{category.name}</Text>
+                    <Text style={[typography.RegularInterH4, { color: colors.green08 }]}>{getCategoryNameById(categoryId)}</Text>
                     :
                     <Text style={[typography.RegularInterH4, { color: colors.green08, opacity: 0.5 }]}>Select category</Text>
                 }

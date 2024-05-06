@@ -11,13 +11,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 import call from 'react-native-phone-call';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionPeople } from '../../../services/addTransactionFormSlice';
+import { setUpdateTransactionPeople } from '../../../services/updateTransactionFormSlice';
 
 const PeopleForm = () => {
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
     const navigation = useNavigation();
     const [searchKeyword, setSearchKeyword] = useState('');
     const [listSearchPeople, setListSearchPeople] = useState([]);
     const [listPeople, setListPeople] = useState([]);
-    const people = useSelector(state => state.addTransactionForm.people);
+    if (currentTransactionCRUDAction === 'create') {
+        var people = useSelector(state => state.addTransactionForm.people);
+    }
+    else if (currentTransactionCRUDAction === 'update') {
+        var people = useSelector(state => state.updateTransactionForm.people);
+    }
     const [selectedPeople, setSelectedPeople] = useState(people);
     const dispatch = useDispatch();
 
@@ -51,7 +58,12 @@ const PeopleForm = () => {
     }, []);
 
     const handleBackPress = () => {
-        dispatch(setTransactionPeople(selectedPeople.map(person => ({ name: person.name, phone: person.phone }))));
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionPeople(selectedPeople.map(person => ({ name: person.name, phone: person.phone }))));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionPeople(selectedPeople.map(person => ({ name: person.name, phone: person.phone }))));
+        }
         navigation.goBack();
     }
 

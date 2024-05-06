@@ -12,17 +12,17 @@ const Transaction = ({ item }) => {
     return (
         <View>
             {
-                item.type == 'Expense'
+                item.type == 'expense'
                 &&
                 <SpendingTransaction item={item} />
             }
             {
-                item.type == 'Income'
+                item.type == 'income'
                 &&
                 <IncomeTransaction item={item} />
             }
             {
-                item.type == 'Debt/ Loan'
+                item.type == 'debt_loan'
                 &&
                 <DebtLoanTransaction item={item} />
             }

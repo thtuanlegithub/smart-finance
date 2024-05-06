@@ -1,11 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 import styles from '../styles/TransactionStyles';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import formatCurrency from '../../../utils/formatCurrency';
 import DayTransactionsGroup from './transactionitem/DayTransactionsGroup';
-import { FlatList } from 'react-native-gesture-handler';
 import fakeDataTransactionList from '../../../data/fakeDataTransactionList';
 import { useSelector } from 'react-redux';
 
@@ -22,7 +21,7 @@ const TransactionsList = (props) => {
     const getSumExpense = () => {
         return fakeDataTransactionListFilter.reduce((total, item) => {
             return total + item.transactions.reduce((total, transaction) => {
-                if (transaction.type == 'Expense') {
+                if (transaction.type == 'expense') {
                     return total + transaction.amount;
                 }
                 return total;
@@ -33,7 +32,7 @@ const TransactionsList = (props) => {
     const getSumIncome = () => {
         return fakeDataTransactionListFilter.reduce((total, item) => {
             return total + item.transactions.reduce((total, transaction) => {
-                if (transaction.type == 'Income') {
+                if (transaction.type == 'income') {
                     return total + transaction.amount;
                 }
                 return total;
@@ -44,7 +43,7 @@ const TransactionsList = (props) => {
     const getSumDebtLoan = () => {
         return fakeDataTransactionListFilter.reduce((total, item) => {
             return total + item.transactions.reduce((total, transaction) => {
-                if (transaction.type == 'Debt/ Loan') {
+                if (transaction.type == 'debt_loan') {
                     return total + transaction.amount;
                 }
                 return total;
@@ -60,7 +59,7 @@ const TransactionsList = (props) => {
                         {props.type
                             ?
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total {props.type} of this time: </Text>
+                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total {getTypeNameById[props.type]} of this time: </Text>
                                 {
                                     props.type == 'Expense'
                                     &&
@@ -98,8 +97,9 @@ const TransactionsList = (props) => {
                     </View>
                 }
                 data={fakeDataTransactionListFilter}
-                renderItem={({ item }) => <DayTransactionsGroup nestFrom='Transaction' {...item} />}
-                keyExtractor={item => item.id}
+                renderItem={({ item }) => <DayTransactionsGroup
+                    nestFrom='Transaction' {...item} />}
+                keyExtractor={item => item.id.toString()}
                 showsVerticalScrollIndicator={false}
             />
         </View>

@@ -10,21 +10,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionHasReminder, setTransactionReminderDate, setTransactionReminderTime } from '../../../services/addTransactionFormSlice';
 import { formatDate } from '../../../../../utils/formatDate';
 import formatTime from '../../../../../utils/formatTime';
+import { setUpdateTransactionHasReminder, setUpdateTransactionReminderDate, setUpdateTransactionReminderTime } from '../../../services/updateTransactionFormSlice';
 
 const ReminderForm = () => {
+    const dispatch = useDispatch();
+
     const navigation = useNavigation();
     const [datePickerOpen, setDatePickerOpen] = useState(false);
     const [timePickerOpen, setTimePickerOpen] = useState(false);
-    const hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
-
-    const toggleSwitch = () => {
-        dispatch(setTransactionHasReminder(!hasReminder));
+    const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
+    if (currentTransactionCRUDAction === 'create') {
+        var hasReminder = useSelector(state => state.addTransactionForm.hasReminder);
+        var reminderTime = useSelector(state => state.addTransactionForm.reminderTime);
+        var reminderDate = useSelector(state => state.addTransactionForm.reminderDate);
+    }
+    else if (currentTransactionCRUDAction === 'update') {
+        var hasReminder = useSelector(state => state.updateTransactionForm.hasReminder);
+        var reminderTime = useSelector(state => state.updateTransactionForm.reminderTime);
+        var reminderDate = useSelector(state => state.updateTransactionForm.reminderDate);
     }
 
-    const reminderTime = useSelector(state => state.addTransactionForm.reminderTime);
-    const reminderDate = useSelector(state => state.addTransactionForm.reminderDate);
+    const toggleSwitch = () => {
+        if (currentTransactionCRUDAction === 'create') {
+            dispatch(setTransactionHasReminder(!hasReminder));
+        }
+        else if (currentTransactionCRUDAction === 'update') {
+            dispatch(setUpdateTransactionHasReminder(!hasReminder));
+        }
+    }
 
-    const dispatch = useDispatch();
     return (
         <View>
             <AddTransactionInputViewHeader
@@ -55,7 +69,6 @@ const ReminderForm = () => {
             {
                 hasReminder
                 &&
-
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'flex-end',
@@ -100,7 +113,12 @@ const ReminderForm = () => {
                         open={datePickerOpen}
                         date={new Date()}
                         onConfirm={(date) => {
-                            dispatch(setTransactionReminderDate(formatDate(date)));
+                            if (currentTransactionCRUDAction === 'create') {
+                                dispatch(setTransactionReminderDate(formatDate(date)));
+                            }
+                            else if (currentTransactionCRUDAction === 'update') {
+                                dispatch(setUpdateTransactionReminderDate(formatDate(date)));
+                            }
                             setDatePickerOpen(false);
                         }}
                         onCancel={() => {
@@ -113,7 +131,12 @@ const ReminderForm = () => {
                         open={timePickerOpen}
                         date={new Date()}
                         onConfirm={(date) => {
-                            dispatch(setTransactionReminderTime(formatTime(date)));
+                            if (currentTransactionCRUDAction === 'create') {
+                                dispatch(setTransactionReminderTime(formatTime(date)));
+                            }
+                            else if (currentTransactionCRUDAction === 'update') {
+                                dispatch(setUpdateTransactionReminderTime(formatTime(date)));
+                            }
                             setTimePickerOpen(false)
                         }}
                         onCancel={() => {

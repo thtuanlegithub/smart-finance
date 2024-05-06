@@ -10,7 +10,7 @@ const initialState = {
     category_id: '',
     created_at: '',
     wallet: '',
-    displayModal: null,
+    displayModal: false,
     reminderTime: formatTime(new Date()),
     reminderDate: formatDate(new Date()),
     hasReminder: false,

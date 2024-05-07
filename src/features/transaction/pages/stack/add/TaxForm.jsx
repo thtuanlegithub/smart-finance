@@ -12,8 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionAmount, setTransactionDependents, setTransactionHasTax, setTransactionInsurance } from '../../../services/addTransactionFormSlice';
 import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIncomeTax';
 import { setUpdateTransactionAmount, setUpdateTransactionDependents, setUpdateTransactionHasTax, setUpdateTransactionInsurance } from '../../../services/updateTransactionFormSlice';
+import { useTranslation } from 'react-i18next';
 
 const TaxForm = () => {
+    const { t } = useTranslation();
     const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
     if (currentTransactionCRUDAction === 'create') {
         var hasTax = useSelector(state => state.addTransactionForm.hasTax);
@@ -67,7 +69,7 @@ const TaxForm = () => {
     const navigation = useNavigation();
     return (
         <View>
-            <StackHeader title='Calculate Tax'
+            <StackHeader title={t('calculate-tax')}
                 onBackPress={() => navigation.goBack()}
             />
             <View style={{
@@ -82,7 +84,7 @@ const TaxForm = () => {
                 <Text style={{
                     ...typography.MediumInterH4,
                     color: colors.green07,
-                }}>Have Tax</Text>
+                }}>{t("have-tax")}</Text>
                 <Switch
                     trackColor={{ false: colors.gray03, true: colors.green05 }}
                     thumbColor={hasTax ? 'white' : 'white'}
@@ -106,20 +108,20 @@ const TaxForm = () => {
                             ...typography.SemiBoldInterH3,
                             paddingVertical: 8,
                             color: colors.green08,
-                        }}>Personal income tax</Text>
+                        }}>{t("personal-income-tax")}</Text>
                         <NumericInputHintText
                             onChange={handleSalaryChange}
                             value={transactionAmount}
-                            hint='Salary' />
+                            hint={t('salary')} />
                         <NumericInputHintText
                             onChange={handleInsuranceChange}
                             value={transactionInsurance}
-                            hint='Other Insurance' />
+                            hint={t('other-insurance')} />
                         <NumericInputIcon
                             onChange={handleDependentsChange}
                             value={transactionDependents}
                             field='people'
-                            placeholder='Dependents' />
+                            placeholder={t('dependents')} />
                     </View>
                     <View style={{
                         padding: 16,
@@ -135,7 +137,7 @@ const TaxForm = () => {
                             style={{
                                 ...typography.RegularInterH3,
                                 color: colors.green08,
-                            }}>Total tax:</Text>
+                            }}>{t('total-tax')}:</Text>
                         <Text style={{
                             ...typography.SemiBoldInterH2,
                             color: colors.green07,

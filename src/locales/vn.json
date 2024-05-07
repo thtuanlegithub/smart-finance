@@ -63,6 +63,12 @@
     "select-time": "Chọn giờ",
     "select-date": "Chọn ngày",
     "no-tax": "Không có thuế",
+    "calculate-tax": "Tính thuế",
+    "have-tax": "Có thuế",
+    "personal-income-tax":"Thuế thu nhập cá nhân",
+    "other-insurance":"Bảo hiểm khác",
+    "total-tax": "Tổng số tiền thuế",
+    "dependents":"Số người phụ thuộc",
     "select-a-day": "Chọn ngày",
     "today": "Hôm nay",
     "yesterday": "Hôm qua",
@@ -110,6 +116,8 @@
     "cancel": "Hủy",
     "confirm": "Xác nhận",
 
+    "vietnamese": "Tiếng Việt",
+    "english": "Tiếng Anh",
 
 
 

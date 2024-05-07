@@ -76,7 +76,7 @@ const initialState = {
     amount: 0,
     note: '',
     category_id: '',
-    created_at: '',
+    created_at: formatDate(new Date()),
     wallet: '',
     displayModal: null,
     reminderTime: formatTime(new Date()),

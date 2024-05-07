@@ -3,22 +3,19 @@
     "label-transaction": "Transactions",
     "label-budget": "Budgets",
     "label-setting": "Setting",
-
     "back": "Back",
     "save": "Save",
     "close": "Close",
     "all": "All",
-
     "total-balance": "Total balances",
     "my-wallets": "My wallets",
     "see-all": "See all",
     "spending-report": "Spending report",
-    "detail-report": "Detail report",    
+    "detail-report": "Detail report",
     "see-details": "See details",
     "month": "Month",
     "week": "Week",
     "target-progress": "Target progress",
-
     "total-spend-of-this-month": "Total spend of this month",
     "total-spend-of-this-week": "Total spend of this week",
     "top-spending": "Top spending",
@@ -26,6 +23,10 @@
     "last-week": "Last week",
     "this-month": "This month",
     "last-month": "Last month",
+    "this-year": "This year",
+    "last-year": "Last year",
+    "select-time-range": "Select time range",
+    "customize": "Customize",
     "select-wallet": "Select wallet",
     "select-transaction-type": "Select transaction type",
     "all-transaction-type": "- All transaction types -",
@@ -37,7 +38,6 @@
     "total-expense-of-this-time": "Total expense of this time",
     "total-income-of-this-time": "Total income of this time",
     "total-debt-loan-of-this-time": "Total debt/loan of this time",
-
     "limit": "Limit",
     "investment": "Investment",
     "select-budget-type": "Select budget type",
@@ -49,7 +49,6 @@
     "days": "days",
     "you-have-reach-the-limit": "You have reach the limit",
     "add-limit": "Add limit",
-
     "amount": "Amount",
     "note": "Note",
     "add-transaction": "Add transaction",
@@ -60,22 +59,25 @@
     "select-time": "Select time",
     "select-date": "Select date",
     "no-tax": "No tax",
+    "calculate-tax": "Calculate tax",
+    "have-tax": "Have tax",
+    "personal-income-tax":"Personal income tax",
+    "other-insurance":"Other insurance",
+    "total-tax": "Total tax",
+    "dependents": "Dependents",
     "select-a-day": "Select a day",
     "today": "Today",
     "yesterday": "Yesterday",
-
     "category": "Categories",
     "reminder": "Reminder",
     "currency-unit": "Currency unit",
     "language": "Languages",
     "about-us": "About us",
-
     "select-category": "Select category",
     "expense": "Expense",
     "income": "Income",
     "debt/loan": "Debt/Loan",
     "new-category": "New category",
-    
     "foodandbeverage": "Food & Beverage",
     "shopping": "Shopping",
     "transportation": "Transportation",
@@ -96,21 +98,15 @@
     "debtcollection": "Debt collection",
     "repayment": "Repayment",
     "default": "Default",
-
     "sign-out": "Sign out",
     "sign-out-title": "Sign out",
-    "sign-out-confirm": "Are you sure you want to sign out?",
+    "sign-out-message": "Are you sure you want to sign out?",
     "cancel": "Cancel",
     "confirm": "Confirm",
-
     "all-wallets": "All wallets",
     "new-wallet": "New wallet",
     "enter-wallet-name": "Enter wallet name",
-
-
-
-
-
-
+    "vietnamese": "Vietnamese",
+    "english": "English",
     "end-file": ""
 }

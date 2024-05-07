@@ -92,7 +92,7 @@ const AddTransactionForm = ({ navigation }) => {
         }
 
         // Set local notification
-        let reminder;
+        let reminder = {};
         if (hasReminder) {
             const currentTimestamp = () => Math.floor(Date.now() / 1000);
             const newReminder = {
@@ -109,10 +109,10 @@ const AddTransactionForm = ({ navigation }) => {
             setReminderNotification(newReminder);
             updateReminder(newReminder);
         }
-        
+
         const newTransaction = new TransactionBuilder()
             .setAmount(amount - calculatePersonalIncomeTax(amount, dependents, insurance))
-            .setCategoryId(category.id)
+            .setCategoryId(categoryId)
             .setCreatedAt(created_at)
             .setNote(note)
             .setWalletId(wallet.wallet_id)
@@ -200,7 +200,7 @@ const AddTransactionForm = ({ navigation }) => {
                                 <TouchableOpacity
                                     onPress={() => handleSelectTransactionDay(TODAY)}
                                     style={styles.bottomMenuItemContainer}>
-                                    <BottomMenuItem title={t('today')}/>
+                                    <BottomMenuItem title={t('today')} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{ width: '100%' }}>
@@ -212,7 +212,7 @@ const AddTransactionForm = ({ navigation }) => {
                             </View>
                             <View style={{ width: '100%' }}>
                                 <TouchableOpacity onPress={() => handleSelectTransactionDay(CUSTOM)} style={styles.bottomMenuItemContainer}>
-                                    <BottomMenuItem title={t('customize')}/>
+                                    <BottomMenuItem title={t('customize')} />
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity onPress={() => actionSheetRef.current?.setModalVisible(false)} style={styles.bottomMenuItemContainer}>

@@ -11,7 +11,7 @@ const MediumTextIconInput = (props) => {
                 <FontAwesome5 name={inputIcons[props.field]} size={18} color={colors.green08} style={styles.labelIcon} />
             </View>
             <View style={styles.inputGroup}>
-                {props.value
+                {props.value && props.value != ''
                     ?
                     <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{props.value}</Text>
                     :

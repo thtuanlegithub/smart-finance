@@ -36,7 +36,6 @@ const LimitCard = (props) => {
                 </View>
                 <View style={styles.rowPlaceBetween}>
                     <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('due-day')}: {props.limitTimeRangeEnd}</Text>
-                    <Text style={[typography.SemiBoldInterH5, { color: colors.green07 }]}>{t('limit')}: {formatCurrency(props.limit)}</Text>
                 </View>
                 <View style={{ marginVertical: 8 }}>
                     <LineProgressBar

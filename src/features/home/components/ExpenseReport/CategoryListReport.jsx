@@ -10,6 +10,7 @@ import getSum from '../../../../utils/getSum'
 import calculatePercentage from '../../../../utils/calculatePercentage'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 const screenWidth = Dimensions.get('window').width;
 const piedata = [
@@ -28,6 +29,7 @@ const data = {
 
 const CategoryReport = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const handleCategoryDetailReport = (item) => {
         navigation.navigate("CategoryDetail", { selectedItem: item });
         console.log(item);
@@ -48,11 +50,11 @@ const CategoryReport = () => {
                     <>
                         <View style={styles.header}>
                             <View style={styles.summary}>
-                                <Text style={styles.title}>Total</Text>
+                                <Text style={styles.title}>{t('total')}</Text>
                                 <Text style={styles.money}>{formatCurrency(data.datasets[0].data.reduce(getSum, 0))}</Text>
                             </View>
                             <View style={styles.summary}>
-                                <Text style={styles.title}>Daily Average</Text>
+                                <Text style={styles.title}>{t('daily-average')}</Text>
                                 <Text style={styles.money}>{formatCurrency(Math.round(data.datasets[0].data.reduce(getSum, 0) / data.datasets[0].data.length))}</Text>
                             </View>
                         </View>

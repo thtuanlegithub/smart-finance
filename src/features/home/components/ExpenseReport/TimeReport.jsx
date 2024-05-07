@@ -7,10 +7,12 @@ import { BarChart } from 'react-native-chart-kit';
 import TimeItem from './TimeItem'
 import getSum from '../../../../utils/getSum'
 import fakeDataBarChart from '../../../../data/fakeDataBarChart';
+import { useTranslation } from 'react-i18next'
 
 const screenWidth = Dimensions.get('window').width;
 
 const TimeReport = () => {
+    const { t } = useTranslation();
     const mergedData = fakeDataBarChart.labels.map((label, index) => {
         return { label: label, value: fakeDataBarChart.datasets[0].data[index] };
     });
@@ -21,11 +23,11 @@ const TimeReport = () => {
                     <>
                         <View style={styles.header}>
                             <View style={styles.summary}>
-                                <Text style={styles.title}>Total</Text>
+                                <Text style={styles.title}>{t('total')}</Text>
                                 <Text style={styles.money}>{formatCurrency(fakeDataBarChart.datasets[0].data.reduce(getSum, 0))}</Text>
                             </View>
                             <View style={styles.summary}>
-                                <Text style={styles.title}>Daily Average</Text>
+                                <Text style={styles.title}>{t('daily-average')}</Text>
                                 <Text style={styles.money}>{formatCurrency(Math.round(fakeDataBarChart.datasets[0].data.reduce(getSum, 0) / fakeDataBarChart.datasets[0].data.length))}</Text>
                             </View>
                         </View>

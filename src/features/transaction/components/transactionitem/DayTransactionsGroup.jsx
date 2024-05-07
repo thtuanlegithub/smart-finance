@@ -4,11 +4,14 @@ import styles from '../../styles/DayTransactionGroupStyles';
 import formatCurrency from '../../../../utils/formatCurrency';
 import { getDate } from '../../../../utils/getDate';
 import { getDayName } from '../../../../utils/getDayName';
-import { getMonthYear } from '../../../../utils/getMonthYear';
+import { getMonth } from '../../../../utils/getMonth';
 import Transaction from './Transaction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { getYear } from '../../../../utils/getYear';
 const DayTransactionsGroup = (props) => {
+    const { t } = useTranslation();
     const getSum = (total, item) => {
         if (item.type == 'income') {
             return total + item.amount;
@@ -38,8 +41,11 @@ const DayTransactionsGroup = (props) => {
                 <Text style={styles.dateText}>{getDate(props.date)}</Text>
                 <View style={styles.rightHeader}>
                     <View>
-                        <Text style={styles.dayText}>{getDayName(props.date)}</Text>
-                        <Text style={styles.monthYearText}>{getMonthYear(props.date)}</Text>
+                        <Text style={styles.dayText}>{t(getDayName(props.date).toLowerCase())}</Text>
+                        <View style={{flexDirection: 'row', gap: 2}}>
+                            <Text style={styles.monthYearText}>{t(getMonth(props.date).toLowerCase())},</Text>
+                            <Text style={styles.monthYearText}>{getYear(props.date)}</Text>
+                        </View>
                     </View>
                     {
                         props.transactions.reduce(getSum, 0) == 0

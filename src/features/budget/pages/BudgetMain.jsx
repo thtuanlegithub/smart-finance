@@ -26,7 +26,7 @@ const Tab = createMaterialTopTabNavigator();
 
 function BudgetMain(props) {
 
-    const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week'];
+    const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week'];
     const budgetTypeFilter = useSelector(state => state.budget.budgetTypeFilter);
     const { t } = useTranslation(); 
     const actionSheetBudgetTypeRef = useRef();
@@ -84,6 +84,7 @@ function BudgetMain(props) {
                         tabBarLabelStyle: {
                             ...typography.MediumInterH5,
                             color: colors.green07,
+                            textTransform: 'none',
                         },
                         tabBarIndicatorStyle: {
                             backgroundColor: colors.green07,
@@ -100,8 +101,9 @@ function BudgetMain(props) {
                     {budgetTimeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={range}
-                            initialParams={{ range }}>
+                            name={t(range).toUpperCase()}
+                            initialParams={{ range }}
+                        >
                             {() => {
                                 switch (budgetTypeFilter) {
                                     case 'Investment':

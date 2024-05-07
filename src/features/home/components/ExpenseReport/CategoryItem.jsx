@@ -5,7 +5,6 @@ import colors from '../../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import formatCurrency from '../../../../utils/formatCurrency'
 import expenseCategoryIcons from '../../../../data/expenseCategoryIcons'
-import globalStyles from '../../../../styles/globalStyles'
 import FastImage from 'react-native-fast-image'
 
 const CategoryItem = (props) => {

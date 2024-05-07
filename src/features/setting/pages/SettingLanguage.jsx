@@ -1,5 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import StackHeader from '../../../components/StackHeader'
 import { useTranslation } from 'react-i18next'
 import FastImage from 'react-native-fast-image'
@@ -25,13 +25,16 @@ const SettingLanguage = () => {
 
     const dispatch = useDispatch();
     const userSetting = useSelector(state => state.setting);
-
+    
     const handleSelectLanguage = (code) => {
         dispatch(setLanguage(code));
         i18next.changeLanguage(code);
-        updateUserSetting(userSetting.setting_id, userSetting);
         navigation.goBack();
     }
+
+    useEffect(() => {
+        updateUserSetting(userSetting.setting_id, userSetting);
+    }, [userSetting]);
 
     return (
         <View style={{

@@ -13,7 +13,7 @@ const TransactionSelect = (props) => {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 {props.selected
                     ?
-                    <Text style={[typography.SemiBoldInterH5, { color: colors.green08, textTransform: 'capitalize' }]}>{getTypeNameById[props.selected]}</Text>
+                    <Text style={[typography.SemiBoldInterH5, { color: colors.green08 }]}>{t(getTypeNameById[props.selected].toLowerCase())}</Text>
                     :
                     <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('all-transaction-type')}</Text>
                 }

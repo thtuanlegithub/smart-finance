@@ -7,16 +7,18 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import typography from '../../../../../styles/typography';
 import colors from '../../../../../styles/colors';
 import ATimeRangeExpenseReport from '../../../components/ExpenseReport/ATimeRangeExpenseReport';
+import { useTranslation } from 'react-i18next';
 
 const TimeTab = createMaterialTopTabNavigator();
 
 const ExpenseReport = (props) => {
     const navigation = useNavigation();
-    const reportTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
+    const { t } = useTranslation();
+    const reportTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week']
     return (
         <View style={{ position: 'relative', flex: 1 }}>
             <AddTransactionInputViewHeader
-                title='Expense Detail'
+                title={t('expense-detail')}
                 onBackPress={() => {
                     navigation.navigate("GeneralReport");
                 }} />
@@ -31,6 +33,7 @@ const ExpenseReport = (props) => {
                     tabBarLabelStyle: {
                         ...typography.MediumInterH5,
                         color: colors.green07,
+                        textTransform: 'none',
                     },
                     tabBarIndicatorStyle: {
                         backgroundColor: colors.green07,
@@ -50,7 +53,7 @@ const ExpenseReport = (props) => {
                             screenOptions={{
                             }}
                             key={index}
-                            name={range}
+                            name={t(range).toUpperCase()}
                             initialParams={{ range }}>
                             {
                                 props => <ATimeRangeExpenseReport {...props} type={props.route.name} />

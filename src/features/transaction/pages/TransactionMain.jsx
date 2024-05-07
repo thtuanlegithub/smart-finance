@@ -31,7 +31,7 @@ function TransactionMain(props) {
 
     const userWallet = useSelector(state => state.wallet.wallets);
     const { t } = useTranslation();
-    const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
+    const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week']
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
@@ -140,6 +140,7 @@ function TransactionMain(props) {
                         tabBarLabelStyle: {
                             ...typography.MediumInterH5,
                             color: colors.green07,
+                            textTransform: 'none',
                         },
                         tabBarIndicatorStyle: {
                             backgroundColor: colors.green07,
@@ -156,7 +157,7 @@ function TransactionMain(props) {
                     {transactionTimeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={range}
+                            name={t(range).toUpperCase()}
                             initialParams={{ range }}>
                             {
                                 props => <TransactionList {...props} type={transactionTypeFilter} />

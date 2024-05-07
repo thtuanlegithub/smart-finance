@@ -12,7 +12,7 @@ const TimeTab = createMaterialTopTabNavigator();
 
 const GeneralReport = (props) => {
     const { t } = useTranslation(); 
-    const reportTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'Last week', 'This week']
+    const reportTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week']
     return (
         <View style={styles.container}>
             <AddTransactionInputViewHeader
@@ -52,7 +52,7 @@ const GeneralReport = (props) => {
                             screenOptions={{
                             }}
                             key={index}
-                            name={range}
+                            name={t(range).toUpperCase()}
                             initialParams={{ range }}>
                             {
                                 props => <ATimeRangeGeneralReport {...props} type={props.route.name} />

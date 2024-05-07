@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 const TransactionsList = (props) => {
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter)
-    const { t } = useTranslation(); 
+    const { t } = useTranslation();
     const fakeDataTransactionListFilter = fakeDataTransactionList.map(item => {
         return {
             ...item,
@@ -60,7 +60,9 @@ const TransactionsList = (props) => {
                         {props.type
                             ?
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Total {getTypeNameById[props.type]} of this time: </Text>
+                                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>
+                                    {t(`total-${getTypeNameById[props.type].toLowerCase()}-of-this-time`)}
+                                </Text>
                                 {
                                     props.type == 'Expense'
                                     &&

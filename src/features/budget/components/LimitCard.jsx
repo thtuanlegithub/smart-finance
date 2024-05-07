@@ -8,10 +8,12 @@ import LineProgressBar from '../../../components/LineProgressBar'
 import { getCategoryIcons } from '../../category'
 import getCategoryNameById from '../../../utils/getCategoryNameById'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 const LimitCard = (props) => {
     let progressLabelColor;
     const { t } = useTranslation();
+    const userLanguage = useSelector(state => state.setting.language);
     const fill = props.current / props.limit * 100;
     if (fill >= 75) {
         progressLabelColor = colors.red05;
@@ -31,7 +33,7 @@ const LimitCard = (props) => {
             </View>
             <View style={{ flex: 1 }}>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{getCategoryNameById(props.category)}</Text>
+                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t(props.category)}</Text>
                     <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(props.current)}</Text>
                 </View>
                 <View style={styles.rowPlaceBetween}>
@@ -50,7 +52,13 @@ const LimitCard = (props) => {
                     </View>
                     ||
                     <View style={{ alignItems: 'flex-end' }}>
-                        <Text style={[typography.RegularInterH4, { color: progressLabelColor }]}>{formatCurrency(props.limit - props.current)} left to reach the limit</Text>
+                        <Text style={[typography.RegularInterH4, { color: progressLabelColor }]}>
+                            
+                            {userLanguage === 'en' ? 
+                            `${formatCurrency(props.limit - props.current)} left to reach the limit`
+                                : 
+                            `Còn lại ${formatCurrency(props.limit - props.current)} là đạt hạn mức`}
+                        </Text>
                     </View>
                 }
             </View>

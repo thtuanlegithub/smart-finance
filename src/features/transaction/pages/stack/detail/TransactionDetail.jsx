@@ -12,9 +12,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setDisplayUpdateTransactionModal, setUpdateTransactionAmount, setUpdateTransactionCategory, setUpdateTransactionDate, setUpdateTransactionDependents, setUpdateTransactionHasReminder, setUpdateTransactionHasTax, setUpdateTransactionInsurance, setUpdateTransactionNote, setUpdateTransactionPeople, setUpdateTransactionReference, setUpdateTransactionReminderDate, setUpdateTransactionType, setUpdateTransactionWallet } from '../../../services/updateTransactionFormSlice'
 import { formatDate } from '../../../../../utils/formatDate'
 import { setCurrentTransactionCRUDAction } from '../../../services/transactionSlice'
+import { useTranslation } from 'react-i18next'
 
 const TransactionDetail = ({ route }) => {
     const { transaction } = route.params;
+    const { t } = useTranslation();
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const updateTransactionBottomSheetRef = useRef(null);
     const updateTransactionDisplayModal = useSelector(state => state.updateTransactionForm.displayModal);
@@ -31,7 +33,7 @@ const TransactionDetail = ({ route }) => {
     return (
         <View style={styles.container}>
             <StackHeader
-                title='Transaction Detail'
+                title={t('transaction-detail')}
                 onEditPress={() => {
                     dispatch(setCurrentTransactionCRUDAction('update'));
                     dispatch(setDisplayUpdateTransactionModal(true));
@@ -76,12 +78,12 @@ const TransactionDetail = ({ route }) => {
                     color: colors.red01,
                     marginTop: 4,
                     ...typography.MediumInterH4
-                }}>Delete</Text>
+                }}>{t('delete')}</Text>
             </TouchableOpacity>
             <ConfirmDialog
                 visible={confirmDialogVisible}
-                title='Delete Transaction'
-                message='Are you sure you want to delete this transaction?'
+                title={t('delete-title')}
+                message={t('delete-message')}
                 onConfirm={() => {
                     // handleDelete
                     setConfirmDialogVisible(false)

@@ -52,7 +52,7 @@ const StackHeader = (props) => {
                 props.onEditPress
                 &&
                 <TouchableOpacity onPress={handleEditPress}>
-                    <Text style={styles.edit}>Edit</Text>
+                    <Text style={styles.edit}>{t('edit')}</Text>
                 </TouchableOpacity>
             }
         </View>

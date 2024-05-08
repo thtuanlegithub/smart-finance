@@ -10,9 +10,11 @@ import { useSelector } from 'react-redux'
 import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { getCategoryIcons } from '../../../../category'
 import getTypeNameById from '../../../../../utils/getTypeNameById'
+import { useTranslation } from 'react-i18next'
 
 const IncomeDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const { t } = useTranslation();  
     return (
         <View style={styles.container}>
             <View style={styles.transactionCard}>
@@ -22,7 +24,7 @@ const IncomeDetail = ({ transaction }) => {
                         source={getCategoryIcons(transaction.category)}
                         resizeMode='contain'
                     />
-                    <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{getCategoryNameById(transaction.category)}</Text>
+                    <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{t(transaction.category)}</Text>
                 </View>
                 <View style={{
                     backgroundColor: colors.green07,
@@ -30,7 +32,7 @@ const IncomeDetail = ({ transaction }) => {
                     paddingHorizontal: 16,
                     paddingVertical: 4,
                 }}>
-                    <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{getTypeNameById[transaction.type]}</Text>
+                    <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{t(transaction.type)}</Text>
                 </View>
             </View>
             <Text style={{

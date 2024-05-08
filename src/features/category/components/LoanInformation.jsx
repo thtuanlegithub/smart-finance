@@ -1,15 +1,24 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import formatCurrency from '../../../utils/formatCurrency';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const LoanInformation = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const reference = useSelector(state => state.addTransactionForm.reference);
+    const wallets = useSelector(state => state.wallet.wallets);
+    const [wallet, setWallet] = useState();
+    
+    useEffect(() => {
+        setWallet(wallets.find(w => w.wallet_id === reference.wallet))
+    }, [reference]);
+
     return (
         <View style={{ backgroundColor: 'white', marginTop: 10 }}>
             {
@@ -22,7 +31,7 @@ const LoanInformation = () => {
                                     <Image style={styles.icon} source={require('../../../assets/images/loan.png')} />
                                 </View>
                                 <View style={{ flexDirection: 'column', gap: 4 }}>
-                                    <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Loan</Text>
+                                    <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('loan')}</Text>
                                     <Text style={[typography.MediumInterH3, { color: colors.red01 }]}>{formatCurrency(reference.remain)}</Text>
                                 </View>
                             </View>
@@ -39,7 +48,7 @@ const LoanInformation = () => {
                                     <FontAwesome5 name={inputIcons['wallet']} size={18} color={colors.green08} style={styles.labelIcon} />
                                 </View>
                                 <View style={styles.inputGroup}>
-                                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{reference.wallet}</Text>
+                                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{wallet ? wallet.wallet_name : 'Loading...'}</Text>
                                 </View>
                             </View>
                             <View style={styles.inputGroupContainer}>

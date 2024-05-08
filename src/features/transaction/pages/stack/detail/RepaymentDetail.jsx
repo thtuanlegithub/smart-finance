@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FastImage from 'react-native-fast-image'
 import typography from '../../../../../styles/typography'
 import colors from '../../../../../styles/colors'
@@ -7,16 +7,21 @@ import transactionCategoryIcons from '../../../../../data/transactionCategoryIco
 import formatCurrency from '../../../../../utils/formatCurrency'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
-import LineProgressBar from '../../../../../components/LineProgressBar'
 import { useNavigation } from '@react-navigation/native'
-import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { getCategoryIcons } from '../../../../category'
-import getTypeNameById from '../../../../../utils/getTypeNameById'
+import { useTranslation } from 'react-i18next'
 
 const RepaymentDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const reference = useSelector(state => state.addTransactionForm.reference);
+    const { t } = useTranslation();
     const navigation = useNavigation();
+    const [wallet, setWallet] = useState(null);
+    const wallets = useSelector(state => state.wallet.wallets);
+
+    useEffect(() => {
+        setWallet(wallets.find(w => w.wallet_id === reference.wallet));
+    }, [reference]);
     return (
         <>
             <View style={styles.container}>
@@ -27,7 +32,7 @@ const RepaymentDetail = ({ transaction }) => {
                             source={getCategoryIcons(transaction.category)}
                             resizeMode='contain'
                         />
-                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{getCategoryNameById(transaction.category)}</Text>
+                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{t(transaction.category)}</Text>
                     </View>
                     <View style={{
                         backgroundColor: colors.blue05,
@@ -35,7 +40,7 @@ const RepaymentDetail = ({ transaction }) => {
                         paddingHorizontal: 16,
                         paddingVertical: 4,
                     }}>
-                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{getTypeNameById[transaction.type]}</Text>
+                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{t(transaction.type)}</Text>
                     </View>
                 </View>
                 <Text style={{
@@ -63,7 +68,7 @@ const RepaymentDetail = ({ transaction }) => {
                             <FastImage style={styles.icon} source={transactionCategoryIcons["Debt"]} />
                         </View>
                         <View style={{ flexDirection: 'column', gap: 4 }}>
-                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Debt</Text>
+                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('debt')}</Text>
                             <Text style={[typography.MediumInterH3, { color: colors.green07 }]}>{formatCurrency(reference?.remain)}</Text>
                         </View>
                     </View>
@@ -80,7 +85,7 @@ const RepaymentDetail = ({ transaction }) => {
                             <FontAwesome5 name={inputIcons['wallet']} size={18} color={colors.green08} style={styles.labelIcon} />
                         </View>
                         <View style={styles.inputGroup}>
-                            <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{reference?.wallet}</Text>
+                            <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{wallet ? wallet.wallet_name : 'Loading...'}</Text>
                         </View>
                     </View>
                     <View style={styles.inputGroupContainer}>

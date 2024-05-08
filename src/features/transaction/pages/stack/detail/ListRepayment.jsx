@@ -4,6 +4,7 @@ import TransactionNavigationHeader from '../../../components/TransactionNavigati
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import ListRepaymentItem from './ListRepaymentItem';
+import { useTranslation } from 'react-i18next';
 
 const listRepayment = [
     {
@@ -50,13 +51,14 @@ const listRepayment = [
 
 const ListRepayment = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     return (
         <View>
             <TransactionNavigationHeader
                 onBackPress={() => {
                     navigation.goBack();
                 }}
-                title='Repayment List' />
+                title={t('repayment-list')} />
             <FlatList
                 data={listRepayment}
                 keyExtractor={item => item.id}

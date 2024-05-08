@@ -14,10 +14,12 @@ import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { getCategoryIcons } from '../../../../category'
 import getTypeNameById from '../../../../../utils/getTypeNameById'
 import { setCurrentTransactionCRUDAction } from '../../../services/transactionSlice'
+import { useTranslation } from 'react-i18next'
 
 const DebtDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const handleAddRepaymentForDebt = () => {
         dispatch(setCurrentTransactionCRUDAction('create'));
@@ -35,7 +37,7 @@ const DebtDetail = ({ transaction }) => {
                             source={getCategoryIcons(transaction.category)}
                             resizeMode='contain'
                         />
-                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{getCategoryNameById(transaction.category)}</Text>
+                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{t(transaction.category)}</Text>
                     </View>
                     <View style={{
                         backgroundColor: colors.blue05,
@@ -43,7 +45,7 @@ const DebtDetail = ({ transaction }) => {
                         paddingHorizontal: 16,
                         paddingVertical: 4,
                     }}>
-                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{getTypeNameById[transaction.type]}</Text>
+                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{t(transaction.type)}</Text>
                     </View>
                 </View>
                 <Text style={{
@@ -74,7 +76,7 @@ const DebtDetail = ({ transaction }) => {
                     <View style={{ justifyContent: 'flex-start' }}>
                         <Text style={{
                             ...typography.RegularInterH4, color: colors.green07
-                        }}>Paid</Text>
+                        }}>{t('paid')}</Text>
                         <Text style={{
                             ...typography.MediumInterH4, color: colors.green07
                         }}>{formatCurrency(80000)}</Text>
@@ -82,7 +84,7 @@ const DebtDetail = ({ transaction }) => {
                     <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                         <Text style={{
                             ...typography.RegularInterH4, color: colors.red01
-                        }}>Left</Text>
+                        }}>{t('left')}</Text>
                         <Text style={{
                             ...typography.MediumInterH4, color: colors.red01
                         }}>{formatCurrency(20000)}</Text>
@@ -105,7 +107,7 @@ const DebtDetail = ({ transaction }) => {
                             color: colors.green07,
                             borderTopColor: colors.gray02,
                             borderTopWidth: 1,
-                        }}>View repayment list</Text>
+                        }}>{t('view-repayment-list')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={handleAddRepaymentForDebt}>
@@ -116,7 +118,7 @@ const DebtDetail = ({ transaction }) => {
                             color: colors.green07,
                             borderTopColor: colors.gray02,
                             borderTopWidth: 1,
-                        }}>Add repayment</Text>
+                        }}>{t('add-repayment')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

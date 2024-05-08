@@ -66,7 +66,7 @@ function TransactionMain(props) {
                         <Text style={[typography.RegularInterH5, { color: colors.green07, textAlign: 'right' }]}>{t('total-balance')}</Text>
                         <Text style={[typography.SemiBoldInterH5, {
                             color: colors.green07
-                        }]}>{formatCurrency(currentWallet.balance)} VND</Text>
+                        }]}>{formatCurrency(currentWallet.balance.toString())} VND</Text>
                     </View>
                 </View>
                 <View style={styles.typeOfTransaction}>

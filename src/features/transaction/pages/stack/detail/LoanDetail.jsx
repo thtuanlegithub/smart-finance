@@ -14,15 +14,16 @@ import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { getCategoryIcons } from '../../../../category'
 import getTypeNameById from '../../../../../utils/getTypeNameById'
 import { setCurrentTransactionCRUDAction } from '../../../services/transactionSlice'
+import { useTranslation } from 'react-i18next'
 
 const LoanDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const handleAddDebtCollectionForLoan = () => {
         dispatch(setCurrentTransactionCRUDAction('create'));
         dispatch(setTransactionReference(transaction));
-        console.log(">>> current loan: ", transaction);
         dispatch(setTransactionCategory('debtcollection'));
         dispatch(setDisplayModal(true));
     }
@@ -36,7 +37,7 @@ const LoanDetail = ({ transaction }) => {
                             source={getCategoryIcons(transaction.category)}
                             resizeMode='contain'
                         />
-                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{getCategoryNameById(transaction.category)}</Text>
+                        <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{t(transaction.category)}</Text>
                     </View>
                     <View style={{
                         backgroundColor: colors.blue05,
@@ -44,7 +45,7 @@ const LoanDetail = ({ transaction }) => {
                         paddingHorizontal: 16,
                         paddingVertical: 4,
                     }}>
-                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{getTypeNameById[transaction.type]}</Text>
+                        <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{t(transaction.type)}</Text>
                     </View>
                 </View>
                 <Text style={{
@@ -107,7 +108,7 @@ const LoanDetail = ({ transaction }) => {
                             color: colors.green07,
                             borderTopColor: colors.gray02,
                             borderTopWidth: 1,
-                        }}>View debt collection list</Text>
+                        }}>{t('view-debt-collection-list')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={handleAddDebtCollectionForLoan}>
@@ -118,7 +119,7 @@ const LoanDetail = ({ transaction }) => {
                             color: colors.green07,
                             borderTopColor: colors.gray02,
                             borderTopWidth: 1,
-                        }}>Add debt collection</Text>
+                        }}>{t('add-debt-collection')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

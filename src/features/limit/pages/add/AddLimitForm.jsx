@@ -25,19 +25,19 @@ const AddLimitForm = () => {
     const [addLimitTimeRangeInputDisplay, setAddLimitTimeRangeInputDisplay] = useState(null);
     const { t } = useTranslation();
     function handleAddLimitTimeRange() {
-        if (addLimitTimeRange === 'Customize') {
+        if (addLimitTimeRange === 'customize') {
             setAddLimitTimeRangeInputDisplay(`${addLimitTimeRangeStart} - ${addLimitTimeRangeEnd}`);
         }
         else {
-            if (addLimitTimeRange === 'This week') {
+            if (addLimitTimeRange === 'this-week') {
                 dispatch(setAddLimitTimeRangeStart('25/3/2024'));
                 dispatch(setAddLimitTimeRangeEnd('31/3/2024'));
             }
-            else if (addLimitTimeRange === 'This month') {
+            else if (addLimitTimeRange === 'this-month') {
                 dispatch(setAddLimitTimeRangeStart('1/4/2024'));
                 dispatch(setAddLimitTimeRangeEnd('30/4/2024'));
             }
-            else if (addLimitTimeRange === 'This year') {
+            else if (addLimitTimeRange === 'this-year') {
                 dispatch(setAddLimitTimeRangeStart('1/1/2024'));
                 dispatch(setAddLimitTimeRangeEnd('31/12/2024'));
             }
@@ -78,7 +78,7 @@ const AddLimitForm = () => {
                         actionSheetAddLimitTimeRangeRef.current.setModalVisible(true)
                     }}>
                     <MediumTextIconInput
-                        value={addLimitTimeRangeInputDisplay}
+                        value={t(addLimitTimeRangeInputDisplay)}
                         field='date'
                         placeholder={t('select-time-range')} />
                 </TouchableOpacity>

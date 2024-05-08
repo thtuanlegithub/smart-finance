@@ -7,9 +7,11 @@ import DebtCard from '../../../../category/components/DebtCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { setTransactionReference } from '../../../services/addTransactionFormSlice';
+import { useTranslation } from 'react-i18next';
 
 const SelectDebtForm = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
     const DebtList = [{
         id: 1,
         amount: 200000,
@@ -57,7 +59,7 @@ const SelectDebtForm = () => {
     }
     return (
         <View style={styles.container}>
-            <AddTransactionInputViewHeader title='Select Debt'
+            <AddTransactionInputViewHeader title={t('select-debt')}
                 onBackPress={() => {
                     navigation.navigate('Add Transaction');
                 }}

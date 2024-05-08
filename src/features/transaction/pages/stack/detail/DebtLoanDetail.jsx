@@ -8,8 +8,6 @@ import DebtCollectionDetail from './DebtCollectionDetail'
 import RepaymentDetail from './RepaymentDetail'
 
 const DebtLoanDetail = ({ transaction }) => {
-    const currentWallet = useSelector(state => state.wallet.currentWallet);
-
     return (
         <>
             {

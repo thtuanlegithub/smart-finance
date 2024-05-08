@@ -8,9 +8,11 @@ import formatCurrency from '../../../../../utils/formatCurrency'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 const ListRepaymentItem = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <View style={styles.transactionCard}>
@@ -20,7 +22,7 @@ const ListRepaymentItem = ({ transaction }) => {
                         source={transactionCategoryIcons[transaction.category]}
                         resizeMode='contain'
                     />
-                    <Text style={{ ...typography.RegularInterH4, color: colors.green08 }}>{transaction.category}</Text>
+                    <Text style={{ ...typography.RegularInterH4, color: colors.green08 }}>{t(transaction.category)}</Text>
                 </View>
             </View>
             <Text style={{

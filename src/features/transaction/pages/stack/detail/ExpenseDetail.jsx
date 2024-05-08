@@ -35,24 +35,11 @@ const ExpenseDetail = ({ transaction }) => {
                     <Text style={{ ...typography.RegularInterH5, color: 'white' }}>{t(transaction.type)}</Text>
                 </View>
             </View>
-            {
-                transaction.category == 'Debt' || transaction.category == 'Debt Collection'
-                &&
-                < Text style={{
-                    ...typography.MediumInterH3,
-                    color: colors.red01,
-                    marginLeft: 40,
-                }}>{formatCurrency(transaction.amount)}</Text>
-            }
-            {
-                transaction.category == 'Loan' || transaction.category == 'Repayment'
-                &&
-                < Text style={{
-                    ...typography.MediumInterH3,
-                    color: colors.red01,
-                    marginLeft: 40,
-                }}>{formatCurrency(transaction.amount)}</Text>
-            }
+            <Text style={{
+                ...typography.MediumInterH3,
+                color: colors.red01,
+                marginLeft: 40,
+            }}>{formatCurrency(transaction.amount)}</Text>
             <View style={{ flexDirection: 'row', gap: 8, marginTop: 10, marginLeft: 8 }}>
                 <FontAwesome5 name='align-left' size={18} color={colors.green07} solid />
                 <Text style={{ ...typography.RegularInterH4, color: colors.green07, marginLeft: 8 }}>{transaction.note}</Text>
@@ -65,7 +52,7 @@ const ExpenseDetail = ({ transaction }) => {
                 <FontAwesome5 name='wallet' size={18} color={colors.green07} solid />
                 <Text style={{ ...typography.RegularInterH4, color: colors.green07, marginLeft: 8 }}>{currentWallet.wallet_name}</Text>
             </View>
-        </View>
+        </View >
     )
 }
 

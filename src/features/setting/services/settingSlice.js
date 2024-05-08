@@ -43,17 +43,24 @@ export const loadReminders = async () => {
     const userRef = usersCollection.doc(getCurrentUser().uid);
     const doc = await userRef.get();
     const user = doc.data();
-    const reminders = user.reminders;
 
-    // Schedule notifications for each reminder
-    reminders.forEach(reminder => {
-        const { id, title, message, notify_time, date } = reminder;
-        const reminderDate = convertToDateTime(date, notify_time);
-        if (reminderDate > new Date()) {
-            console.log('Set reminder này: ', reminder);
-            setReminderNotification(reminder);
+    if (doc.exists) {
+        const user = doc.data();
+
+        if (user && user.reminders) {
+            const reminders = user.reminders;
+            
+            // Schedule notifications for each reminder
+            reminders.forEach(reminder => {
+                const { id, title, message, notify_time, date } = reminder;
+                const reminderDate = convertToDateTime(date, notify_time);
+                if (reminderDate > new Date()) {
+                    console.log('Set reminder này: ', reminder);
+                    setReminderNotification(reminder);
+                }
+            });
         }
-    });
+    }
 }
 
 async function initiateUserSetting(currentUser, dispatch) {

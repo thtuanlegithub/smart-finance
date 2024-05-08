@@ -64,18 +64,18 @@ const TransactionsList = (props) => {
                                     {t(`total-${getTypeNameById[props.type].toLowerCase()}-of-this-time`)}
                                 </Text>
                                 {
-                                    props.type == 'Expense'
+                                    props.type == 'expense'
                                     &&
                                     <Text style={[typography.SemiBoldInterH4, { color: colors.red01 }]}>{formatCurrency(getSumExpense())}</Text>
                                 }
                                 {
-                                    props.type == 'Income'
+                                    props.type == 'income'
                                     &&
                                     <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumIncome())}</Text>
                                 }
 
                                 {
-                                    props.type == 'Debt/ Loan'
+                                    props.type == 'debt_loan'
                                     &&
                                     <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumDebtLoan())}</Text>
                                 }

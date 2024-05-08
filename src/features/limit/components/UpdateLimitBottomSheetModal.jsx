@@ -4,34 +4,34 @@ import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useSnapPoints } from '../../../hooks/useSnapPoints'
 import CustomHandle from '../../../components/CustomHandle'
 import { NavigationContainer } from '@react-navigation/native'
-import AddLimitNavigator from '../pages/add/AddLimitNavigator'
+import UpdateLimitNavigator from '../pages/update/UpdateLimitNavigator'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAddLimitBottomSheetDisplay } from '../services/AddLimitSlice'
+import { setUpdateLimitBottomSheetDisplay } from '../services/UpdateLimitSlice'
 import { setCurrentCategory } from '../../category/services/categorySlice'
 import { setTransactionCategory, setUpdateTransactionCategory } from '../../transaction'
-const AddLimitBottomSheetModal = (props) => {
+const UpdateLimitBottomSheetModal = (props) => {
     const snapPoints = useSnapPoints();
     const dispatch = useDispatch();
-    const addLimitBottomSheetRef = useRef(null);
-    const addLimitBottomSheetDisplay = useSelector(state => state.addLimit.addLimitBottomSheetDisplay);
+    const updateLimitBottomSheetRef = useRef(null);
+    const updateLimitBottomSheetDisplay = useSelector(state => state.updateLimit.updateLimitBottomSheetDisplay);
     useEffect(() => {
-        if (addLimitBottomSheetDisplay == true) {
-            addLimitBottomSheetRef.current.present();
+        if (updateLimitBottomSheetDisplay == true) {
+            updateLimitBottomSheetRef.current.present();
         }
         else {
-            addLimitBottomSheetRef.current.dismiss();
+            updateLimitBottomSheetRef.current.dismiss();
         }
-    }, [addLimitBottomSheetDisplay]);
+    }, [updateLimitBottomSheetDisplay]);
 
     return (
         <BottomSheetModal
             onDismiss={() => {
-                dispatch(setAddLimitBottomSheetDisplay(false))
+                dispatch(setUpdateLimitBottomSheetDisplay(false))
                 dispatch(setCurrentCategory(null));
                 dispatch(setTransactionCategory(null));
                 dispatch(setUpdateTransactionCategory(null));
             }}
-            ref={addLimitBottomSheetRef}
+            ref={updateLimitBottomSheetRef}
             backdropComponent={BottomSheetBackdrop}
             snapPoints={snapPoints}
             index={2}
@@ -39,10 +39,10 @@ const AddLimitBottomSheetModal = (props) => {
             handleComponent={CustomHandle}
         >
             <NavigationContainer independent={true}>
-                <AddLimitNavigator />
+                <UpdateLimitNavigator />
             </NavigationContainer>
         </BottomSheetModal>
     )
 }
 
-export default AddLimitBottomSheetModal
+export default UpdateLimitBottomSheetModal

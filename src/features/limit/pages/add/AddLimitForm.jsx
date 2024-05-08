@@ -11,6 +11,8 @@ import W1Button from '../../../../components/W1Button'
 import { useNavigation } from '@react-navigation/native'
 import ActionSheetSelectTimeRangeAddLimit from '../../components/ActionSheetSelectTimeRangeLimit'
 import { useTranslation } from 'react-i18next'
+import { setCurrentCategory } from '../../../category/services/categorySlice'
+import { setTransactionCategory, setUpdateTransactionCategory } from '../../../transaction'
 
 const AddLimitForm = () => {
     dispatch = useDispatch();
@@ -21,7 +23,7 @@ const AddLimitForm = () => {
     const addLimitTimeRangeEnd = useSelector(state => state.addLimit.addLimitTimeRangeEnd);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const [addLimitTimeRangeInputDisplay, setAddLimitTimeRangeInputDisplay] = useState(null);
-    const { t } = useTranslation(); 
+    const { t } = useTranslation();
     function handleAddLimitTimeRange() {
         if (addLimitTimeRange === 'Customize') {
             setAddLimitTimeRangeInputDisplay(`${addLimitTimeRangeStart} - ${addLimitTimeRangeEnd}`);
@@ -52,6 +54,9 @@ const AddLimitForm = () => {
                 title={t('add-limit')}
                 onBackPress={() => {
                     dispatch(setAddLimitBottomSheetDisplay(false));
+                    dispatch(setCurrentCategory(null));
+                    dispatch(setTransactionCategory(null));
+                    dispatch(setUpdateTransactionCategory(null));
                 }} />
             <View style={{
                 backgroundColor: 'white',
@@ -65,7 +70,7 @@ const AddLimitForm = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Select Category")}
-                    >
+                >
                     <SelectCategoryInput />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -75,7 +80,7 @@ const AddLimitForm = () => {
                     <MediumTextIconInput
                         value={addLimitTimeRangeInputDisplay}
                         field='date'
-                        placeholder={t('select-time-range')}/>
+                        placeholder={t('select-time-range')} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {

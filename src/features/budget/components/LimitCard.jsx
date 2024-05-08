@@ -34,17 +34,18 @@ const LimitCard = (props) => {
             <View style={{ flex: 1 }}>
                 <View style={styles.rowPlaceBetween}>
                     <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t(props.category)}</Text>
-                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{formatCurrency(props.current)}</Text>
+                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>Limit: {formatCurrency(props.limit)}</Text>
                 </View>
                 <View style={styles.rowPlaceBetween}>
                     <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('due-day')}: {props.limitTimeRangeEnd}</Text>
                 </View>
-                <View style={{ marginVertical: 8 }}>
+                <View style={{ marginTop: 8 }}>
                     <LineProgressBar
                         completeColor={colors.red05}
                         current={props.current}
                         limit={props.limit} />
                 </View>
+                <Text style={[typography.SemiBoldInterH4, { color: progressLabelColor, textAlign: 'right', marginTop: 4 }]}>{formatCurrency(props.current)}</Text>
                 {
                     props.current >= props.limit &&
                     <View style={{ alignItems: 'flex-end' }}>
@@ -53,11 +54,11 @@ const LimitCard = (props) => {
                     ||
                     <View style={{ alignItems: 'flex-end' }}>
                         <Text style={[typography.RegularInterH4, { color: progressLabelColor }]}>
-                            
-                            {userLanguage === 'en' ? 
-                            `${formatCurrency(props.limit - props.current)} left to reach the limit`
-                                : 
-                            `Còn lại ${formatCurrency(props.limit - props.current)} là đạt hạn mức`}
+
+                            {userLanguage === 'en' ?
+                                `${formatCurrency(props.limit - props.current)} left to reach the limit`
+                                :
+                                `Còn lại ${formatCurrency(props.limit - props.current)} là đạt hạn mức`}
                         </Text>
                     </View>
                 }

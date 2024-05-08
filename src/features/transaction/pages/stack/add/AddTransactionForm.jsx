@@ -12,7 +12,7 @@ import typography from '../../../../../styles/typography'
 import colors from '../../../../../styles/colors'
 import BottomMenuItem from '../../../../../components/BottomMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearInput, setDisplayModal, setTransactionAmount, setTransactionDate, updateReminder, updateTransaction } from '../../../services/addTransactionFormSlice'
+import { clearInput, setDisplayModal, setTransactionAmount, setTransactionCategory, setTransactionDate, updateReminder, updateTransaction } from '../../../services/addTransactionFormSlice'
 import { formatDate } from '../../../../../utils/formatDate'
 import LoanInformation from '../../../../category/components/LoanInformation'
 import DebtInformation from '../../../../category/components/DebtInformation'
@@ -25,6 +25,7 @@ import formatCurrency from '../../../../../utils/formatCurrency'
 import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIncomeTax'
 import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { useTranslation } from 'react-i18next'
+import StackHeader from '../../../../../components/StackHeader'
 
 const TODAY = 0;
 const YESTERDAY = 1;
@@ -155,7 +156,13 @@ const AddTransactionForm = ({ navigation }) => {
         <KeyboardAvoidingView
             style={styles.container}>
             <ScrollView style={{ marginBottom: 60 }}>
-                <Text style={styles.title}>{t('add-transaction')}</Text>
+                <StackHeader title={t('add-transaction')}
+                    backContent='Close'
+                    onBackPress={() => {
+                        dispatch(setDisplayModal(false));
+                        setTransactionCategory(null);
+                        dispatch(clearInput());
+                    }} />
                 <View style={styles.form}>
                     <View style={{ marginTop: 8 }}>
                         <MoneyInput

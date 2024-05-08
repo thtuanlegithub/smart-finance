@@ -21,6 +21,7 @@ import AddLimitBottomSheetModal from '../features/limit/components/AddLimitBotto
 import i18next from '../lib/i18next';
 import { initiateUserSetting, initiateUserWallet } from '../features/setting';
 import { useTranslation } from 'react-i18next';
+import UpdateLimitBottomSheetModal from '../features/limit/components/UpdateLimitBottomSheetModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ const MainTabNavigation = (props) => {
     }, [displayModal]);
 
     useEffect(() => {
-        i18next.changeLanguage(userSetting.language);   
+        i18next.changeLanguage(userSetting.language);
     }, [userSetting]);
 
     useEffect(() => {
@@ -150,6 +151,7 @@ const MainTabNavigation = (props) => {
                             </NavigationContainer>
                         </BottomSheetModal>
                         <AddLimitBottomSheetModal />
+                        <UpdateLimitBottomSheetModal />
                     </View>
                 </NavigationContainer>
             </BottomSheetModalProvider>

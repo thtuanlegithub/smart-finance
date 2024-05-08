@@ -9,6 +9,7 @@ import { walletReducer } from '../features/setting';
 import { categoryReducer } from '../features/category';
 import { addLimitReducer } from '../features/limit';
 import { updateTransactionFormReducer } from '../features/transaction';
+import { updateLimitReducer } from '../features/limit';
 
 export default configureStore({
     reducer: {
@@ -20,6 +21,7 @@ export default configureStore({
         setting: settingReducer,
         wallet: walletReducer,
         category: categoryReducer,
+        updateLimit: updateLimitReducer,
         addLimit: addLimitReducer,
         updateTransactionForm: updateTransactionFormReducer,
     },

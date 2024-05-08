@@ -10,6 +10,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { getYear } from '../../../../utils/getYear';
+import { useDispatch } from 'react-redux';
+import { setUpdateTransactionReference } from '../../services/updateTransactionFormSlice';
 const DayTransactionsGroup = (props) => {
     const { t } = useTranslation();
     const getSum = (total, item) => {
@@ -29,9 +31,12 @@ const DayTransactionsGroup = (props) => {
         }
     }
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const handleDisplayTransactionDetail = (item) => {
-        if (props.nestFrom == 'Transaction')
+        if (props.nestFrom == 'Transaction') {
+            dispatch(setUpdateTransactionReference(item));
             navigation.navigate("Transaction Detail", { transaction: item })
+        }
         else
             navigation.navigate("Limit Transaction Detail", { transaction: item })
     }

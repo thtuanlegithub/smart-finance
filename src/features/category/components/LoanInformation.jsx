@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 const LoanInformation = () => {
     const navigation = useNavigation();
     const { t } = useTranslation();
-    const reference = useSelector(state => state.addTransactionForm.reference);
+    const reference = useSelector(state => state.updateTransactionForm.reference);
     const wallets = useSelector(state => state.wallet.wallets);
     const [wallet, setWallet] = useState();
     

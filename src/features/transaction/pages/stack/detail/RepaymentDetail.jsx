@@ -13,14 +13,14 @@ import { useTranslation } from 'react-i18next'
 
 const RepaymentDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
-    const reference = useSelector(state => state.addTransactionForm.reference);
+    const reference = useSelector(state => state.updateTransactionForm.reference);
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [wallet, setWallet] = useState(null);
     const wallets = useSelector(state => state.wallet.wallets);
 
     useEffect(() => {
-        setWallet(wallets.find(w => w.wallet_id === reference.wallet));
+        setWallet(wallets.find(w => w.wallet_id === reference?.wallet));
     }, [reference]);
     return (
         <>

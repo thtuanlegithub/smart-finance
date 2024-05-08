@@ -15,6 +15,7 @@ import { getCategoryIcons } from '../../../../category'
 import getTypeNameById from '../../../../../utils/getTypeNameById'
 import { setCurrentTransactionCRUDAction } from '../../../services/transactionSlice'
 import { useTranslation } from 'react-i18next'
+import { setUpdateTransactionReference } from '../../../services/updateTransactionFormSlice'
 
 const LoanDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
@@ -23,7 +24,7 @@ const LoanDetail = ({ transaction }) => {
     const { t } = useTranslation();
     const handleAddDebtCollectionForLoan = () => {
         dispatch(setCurrentTransactionCRUDAction('create'));
-        dispatch(setTransactionReference(transaction));
+        dispatch(setUpdateTransactionReference(transaction));
         dispatch(setTransactionCategory('debtcollection'));
         dispatch(setDisplayModal(true));
     }

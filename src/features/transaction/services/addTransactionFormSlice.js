@@ -91,7 +91,7 @@ const initialState = {
 };
 
 const addTransactionFormSlice = createSlice({
-    name: 'addTransactionForm',
+name: 'addTransactionForm',
     initialState,
     reducers: {
         setTransactionAmount: (state, action) => {

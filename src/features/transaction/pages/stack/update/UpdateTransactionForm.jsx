@@ -19,6 +19,8 @@ import { useNavigation } from '@react-navigation/native'
 import { formatDate } from '../../../../../utils/formatDate'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import DebtInformation from '../../../../category/components/DebtInformation'
+import LoanInformation from '../../../../category/components/LoanInformation'
+
 const TODAY = 0;
 const YESTERDAY = 1;
 const CUSTOM = 2;

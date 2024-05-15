@@ -6,6 +6,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { getCategoryIcons } from '../../category';
 import getInvesmentNameById from '../../../utils/getInvesmentNameById';
 import getInvestmentIcons from '../../../utils/getInvestmentIcons';
+import { useSelector } from 'react-redux';
 
 const SelectInvestmentCategory = (props) => {
     const { t } = useTranslation();

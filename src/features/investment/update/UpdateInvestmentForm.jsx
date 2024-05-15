@@ -3,69 +3,69 @@ import React, { useEffect, useRef, useState } from 'react'
 import StackHeader from '../../../components/StackHeader'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAddInvestmentBottomSheetDisplay, setAddInvestmentName, setAddInvestmentTimeRangeEnd, setAddInvestmentTimeRangeStart } from '../services/addInvestmentSlice'
+import { setUpdateInvestmentBottomSheetDisplay, setUpdateInvestmentName, setUpdateInvestmentTimeRangeEnd, setUpdateInvestmentTimeRangeStart } from '../services/updateInvestmentSlice'
 import { useNavigation } from '@react-navigation/native'
 import MediumTextIconInput from '../../transaction/components/MediumTextIconInput'
 import NoOutlinedMediumTextIconInput from '../../transaction/components/NoOutlinedMediumTextIconInput'
 import NumericInputHintText from '../../../components/NumericInputHintText'
 import CustomTextInput from '../../../components/CustomTextInput'
 import W1Button from '../../../components/W1Button'
-import ActionSheetSelectTimeRangeAddInvestment from '../components/ActionSheetSelectTimeRangeAddInvestment'
+import ActionSheetSelectTimeRangeUpdateInvestment from '../components/ActionSheetSelectTimeRangeUpdateInvestment'
 import SelectInvestmentCategory from '../components/SelectInvestmentCategory'
 
-const AddInvestmentForm = () => {
+const UpdateInvestmentForm = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const actionSheetAddInvestmentTimeRangeRef = useRef();
-    const addInvestmentTimeRange = useSelector(state => state.addInvestment.addInvestmentTimeRange);
-    const addInvestmentTimeRangeStart = useSelector(state => state.addInvestment.addInvestmentTimeRangeStart);
-    const addInvestmentTimeRangeEnd = useSelector(state => state.addInvestment.addInvestmentTimeRangeEnd);
-    const addInvestmentName = useSelector(state => state.addInvestment.addInvestmentName);
-    const addInvestmentCategory = useSelector(state => state.addInvestment.addInvestmentCategory);
-    const addInvestmentNote = useSelector(state => state.addInvestment.addInvestmentNote);
-    const [addInvestmentTimeRangeInputDisplay, setAddInvestmentTimeRangeInputDisplay] = useState(null);
+    const actionSheetUpdateInvestmentTimeRangeRef = useRef();
+    const updateInvestmentTimeRange = useSelector(state => state.updateInvestment.updateInvestmentTimeRange);
+    const updateInvestmentTimeRangeStart = useSelector(state => state.updateInvestment.updateInvestmentTimeRangeStart);
+    const updateInvestmentTimeRangeEnd = useSelector(state => state.updateInvestment.updateInvestmentTimeRangeEnd);
+    const updateInvestmentName = useSelector(state => state.updateInvestment.updateInvestmentName);
+    const updateInvestmentCategory = useSelector(state => state.updateInvestment.updateInvestmentCategory);
+    const updateInvestmentNote = useSelector(state => state.updateInvestment.updateInvestmentNote);
+    const [updateInvestmentTimeRangeInputDisplay, setUpdateInvestmentTimeRangeInputDisplay] = useState(null);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
-    function handleAddInvestmentTimeRange() {
-        if (addInvestmentTimeRange === 'customize') {
-            setAddInvestmentTimeRangeInputDisplay(`${addInvestmentTimeRangeStart} - ${addInvestmentTimeRangeEnd}`);
+    function handleUpdateInvestmentTimeRange() {
+        if (updateInvestmentTimeRange === 'customize') {
+            setUpdateInvestmentTimeRangeInputDisplay(`${updateInvestmentTimeRangeStart} - ${updateInvestmentTimeRangeEnd}`);
         }
         else {
-            if (addInvestmentTimeRange === 'this-week') {
-                dispatch(setAddInvestmentTimeRangeStart('25/3/2024'));
-                dispatch(setAddInvestmentTimeRangeEnd('31/3/2024'));
+            if (updateInvestmentTimeRange === 'this-week') {
+                dispatch(setUpdateInvestmentTimeRangeStart('25/3/2024'));
+                dispatch(setUpdateInvestmentTimeRangeEnd('31/3/2024'));
             }
-            else if (addInvestmentTimeRange === 'this-month') {
-                dispatch(setAddInvestmentTimeRangeStart('1/4/2024'));
-                dispatch(setAddInvestmentTimeRangeEnd('30/4/2024'));
+            else if (updateInvestmentTimeRange === 'this-month') {
+                dispatch(setUpdateInvestmentTimeRangeStart('1/4/2024'));
+                dispatch(setUpdateInvestmentTimeRangeEnd('30/4/2024'));
             }
-            else if (addInvestmentTimeRange === 'this-year') {
-                dispatch(setAddInvestmentTimeRangeStart('1/1/2024'));
-                dispatch(setAddInvestmentTimeRangeEnd('31/12/2024'));
+            else if (updateInvestmentTimeRange === 'this-year') {
+                dispatch(setUpdateInvestmentTimeRangeStart('1/1/2024'));
+                dispatch(setUpdateInvestmentTimeRangeEnd('31/12/2024'));
             }
-            setAddInvestmentTimeRangeInputDisplay(addInvestmentTimeRange);
+            setUpdateInvestmentTimeRangeInputDisplay(updateInvestmentTimeRange);
         }
     }
     useEffect(() => {
-        handleAddInvestmentTimeRange();
-    }, [addInvestmentTimeRange, addInvestmentTimeRangeStart, addInvestmentTimeRangeEnd])
+        handleUpdateInvestmentTimeRange();
+    }, [updateInvestmentTimeRange, updateInvestmentTimeRangeStart, updateInvestmentTimeRangeEnd])
     return (
         <View style={{
             flex: 1,
         }}>
             <StackHeader
                 backContent={t('close')}
-                title={t('add-investment')}
+                title={t('update-investment')}
                 onBackPress={() => {
-                    dispatch(setAddInvestmentBottomSheetDisplay(false));
+                    dispatch(setUpdateInvestmentBottomSheetDisplay(false));
                 }}
             />
             <View style={styles.form}>
                 <CustomTextInput
-                    value={addInvestmentName}
+                    value={updateInvestmentName}
                     onChangeText={
                         (text) => {
-                            dispatch(setAddInvestmentName(text))
+                            dispatch(setUpdateInvestmentName(text))
                         }}
                     field='investment-name'
                     placeholder='investment-name'
@@ -74,7 +74,7 @@ const AddInvestmentForm = () => {
                     navigation.navigate("Select Investment Category")
                 }}>
                     <SelectInvestmentCategory
-                        category={addInvestmentCategory} />
+                        category={updateInvestmentCategory} />
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <NumericInputHintText
@@ -83,11 +83,11 @@ const AddInvestmentForm = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        actionSheetAddInvestmentTimeRangeRef.current.setModalVisible(true);
+                        actionSheetUpdateInvestmentTimeRangeRef.current.setModalVisible(true);
                     }}
                 >
                     <MediumTextIconInput
-                        value={t(addInvestmentTimeRangeInputDisplay)}
+                        value={t(updateInvestmentTimeRangeInputDisplay)}
                         field='date'
                         placeholder='select-time-range'
                     />
@@ -99,7 +99,7 @@ const AddInvestmentForm = () => {
                     <MediumTextIconInput
                         field='note'
                         placeholder='note'
-                        value={addInvestmentNote}
+                        value={updateInvestmentNote}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
@@ -113,7 +113,7 @@ const AddInvestmentForm = () => {
                 </TouchableOpacity>
             </View>
             {
-                addInvestmentCategory?.id == 'fixedinvestment'
+                updateInvestmentCategory?.id == 'fixedinvestment'
                 &&
                 <View style={styles.form}>
                     <TouchableOpacity>
@@ -142,8 +142,8 @@ const AddInvestmentForm = () => {
             }}>
                 <W1Button title='Save' />
             </View>
-            <ActionSheetSelectTimeRangeAddInvestment
-                actionSheetAddInvestmentTimeRangeRef={actionSheetAddInvestmentTimeRangeRef}
+            <ActionSheetSelectTimeRangeUpdateInvestment
+                actionSheetUpdateInvestmentTimeRangeRef={actionSheetUpdateInvestmentTimeRangeRef}
             />
         </View>
     )
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default AddInvestmentForm
+export default UpdateInvestmentForm

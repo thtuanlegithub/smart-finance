@@ -23,6 +23,7 @@ import { initiateUserSetting, initiateUserWallet } from '../features/setting';
 import { useTranslation } from 'react-i18next';
 import UpdateLimitBottomSheetModal from '../features/limit/components/UpdateLimitBottomSheetModal';
 import AddInvestmentBottomSheet from '../features/investment/components/AddInvestmentBottomSheet';
+import UpdateInvestmentBottomSheet from '../features/investment/components/UpdateInvestmentBottomSheet';
 
 const Tab = createBottomTabNavigator();
 
@@ -157,6 +158,7 @@ const MainTabNavigation = (props) => {
                         <AddLimitBottomSheetModal />
                         <UpdateLimitBottomSheetModal />
                         <AddInvestmentBottomSheet />
+                        <UpdateInvestmentBottomSheet />
                     </View>
                 </NavigationContainer>
             </BottomSheetModalProvider>

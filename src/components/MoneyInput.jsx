@@ -25,7 +25,7 @@ const MoneyInput = (props) => {
                 <Text style={styles.currencyUnitLabel}>VND</Text>
             </View>
             <View style={styles.inputGroup}>
-                <Text style={[typography.MediumInterH6, { color: colors.green08 }]}>{t('amount')}</Text>
+                <Text style={[typography.MediumInterH6, { color: colors.green08 }]}>{t(props.label)}</Text>
                 <TextInput
                     value={formatCurrency(removeCommas(props.value.toString()))}
                     onChangeText={handleMoneyChange}

@@ -2,73 +2,73 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ActionSheet from 'react-native-actions-sheet';
-import { clearAddLimitTimeRange, setAddLimitTimeRange, setAddLimitTimeRangeEnd, setAddLimitTimeRangeStart } from '../../limit';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import DatePicker from 'react-native-date-picker';
 import { formatDate } from '../../../utils/formatDate';
 import { useTranslation } from 'react-i18next';
+import { setUpdateInvestmentTimeRange, setUpdateInvestmentTimeRangeEnd, setUpdateInvestmentTimeRangeStart, clearUpdateInvestmentTimeRange } from '../services/updateInvestmentSlice';
 
 const DISPLAY = true;
 const HIDE = false;
 
-const ActionSheetSelectTimeRangeAddLimit = (props) => {
+const ActionSheetSelectTimeRangeUpdateInvestment = (props) => {
 
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [pickDateForStart, setPickDateForStart] = useState(true);
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
-    const addLimitTimeRangeStart = useSelector(state => state.addLimit.addLimitTimeRangeStart);
-    const addLimitTimeRangeEnd = useSelector(state => state.addLimit.addLimitTimeRangeEnd);
+    const updateInvestmentTimeRangeStart = useSelector(state => state.updateInvestment.updateInvestmentTimeRangeStart);
+    const updateInvestmentTimeRangeEnd = useSelector(state => state.updateInvestment.updateInvestmentTimeRangeEnd);
 
-    const handleActionSheetSelectAddLimitTimeRangeDisplay = (action) => {
-        props.actionSheetAddLimitTimeRangeRef.current.setModalVisible(action);
+    const handleActionSheetSelectUpdateInvestmentTimeRangeDisplay = (action) => {
+        props.actionSheetUpdateInvestmentTimeRangeRef.current.setModalVisible(action);
     }
 
-    const actionSheetCustomizeAddLimitTimeRangeRef = useRef();
-    const handleActionSheetCustomizeAddLimitTimeRangeDisplay = (action) => {
-        actionSheetCustomizeAddLimitTimeRangeRef.current.setModalVisible(action);
+    const actionSheetCustomizeUpdateInvestmentTimeRangeRef = useRef();
+    const handleActionSheetCustomizeUpdateInvestmentTimeRangeDisplay = (action) => {
+        actionSheetCustomizeUpdateInvestmentTimeRangeRef.current.setModalVisible(action);
     }
-    const handleAddLimitTimeRangeSelect = (addLimitTimeRange) => {
-        if (addLimitTimeRange === 'Customize') {
-            dispatch(setAddLimitTimeRange(addLimitTimeRange));
-            handleActionSheetCustomizeAddLimitTimeRangeDisplay(DISPLAY);
-            handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE);
+    const handleUpdateInvestmentTimeRangeSelect = (updateInvestmentTimeRange) => {
+        if (updateInvestmentTimeRange === 'customize') {
+            dispatch(setUpdateInvestmentTimeRange(updateInvestmentTimeRange));
+            handleActionSheetCustomizeUpdateInvestmentTimeRangeDisplay(DISPLAY);
+            handleActionSheetSelectUpdateInvestmentTimeRangeDisplay(HIDE);
         }
         else {
-            dispatch(setAddLimitTimeRange(addLimitTimeRange));
-            handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE);
+            dispatch(setUpdateInvestmentTimeRange(updateInvestmentTimeRange));
+            handleActionSheetSelectUpdateInvestmentTimeRangeDisplay(HIDE);
         }
     }
 
     return (
         <>
-            <ActionSheet ref={props.actionSheetAddLimitTimeRangeRef}>
+            <ActionSheet ref={props.actionSheetUpdateInvestmentTimeRangeRef}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <BottomMenuItem
                         title={t('this-week')}
-                        onPress={() => handleAddLimitTimeRangeSelect('this-week')} />
+                        onPress={() => handleUpdateInvestmentTimeRangeSelect('this-week')} />
                     <BottomMenuItem
                         title={t('this-month')}
-                        onPress={() => handleAddLimitTimeRangeSelect(t('this-month'))} />
+                        onPress={() => handleUpdateInvestmentTimeRangeSelect(t('this-month'))} />
                     <BottomMenuItem
                         title={t('this-year')}
-                        onPress={() => handleAddLimitTimeRangeSelect(t('this-year'))} />
+                        onPress={() => handleUpdateInvestmentTimeRangeSelect(t('this-year'))} />
                     <BottomMenuItem
                         title={t('customize')}
-                        onPress={() => handleAddLimitTimeRangeSelect('customize')} />
+                        onPress={() => handleUpdateInvestmentTimeRangeSelect('customize')} />
                     <TouchableOpacity
-                        onPress={() => handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE)}
+                        onPress={() => handleActionSheetSelectUpdateInvestmentTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>
                         <Text style={
                             [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                     </TouchableOpacity>
                 </View>
             </ActionSheet>
-            <ActionSheet ref={actionSheetCustomizeAddLimitTimeRangeRef}>
+            <ActionSheet ref={actionSheetCustomizeUpdateInvestmentTimeRangeRef}>
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <TouchableOpacity onPress={() => {
@@ -76,9 +76,9 @@ const ActionSheetSelectTimeRangeAddLimit = (props) => {
                         setPickDateForStart(true);
                     }}>
                         {
-                            addLimitTimeRangeStart
+                            updateInvestmentTimeRangeStart
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('start-date')}: {addLimitTimeRangeStart}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('start-date')}: {updateInvestmentTimeRangeStart}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>{t('select-start-date')}</Text>
                         }
@@ -90,9 +90,9 @@ const ActionSheetSelectTimeRangeAddLimit = (props) => {
                         setPickDateForStart(false);
                     }}>
                         {
-                            addLimitTimeRangeEnd
+                            updateInvestmentTimeRangeEnd
                                 ?
-                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('end-date')}: {addLimitTimeRangeEnd}</Text>
+                                <Text style={[typography.RegularInterH3, { color: colors.green07, padding: 16 }]}>{t('end-date')}: {updateInvestmentTimeRangeEnd}</Text>
                                 :
                                 <Text style={[typography.RegularInterH3, { color: colors.green06, padding: 16 }]}>{t('select-end-date')}</Text>
                         }
@@ -100,17 +100,17 @@ const ActionSheetSelectTimeRangeAddLimit = (props) => {
                     <View style={[styles.bottomMenuItemContainer, { flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 24 }]}>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeAddLimitTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectAddLimitTimeRangeDisplay(DISPLAY);
-                                dispatch(clearAddLimitTimeRange());
+                                handleActionSheetCustomizeUpdateInvestmentTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectUpdateInvestmentTimeRangeDisplay(DISPLAY);
+                                dispatch(clearUpdateInvestmentTimeRange());
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.red01, padding: 16, marginTop: 16 }]}>{t('cancel')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                handleActionSheetCustomizeAddLimitTimeRangeDisplay(HIDE);
-                                handleActionSheetSelectAddLimitTimeRangeDisplay(HIDE);
+                                handleActionSheetCustomizeUpdateInvestmentTimeRangeDisplay(HIDE);
+                                handleActionSheetSelectUpdateInvestmentTimeRangeDisplay(HIDE);
                             }}>
                             <Text style={
                                 [typography.RegularInterH3, { color: colors.green07, padding: 16, marginTop: 16 }]}>{t('confirm')}</Text>
@@ -123,10 +123,10 @@ const ActionSheetSelectTimeRangeAddLimit = (props) => {
                         date={new Date()}
                         onConfirm={(date) => {
                             if (pickDateForStart) {
-                                dispatch(setAddLimitTimeRangeStart(formatDate(date)));
+                                dispatch(setUpdateInvestmentTimeRangeStart(formatDate(date)));
                             }
                             else {
-                                dispatch(setAddLimitTimeRangeEnd(formatDate(date)));
+                                dispatch(setUpdateInvestmentTimeRangeEnd(formatDate(date)));
                             }
                             setDatePickerOpen(false)
                         }}
@@ -140,4 +140,4 @@ const ActionSheetSelectTimeRangeAddLimit = (props) => {
     )
 }
 
-export default ActionSheetSelectTimeRangeAddLimit
+export default ActionSheetSelectTimeRangeUpdateInvestment

@@ -3,23 +3,24 @@ import React from 'react'
 import NewCategoryButton from './NewCategoryButton'
 import ExpenseSelectCategoryItem from './ExpenseSelectCategoryItem'
 import {
-    ScrollView
+    FlatList,
 } from 'react-native-gesture-handler'
 const expenseCategory = require('../data/expenseCategory.json');
 
 const ExpenseSelectCategoryList = (props) => {
     return (
         <View style={styles.outerContainer}>
-            <ScrollView contentContainerStyle={styles.container}>
-                <NewCategoryButton />
-                {expenseCategory.map((item, index) => {
-                    return <ExpenseSelectCategoryItem
+            <View contentContainerStyle={styles.container}>
+                <FlatList
+                    ListHeaderComponent={NewCategoryButton}
+                    data={expenseCategory}
+                    renderItem={({ item }) => <ExpenseSelectCategoryItem
                         onSelect={() => props.onCategorySelect(item)}
-                        key={index}
-                        category={item} />
-                })}
+                        category={item} />}
+                    keyExtractor={item => item.id.toString()}
+                />
                 <View style={{ height: 24 }}></View>
-            </ScrollView>
+            </View>
         </View>
     )
 }

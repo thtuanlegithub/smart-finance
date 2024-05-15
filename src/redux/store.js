@@ -10,7 +10,9 @@ import { categoryReducer } from '../features/category';
 import { addLimitReducer } from '../features/limit';
 import { updateTransactionFormReducer } from '../features/transaction';
 import { updateLimitReducer } from '../features/limit';
-
+import { addInvestmentReducer } from '../features/investment';
+import { updateInvestmentReducer } from '../features/investment';
+import { investmentReducer } from '../features/investment';
 export default configureStore({
     reducer: {
         login: authReducer,
@@ -24,6 +26,9 @@ export default configureStore({
         updateLimit: updateLimitReducer,
         addLimit: addLimitReducer,
         updateTransactionForm: updateTransactionFormReducer,
+        addInvestment: addInvestmentReducer,
+        updateInvestment: updateInvestmentReducer,
+        investment: investmentReducer,
     },
 });
 

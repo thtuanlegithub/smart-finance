@@ -5,8 +5,9 @@ import colors from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import inputIcons from '../../../data/inputIcons';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 const NoOutlinedMediumTextIconInput = (props) => {
-
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
@@ -17,7 +18,7 @@ const NoOutlinedMediumTextIconInput = (props) => {
                     ?
                     <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{props.value}</Text>
                     :
-                    <Text style={[typography.RegularInterH5, { color: colors.green08, opacity: 0.5 }]}>{props.placeholder}</Text>
+                    <Text style={[typography.RegularInterH5, { color: colors.green08, opacity: 0.5 }]}>{t(props.placeholder)}</Text>
                 }
                 <FontAwesome5 name="chevron-right" size={16} color={colors.green08} opacity={0.5} />
             </View>

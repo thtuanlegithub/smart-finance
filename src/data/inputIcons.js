@@ -5,4 +5,7 @@ export default inputIcons = {
     "reminder": 'clock',
     "people": 'user-friends',
     "tax": 'percentage',
+    "circle": 'recycle',
+    "maturity": 'sort-amount-up',
+    "investment-name": 'address-card',
 }

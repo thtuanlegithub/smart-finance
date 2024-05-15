@@ -3,7 +3,6 @@
     "label-transaction": "Giao dịch",
     "label-budget": "Ngân sách",
     "label-setting": "Cài đặt",
- 
     "back": "Quay lại",
     "save": "Lưu",
     "close": "Đóng",
@@ -12,17 +11,15 @@
     "delete": "Xóa",
     "delete-title": "Xóa",
     "delete-message": "Bạn có chắc chắn muốn xóa mục này không?",
-
     "total-balance": "Tổng số dư",
     "my-wallets": "Ví của tôi",
     "see-all": "Tất cả",
     "spending-report": "Báo cáo chi tiêu",
-    "detail-report": "Báo cáo chi tiết",    
+    "detail-report": "Báo cáo chi tiết",
     "see-details": "Xem chi tiết",
     "month": "Tháng",
     "week": "Tuần",
     "target-progress": "Tiến độ mục tiêu",
-
     "total-spend-of-this-month": "Tổng số tiền chi tiêu trong tháng",
     "total-spend-of-this-week": "Tổng số tiền chi tiêu trong tuần",
     "top-spending": "Chi tiêu nhiều nhất",
@@ -46,7 +43,6 @@
     "total-debt-loan-of-this-time": "Tổng số tiền nợ/vay:",
     "total-debt/ loan-of-this-time": "Tổng số tiền nợ/vay:",
     "debt/ loan": "Nợ / Vay",
-
     "monday": "Thứ hai",
     "tuesday": "Thứ ba",
     "wednesday": "Thứ tư",
@@ -54,7 +50,6 @@
     "friday": "Thứ sáu",
     "saturday": "Thứ bảy",
     "sunday": "Chủ nhật",
-
     "january": "Tháng 1",
     "february": "Tháng 2",
     "march": "Tháng 3",
@@ -67,13 +62,11 @@
     "october": "Tháng 10",
     "november": "Tháng 11",
     "december": "Tháng 12",
-
     "expense-detail": "Chi tiết chi tiêu",
     "total": "Tổng cộng",
     "daily-average": "Trung bình mỗi ngày",
-
     "limit": "Hạn mức",
-    "investment": "Đầu tư",
+    "select-limit-category": "Chọn danh mục hạn mức",
     "select-budget-type": "Chọn loại ngân sách",
     "total-spending": "Tổng số tiền chi tiêu",
     "limit-budget": "Hạn mức",
@@ -83,13 +76,30 @@
     "days": "ngày",
     "you-have-reach-the-limit": "Bạn đã đạt hạn mức",
     "add-limit": "Thêm hạn mức",
-    "add-note": "Thêm ghi chú",
+    "update-limit": "Cập nhật hạn mức",
+    "investment": "Đầu tư",
+    "add-investment": "Thêm khoản đầu tư",
+    "select-investment-category": "Chọn loại đầu tư",
+    "principal": "Vốn",
+    "update-investment": "Cập nhật đầu tư",
+    "total-interest-this-time": "Tổng lãi giai đoạn này: ",
+    "new-investment": "Tạo đầu tư mới",
+    "total-interest": "Tổng lãi",
+    "fixed": "Cố định",
+    "dynamic": "Động",
+    "circle": "Chu kỳ",
+    "maturity": "Đáo hạn",
+    "investment-name": "Tên đầu tư",
+    "fixedinvestment": "Đầu tư cố định",
+    "dynamicinvestment": "Đầu tư động",
+    "investment-note": "Ghi chú đầu tư",
+    "enter-note": "Nhập ghi chú",    "add-note": "Thêm ghi chú",
     
     "amount": "Số tiền",
-    "note": "Ghi chú",  
+    "note": "Ghi chú",
     "add-transaction": "Thêm giao dịch",
     "pick-a-date": "Chọn ngày",
-    "contact": "Danh bạ",   
+    "contact": "Danh bạ",
     "search-contact": "Tìm kiếm trong danh bạ...",
     "no-reminder": "Không nhắc nhở",
     "select-time": "Chọn giờ",
@@ -97,20 +107,18 @@
     "no-tax": "Không có thuế",
     "calculate-tax": "Tính thuế",
     "have-tax": "Có thuế",
-    "personal-income-tax":"Thuế thu nhập cá nhân",
-    "other-insurance":"Bảo hiểm khác",
+    "personal-income-tax": "Thuế thu nhập cá nhân",
+    "other-insurance": "Bảo hiểm khác",
     "total-tax": "Tổng số tiền thuế",
-    "dependents":"Số người phụ thuộc",
+    "dependents": "Số người phụ thuộc",
     "select-a-day": "Chọn ngày",
     "today": "Hôm nay",
     "yesterday": "Hôm qua",
-
     "category": "Danh mục",
     "reminder": "Nhắc nhở",
     "currency-unit": "Đơn vị tiền tệ",
     "language": "Ngôn ngữ",
     "about-us": "Về chúng tôi",
-
     "select-category": "Chọn danh mục",
     "expense": "Chi tiêu",
     "income": "Thu nhập",
@@ -126,7 +134,6 @@
     "view-debt-collection-list": "Xem danh sách thu nợ",
     "add-debt-collection": "Thêm người thu nợ",
     "debt-collection-list": "Danh sách nợ",
-
     "foodandbeverage": "Thức ăn & Đồ uống",
     "shopping": "Mua sắm",
     "transportation": "Giao thông",
@@ -142,32 +149,21 @@
     "salary": "Lương",
     "businessprofit": "Lợi nhuận kinh doanh",
     "otherincome": "Thu nhập khác",
-    "loan": "Vay mượn",
+    "loan": "Cho vay",
     "debt": "Nợ",
     "debtcollection": "Thu nợ",
     "repayment": "Trả nợ",
-
     "transaction-detail": "Chi tiết giao dịch",
     "default": "Mặc định",
     "all-wallets": "Tất cả ví",
     "new-wallet": "Tạo ví mới",
     "enter-wallet-name": "Nhập tên ví",
-
     "sign-out": "Đăng xuất",
     "sign-out-title": "Đăng xuất",
     "sign-out-message": "Bạn có chắc chắn muốn đăng xuất khỏi thiết bị không?",
     "cancel": "Hủy",
     "confirm": "Xác nhận",
-
     "vietnamese": "Tiếng Việt",
     "english": "Tiếng Anh",
-
-
-
-
-
-
-
-
     "end-file": ""
 }

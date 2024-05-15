@@ -1,0 +1,12 @@
+[
+    {
+        "id": "fixedinvestment",
+        "name": "Fixed Investment",
+        "imagePath": "../../assets/images/fixedinvestment.png"
+    },
+    {
+        "id": "dynamicinvestment",
+        "name": "Dynamic Investment",
+        "imagePath": "../../assets/images/dynamicinvest.png"
+    }
+]

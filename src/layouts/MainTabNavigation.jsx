@@ -11,7 +11,7 @@ import AddTransactionNavigator from '../features/transaction/components/AddTrans
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentTransactionCRUDAction, setDisplayModal } from '../features/transaction';
+import { clearInput, setCurrentTransactionCRUDAction, setDisplayModal } from '../features/transaction';
 import CustomHandle from '../components/CustomHandle';
 import { useSnapPoints } from '../hooks/useSnapPoints';
 import TransactionNavigator from '../features/transaction/pages/TransactionNavigator';
@@ -22,6 +22,8 @@ import i18next from '../lib/i18next';
 import { initiateUserSetting, initiateUserWallet } from '../features/setting';
 import { useTranslation } from 'react-i18next';
 import UpdateLimitBottomSheetModal from '../features/limit/components/UpdateLimitBottomSheetModal';
+import AddInvestmentBottomSheet from '../features/investment/components/AddInvestmentBottomSheet';
+import UpdateInvestmentBottomSheet from '../features/investment/components/UpdateInvestmentBottomSheet';
 
 const Tab = createBottomTabNavigator();
 
@@ -134,7 +136,10 @@ const MainTabNavigation = (props) => {
                                 }} />
                         </Tab.Navigator>
                         <BottomSheetModal
-                            onDismiss={() => dispatch(setDisplayModal(false))}
+                            onDismiss={() => {
+                                dispatch(setDisplayModal(false))
+                                dispatch(clearInput());
+                            }}
                             backdropComponent={BottomSheetBackdrop}
                             ref={bottomSheetModalRef}
                             snapPoints={snapPoints}
@@ -152,6 +157,8 @@ const MainTabNavigation = (props) => {
                         </BottomSheetModal>
                         <AddLimitBottomSheetModal />
                         <UpdateLimitBottomSheetModal />
+                        <AddInvestmentBottomSheet />
+                        <UpdateInvestmentBottomSheet />
                     </View>
                 </NavigationContainer>
             </BottomSheetModalProvider>

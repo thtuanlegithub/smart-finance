@@ -3,7 +3,6 @@
     "label-transaction": "Transactions",
     "label-budget": "Budgets",
     "label-setting": "Setting",
-
     "back": "Back",
     "save": "Save",
     "close": "Close",
@@ -12,7 +11,6 @@
     "delete": "Delete",
     "delete-title": "Delete",
     "delete-message": "Are you sure you want to delete this item?",
-
     "total-balance": "Total balances",
     "my-wallets": "My wallets",
     "see-all": "See all",
@@ -22,7 +20,6 @@
     "month": "Month",
     "week": "Week",
     "target-progress": "Target progress",
-    
     "total-spend-of-this-month": "Total spend of this month",
     "total-spend-of-this-week": "Total spend of this week",
     "top-spending": "Top spending",
@@ -47,7 +44,6 @@
     "total-debt-loan-of-this-time": "Total debt/loan of this time",
     "total-debt/ loan-of-this-time": "Total debt/loan of this time",
     "debt/ loan": "Debt / Loan",
-
     "monday": "Monday",
     "tuesday": "Tuesday",
     "wednesday": "Wednesday",
@@ -55,7 +51,6 @@
     "friday": "Friday",
     "saturday": "Saturday",
     "sunday": "Sunday",
-
     "january": "January",
     "february": "February",
     "march": "March",
@@ -68,12 +63,11 @@
     "october": "October",
     "november": "November",
     "december": "December",
-
     "expense-detail": "Expense detail",
     "total": "Total",
     "daily-average": "Daily average",
-    
     "limit": "Limit",
+    "select-limit-category": "Select limit category",
     "investment": "Investment",
     "select-budget-type": "Select budget type",
     "total-spending": "Total spending",
@@ -84,7 +78,23 @@
     "days": "days",
     "you-have-reach-the-limit": "You have reach the limit",
     "add-limit": "Add limit",
-    "add-note": "Add note",
+    "update-limit": "Update limit",
+    "add-investment": "Add Investment",
+    "select-investment-category": "Select investment category",
+    "principal": "Principal",
+    "circle": "Circle",
+    "maturity": "Maturity",
+    "investment-name": "Investment name",
+    "fixedinvestment": "Fixed investment",
+    "dynamicinvestment": "Dynamic investment",
+    "investment-note": "Investment note",
+    "enter-note": "Enter note",
+    "update-investment": "Update Investment",
+    "total-interest-this-time": "Total interest this time",
+    "new-investment": "New Investment",
+    "total-interest": "Total interest",
+    "fixed": "Fixed",
+    "dynamic": "Dynamic",    "add-note": "Add note",
 
     "amount": "Amount",
     "note": "Note",
@@ -98,20 +108,18 @@
     "no-tax": "No tax",
     "calculate-tax": "Calculate tax",
     "have-tax": "Have tax",
-    "personal-income-tax":"Personal income tax",
-    "other-insurance":"Other insurance",
+    "personal-income-tax": "Personal income tax",
+    "other-insurance": "Other insurance",
     "total-tax": "Total tax",
     "dependents": "Dependents",
     "select-a-day": "Select a day",
     "today": "Today",
     "yesterday": "Yesterday",
-
     "category": "Categories",
     "reminder": "Reminder",
     "currency-unit": "Currency unit",
     "language": "Languages",
     "about-us": "About us",
-
     "select-category": "Select category",
     "expense": "Expense",
     "income": "Income",
@@ -127,7 +135,6 @@
     "view-debt-collection-list": "View debt collection list",
     "add-debt-collection": "Add debt collection",
     "debt-collection-list": "Debt list",
-
     "foodandbeverage": "Food & Beverage",
     "shopping": "Shopping",
     "transportation": "Transportation",
@@ -148,7 +155,6 @@
     "debtcollection": "Debt collection",
     "repayment": "Repayment",
     "transaction-detail": "Transaction detail",
-
     "default": "Default",
     "sign-out": "Sign out",
     "sign-out-title": "Sign out",
@@ -160,14 +166,5 @@
     "enter-wallet-name": "Enter wallet name",
     "vietnamese": "Vietnamese",
     "english": "English",
-
-
-
-
-
-
-
-    
-
     "end-file": ""
 }

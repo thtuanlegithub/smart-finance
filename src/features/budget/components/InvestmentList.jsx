@@ -4,6 +4,10 @@ import typography from '../../../styles/typography'
 import formatCurrency from '../../../utils/formatCurrency'
 import colors from '../../../styles/colors'
 import InvestmentCard from './InvestmentCard'
+import { useDispatch } from 'react-redux'
+import { setAddInvestmentBottomSheetDisplay } from '../../investment/services/addInvestmentSlice'
+import { setCurrentInvestmentCRUDAction, setUpdateInvestmentBottomSheetDisplay } from '../../investment'
+import { useTranslation } from 'react-i18next'
 const investmentList = [
     {
         id: '1',
@@ -48,28 +52,43 @@ const investmentList = [
 ]
 
 const InvestmentList = () => {
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <FlatList
                 ListHeaderComponent={
                     <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                         <View style={styles.investmentQuickReport}>
-                            <Text style={{ ...typography.MediumInterH4, color: colors.green08 }}>Total interest this time:</Text>
+                            <Text style={{ ...typography.MediumInterH4, color: colors.green08 }}>{t('total-interest-this-time')}: </Text>
                             <Text style={{ ...typography.SemiBoldInterH4, color: colors.green07 }}>{formatCurrency(24500000)}</Text>
                         </View>
                         <View style={styles.createNewBudgetContainer}>
-                            <TouchableOpacity style={styles.btnCreateNewBudget}>
-                                <Text style={{ ...typography.MediumInterH5, color: 'white' }}>New investment</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    dispatch(setCurrentInvestmentCRUDAction('add'));
+                                    dispatch(setAddInvestmentBottomSheetDisplay(true));
+                                }}
+                                style={styles.btnCreateNewBudget}>
+                                <Text style={{ ...typography.MediumInterH5, color: 'white' }}>{t('new-investment')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 }
 
                 data={investmentList}
-                renderItem={({ item }) => <InvestmentCard {...item} />}
+                renderItem={({ item }) =>
+                    <TouchableOpacity onPress={() => {
+                        dispatch(setCurrentInvestmentCRUDAction('update'));
+                        dispatch(setUpdateInvestmentBottomSheetDisplay(true));
+                    }
+                    }>
+                        <InvestmentCard {...item} />
+                    </TouchableOpacity>
+                }
                 keyExtractor={item => item.id}
             />
-        </View>
+        </View >
     )
 }
 

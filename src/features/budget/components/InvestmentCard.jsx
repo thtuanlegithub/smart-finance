@@ -3,8 +3,10 @@ import React from 'react'
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import formatCurrency from '../../../utils/formatCurrency';
+import { useTranslation } from 'react-i18next';
 
 const InvestmentCard = (props) => {
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -24,23 +26,23 @@ const InvestmentCard = (props) => {
                             ?
                             <View style={{ marginLeft: 8, backgroundColor: colors.orange04, padding: 2, borderRadius: 16, paddingHorizontal: 16 }}>
                                 <Text style={{ color: 'white', ...typography.MediumInterH6 }}>
-                                    Dynamic
+                                    {t('dynamic')}
                                 </Text>
                             </View>
                             :
                             <View style={{ marginLeft: 8, backgroundColor: colors.green06, padding: 2, borderRadius: 16, paddingHorizontal: 16 }}>
                                 <Text style={{ color: 'white', ...typography.MediumInterH6 }}>
-                                    Fixed
+                                    {t('fixed')}
                                 </Text>
                             </View>
                     }
                 </View>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={{ ...typography.RegularInterH6, color: colors.green08 }}>Due day: {props.dueDay}</Text>
-                    <Text style={{ ...typography.MediumInterH6, color: colors.blue05 }}>Principal: {formatCurrency(props.principal)}</Text>
+                    <Text style={{ ...typography.RegularInterH6, color: colors.green08 }}>{t('due-day')} {props.dueDay}</Text>
+                    <Text style={{ ...typography.MediumInterH6, color: colors.blue05 }}>{t('principal')} {formatCurrency(props.principal)}</Text>
                 </View>
                 <View style={{ alignItems: 'flex-end', marginTop: 8 }}>
-                    <Text style={{ ...typography.MediumInterH5, color: colors.blue05 }}>Total interest: +{formatCurrency(props.principal)}</Text>
+                    <Text style={{ ...typography.MediumInterH5, color: colors.blue05 }}>{t('total-interest')} +{formatCurrency(props.principal)}</Text>
                 </View>
             </View>
         </View>

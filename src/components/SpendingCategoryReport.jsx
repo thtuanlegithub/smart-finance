@@ -3,18 +3,21 @@ import React from 'react';
 import formatCurrency from '../utils/formatCurrency';
 import typography from '../styles/typography';
 import colors from '../styles/colors';
-import expenseCategoryIcons from '../data/expenseCategoryIcons';
+import { getCategoryIcons } from '../features/category';
+import getCategoryNameById from '../utils/getCategoryNameById';
+import { useTranslation } from 'react-i18next';
 
 const SpendingCategoryReport = (props) => {
+    const { t } = useTranslation();
     return (
         <TouchableOpacity>
             <View style={styles.categoryReport}>
                 <View>
-                    <Image style={styles.categoryIcon} source={expenseCategoryIcons[props.category]} />
+                    <Image style={styles.categoryIcon} source={getCategoryIcons(props.category)} />
                 </View>
                 <View style={styles.categoryInformation}>
                     <View>
-                        <Text style={[typography.MediumInterH5, { color: colors.green08 }]}>{props.category}</Text>
+                        <Text style={[typography.MediumInterH5, { color: colors.green08 }]}>{t(props.category)}</Text>
                         <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{formatCurrency(props.amount)}</Text>
                     </View>
                     <Text style={[typography.MediumInterH5, { color: colors.red01 }]}>{props.percentage}%</Text>

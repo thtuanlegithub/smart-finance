@@ -12,7 +12,39 @@ const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
 async function updateTransaction(trans_id, newTransaction) {
     const [month, day, year] = newTransaction.created_at.split(' ');
     const userId = getCurrentUser().uid;
+    const userDocRef = userCollection.doc(userId);
+    const yearDocRef = userDocRef.collection(FirebaseNodes.TRANSACTION).doc(year);
     const dayDocRef = userCollection.doc(userId).collection(FirebaseNodes.TRANSACTION).doc(year).collection(month).doc(`Day ${day}`);
+
+    // Check if the user document exists
+    let userDoc = await userDocRef.get();
+    if (!userDoc.exists) {
+        // If not, create it with an empty 'years' array
+        await userDocRef.set({ years: [] });
+        userDoc = await userDocRef.get();
+    }
+
+    // Get the 'years' array from the user document
+    const years = userDoc.data().years || [];
+    if (!years.includes(year)) {
+        // If the current year is not in the 'years' array, add it
+        await userDocRef.update({ years: [...years, year] });
+    }
+
+    // Check if the year document exists
+    let yearDoc = await yearDocRef.get();
+    if (!yearDoc.exists) {
+        // If not, create it with an empty 'months' array
+        await yearDocRef.set({ months: [] });
+        yearDoc = await yearDocRef.get();
+    }
+
+    // Get the 'months' array from the year document
+    const months = yearDoc.data().months || [];
+    if (!months.includes(month)) {
+        // If the current month is not in the 'months' array, add it
+        await yearDocRef.update({ months: [...months, month] });
+    }
 
     let dayDoc = await dayDocRef.get();
     if (!dayDoc.exists) {
@@ -91,7 +123,7 @@ const initialState = {
 };
 
 const addTransactionFormSlice = createSlice({
-name: 'addTransactionForm',
+    name: 'addTransactionForm',
     initialState,
     reducers: {
         setTransactionAmount: (state, action) => {

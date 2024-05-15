@@ -74,7 +74,7 @@ const AddTransactionForm = ({ navigation }) => {
         dispatch(setTransactionAmount(amount));
     }
 
-    const handleSaveTransaction = () => {
+    const handleSaveTransaction = async () => {
         if (!created_at || !amount || !wallet || !categoryId) {
             alert('Please fill in all required fields');
             return;
@@ -146,7 +146,7 @@ const AddTransactionForm = ({ navigation }) => {
         }
 
         updateUserWallet(wallet.wallet_id, newWallet);
-        updateTransaction('', newTransaction);
+        await updateTransaction('', newTransaction);
         dispatch(updateWallet(newWallet));
         if (currentWallet.wallet_id === wallet.wallet_id)
             dispatch(setBalance(newWallet.balance));
@@ -157,7 +157,7 @@ const AddTransactionForm = ({ navigation }) => {
             style={styles.container}>
             <ScrollView style={{ marginBottom: 60 }}>
                 <StackHeader title={t('add-transaction')}
-                    backContent='Close'
+                    backContent={t('close')}
                     onBackPress={() => {
                         dispatch(setDisplayModal(false));
                         setTransactionCategory(null);

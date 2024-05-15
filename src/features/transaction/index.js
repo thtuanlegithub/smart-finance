@@ -21,6 +21,11 @@ export {
 } from './services/addTransactionFormSlice';
 
 export {
+    getAllTransactions,
+    getAllTransactionsInMonth,
+    getAllTransactionsInWeek,
+    getTop3Expense,
+    getTotalExpense,
     default as transactionReducer,
     setTransactionTypeFilter,
     setTransactionTimeRange,

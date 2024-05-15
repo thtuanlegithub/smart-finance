@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransactionNote } from '../../../services/addTransactionFormSlice';
 import AddTransactionInputViewHeader from '../../../components/AddTransactionInputViewHeader';
 import { setUpdateTransactionNote } from '../../../services/updateTransactionFormSlice';
+import { useTranslation } from 'react-i18next';
 
 
 const NoteForm = () => {
     const currentTransactionCRUDAction = useSelector(state => state.transaction.currentTransactionCRUDAction);
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     var note;
     if (currentTransactionCRUDAction == 'create') {
         note = useSelector(state => state.addTransactionForm.note);
@@ -37,7 +39,7 @@ const NoteForm = () => {
 
     return (
         <View style={styles.container}>
-            <AddTransactionInputViewHeader title='Add Note'
+            <AddTransactionInputViewHeader title={t('add-note')}
                 onBackPress={() => {
                     navigation.goBack();
                 }} />

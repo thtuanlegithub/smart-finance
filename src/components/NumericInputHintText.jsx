@@ -4,9 +4,10 @@ import typography from '../styles/typography'
 import colors from '../styles/colors'
 import formatCurrency from '../utils/formatCurrency'
 import removeCommas from '../utils/removeCommas'
+import { useTranslation } from 'react-i18next'
 
 const NumericInputHintText = (props) => {
-
+    const { t } = useTranslation();
     const [isFocused, setFocus] = useState(false);
     const [value, setValue] = React.useState(props.value ? parseInt(props.value).toString() : '0');
 
@@ -24,7 +25,7 @@ const NumericInputHintText = (props) => {
                 <Text style={styles.currencyUnitLabel}>VND</Text>
             </View>
             <View style={styles.inputGroup}>
-                <Text style={[typography.MediumInterH6, { color: colors.green08 }]}>{props.hint}</Text>
+                <Text style={[typography.MediumInterH6, { color: colors.green08 }]}>{t(props.hint)}</Text>
                 <TextInput
                     inputMode='numeric'
                     value={formatCurrency(props.value ? parseInt(props.value).toString() : '0')}

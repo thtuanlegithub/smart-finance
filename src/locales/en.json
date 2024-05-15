@@ -74,6 +74,7 @@
     "daily-average": "Daily average",
     
     "limit": "Limit",
+    "select-limit-category": "Select limit category",
     "investment": "Investment",
     "select-budget-type": "Select budget type",
     "total-spending": "Total spending",
@@ -84,6 +85,20 @@
     "days": "days",
     "you-have-reach-the-limit": "You have reach the limit",
     "add-limit": "Add limit",
+    "update-limit": "Update limit",
+
+    "investment": "Investment",
+    "add-investment": "Add Investment",
+    "select-investment-category": "Select investment category",
+    "princial": "Princial",
+    "select-time-range":"Select time range",
+    "circle": "Circle",
+    "maturity":"Maturity",
+    "investment-name": "Investment name",
+    "fixedinvestment": "Fixed investment",
+    "dynamicinvestment": "Dynamic investment",
+    "investment-note": "Investment note",
+    "enter-note": "Enter note",
 
     "amount": "Amount",
     "note": "Note",

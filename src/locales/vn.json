@@ -73,6 +73,7 @@
     "daily-average": "Trung bình mỗi ngày",
 
     "limit": "Hạn mức",
+    "select-limit-category": "Chọn danh mục hạn mức",
     "investment": "Đầu tư",
     "select-budget-type": "Chọn loại ngân sách",
     "total-spending": "Tổng số tiền chi tiêu",
@@ -83,6 +84,20 @@
     "days": "ngày",
     "you-have-reach-the-limit": "Bạn đã đạt hạn mức",
     "add-limit": "Thêm hạn mức",
+    "update-limit": "Cập nhật hạn mức",
+
+    "investment": "Đầu tư",
+    "add-investment": "Thêm khoản đầu tư",
+    "select-investment-category": "Chọn loại đầu tư",
+    "principal": "Vốn",
+    "select-time-range": "Chọn khoảng thời gian",
+    "circle": "Chu kỳ",
+    "maturity": "Đáo hạn",
+    "investment-name": "Tên đầu tư",
+    "fixedinvestment": "Đầu tư cố định",
+    "dynamicinvestment": "Đầu tư động",
+    "investment-note": "Ghi chú đầu tư",
+    "enter-note": "Nhập ghi chú",
 
     "amount": "Số tiền",
     "note": "Ghi chú",  

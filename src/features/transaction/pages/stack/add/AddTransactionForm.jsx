@@ -166,6 +166,7 @@ const AddTransactionForm = ({ navigation }) => {
                 <View style={styles.form}>
                     <View style={{ marginTop: 8 }}>
                         <MoneyInput
+                            label='amount'
                             onChange={(amount) => handleAmountChange(amount)}
                             value={amount} />
                     </View>

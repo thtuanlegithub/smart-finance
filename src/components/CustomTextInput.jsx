@@ -1,25 +1,30 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import typography from '../../../styles/typography';
-import colors from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import inputIcons from '../../../data/inputIcons';
 import { useTranslation } from 'react-i18next';
-const MediumTextIconInput = (props) => {
-    const {t} = useTranslation();
+import inputIcons from '../data/inputIcons';
+import colors from '../styles/colors';
+import typography from '../styles/typography';
+
+const CustomTextInput = (props) => {
+    const { t } = useTranslation();
     return (
         <View style={styles.container}>
             <View style={styles.labelGroup}>
                 <FontAwesome5 name={inputIcons[props.field]} size={18} color={colors.green08} style={styles.labelIcon} />
             </View>
             <View style={styles.inputGroup}>
-                {props.value && props.value != ''
-                    ?
-                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{props.value}</Text>
-                    :
-                    <Text style={[typography.RegularInterH5, { color: colors.green08, opacity: 0.5 }]}>{t(props.placeholder)}</Text>
-                }
-                <FontAwesome5 name="chevron-right" size={16} color={colors.green08} opacity={0.5} />
+                <TextInput
+                    value={props.value}
+                    onChangeText={props.onChangeText}
+                    placeholderTextColor="#A7B7B0"
+                    placeholder={t(props.placeholder)}
+                    style={[typography.RegularInterH3,
+                    {
+                        flex: 1,
+                        color: colors.green08,
+                    }]}
+                />
             </View>
         </View>
     )
@@ -40,11 +45,11 @@ const styles = StyleSheet.create({
         flex: 1,
         borderBottomWidth: 0.5,
         borderColor: colors.green08,
-        height: 48,
+        paddingVertical: 4,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     }
 })
 
-export default MediumTextIconInput
+export default CustomTextInput

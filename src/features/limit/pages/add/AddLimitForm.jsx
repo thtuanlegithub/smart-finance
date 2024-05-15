@@ -9,7 +9,7 @@ import MediumTextIconInput from '../../../transaction/components/MediumTextIconI
 import NoOutlinedMediumTextIconInput from '../../../transaction/components/NoOutlinedMediumTextIconInput'
 import W1Button from '../../../../components/W1Button'
 import { useNavigation } from '@react-navigation/native'
-import ActionSheetSelectTimeRangeAddLimit from '../../components/ActionSheetSelectTimeRangeLimit'
+import ActionSheetSelectTimeRangeAddLimit from '../../components/ActionSheetSelectTimeRangeAddLimit'
 import { useTranslation } from 'react-i18next'
 import { setCurrentCategory } from '../../../category/services/categorySlice'
 import { setTransactionCategory, setUpdateTransactionCategory } from '../../../transaction'
@@ -22,8 +22,8 @@ const AddLimitForm = () => {
     const addLimitTimeRangeStart = useSelector(state => state.addLimit.addLimitTimeRangeStart);
     const addLimitTimeRangeEnd = useSelector(state => state.addLimit.addLimitTimeRangeEnd);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
-    const [addLimitTimeRangeInputDisplay, setAddLimitTimeRangeInputDisplay] = useState(null);
     const { t } = useTranslation();
+    const [addLimitTimeRangeInputDisplay, setAddLimitTimeRangeInputDisplay] = useState(null);
     function handleAddLimitTimeRange() {
         if (addLimitTimeRange === 'customize') {
             setAddLimitTimeRangeInputDisplay(`${addLimitTimeRangeStart} - ${addLimitTimeRangeEnd}`);
@@ -66,10 +66,12 @@ const AddLimitForm = () => {
                 gap: 4,
             }}>
                 <TouchableOpacity>
-                    <MoneyInput value={0} />
+                    <MoneyInput 
+                        label='amount'
+                        value={0} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Select Category")}
+                    onPress={() => navigation.navigate("Select Limit Category")}
                 >
                     <SelectCategoryInput />
                 </TouchableOpacity>

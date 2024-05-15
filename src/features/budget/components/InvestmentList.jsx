@@ -4,6 +4,8 @@ import typography from '../../../styles/typography'
 import formatCurrency from '../../../utils/formatCurrency'
 import colors from '../../../styles/colors'
 import InvestmentCard from './InvestmentCard'
+import { useDispatch } from 'react-redux'
+import { setAddInvestmentBottomSheetDisplay } from '../../investment/services/addInvestmentSlice'
 const investmentList = [
     {
         id: '1',
@@ -48,6 +50,7 @@ const investmentList = [
 ]
 
 const InvestmentList = () => {
+    const dispatch = useDispatch();
     return (
         <View style={styles.container}>
             <FlatList
@@ -58,7 +61,11 @@ const InvestmentList = () => {
                             <Text style={{ ...typography.SemiBoldInterH4, color: colors.green07 }}>{formatCurrency(24500000)}</Text>
                         </View>
                         <View style={styles.createNewBudgetContainer}>
-                            <TouchableOpacity style={styles.btnCreateNewBudget}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    dispatch(setAddInvestmentBottomSheetDisplay(true));
+                                }}
+                                style={styles.btnCreateNewBudget}>
                                 <Text style={{ ...typography.MediumInterH5, color: 'white' }}>New investment</Text>
                             </TouchableOpacity>
                         </View>

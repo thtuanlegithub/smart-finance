@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/TransactionStyles';
 import WalletSelect from '../../../components/WalletSelect';
@@ -31,7 +31,7 @@ function TransactionMain(props) {
 
     const userWallet = useSelector(state => state.wallet.wallets);
     const { t } = useTranslation();
-    const transactionTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week']
+    const transactionTimeRanges = ['last-week', 'this-week']
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
@@ -56,6 +56,9 @@ function TransactionMain(props) {
         actionSheetTransactionTimeRangeRef.current.setModalVisible(action);
     }
 
+    useEffect(() => {   
+        
+    }, [currentWallet.balance]);    
 
     return (
         <View style={styles.container}>

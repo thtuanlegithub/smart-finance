@@ -24,7 +24,7 @@ const MonthReport = () => {
     };
 
     useEffect(() => {
-        fetchTransactions();
+        // fetchTransactions();
     }, [currentWallet.balance]);
 
     return (

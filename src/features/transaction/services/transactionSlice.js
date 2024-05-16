@@ -48,11 +48,18 @@ const getAllTransactionsInMonth = async (walletId, type) => {
         const uid = getCurrentUser().uid;
         const userRef = userCollection.doc(uid);
         const transRef = userRef.collection(FirebaseNodes.TRANSACTION);
+
+        // Check if the user has any transactions
+        const transSnapshot = await transRef.get();
+        if (transSnapshot.empty) {
+            return [];
+        }
+
         let transactions = [];
         const currentDate = new Date();
         const year = currentDate.getFullYear().toString();
         const month = months[currentDate.getMonth()];
-        const yearRef = transRef.doc(year);          
+        const yearRef = transRef.doc(year);
         const monthRef = yearRef.collection(month);
         const transactionSnapshot = await monthRef.get();
         transactionSnapshot.forEach((doc) => {
@@ -80,15 +87,15 @@ const getAllTransactionsInWeek = async (walletId, type) => {
     }
 }
 
-function getWeekRange (date) {
-    const firstDayOfWeek = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1); 
+function getWeekRange(date) {
+    const firstDayOfWeek = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
     const lastDayOfWeek = firstDayOfWeek + 6;
 
     const firstDay = new Date(date.setDate(firstDayOfWeek));
-    firstDay.setHours(0, 0, 0, 0); 
+    firstDay.setHours(0, 0, 0, 0);
 
     const lastDay = new Date(date.setDate(lastDayOfWeek));
-    lastDay.setHours(23, 59, 59, 999); 
+    lastDay.setHours(23, 59, 59, 999);
 
     return { start: firstDay, end: lastDay };
 }
@@ -99,11 +106,15 @@ const getTransactionsByRange = async (walletId, start, end, type) => {
         const userRef = userCollection.doc(uid);
         const transRef = userRef.collection(FirebaseNodes.TRANSACTION);
 
+        // Check if the user has any transactions
+        const transSnapshot = await transRef.get();
+        if (transSnapshot.empty) {
+            return [];
+        }
         const startYear = start.getFullYear();
         const endYear = end.getFullYear();
         const startMonth = start.getMonth();
         const endMonth = end.getMonth();
-
         let transactions = [];
 
         for (let year = startYear; year <= endYear; year++) {
@@ -117,7 +128,7 @@ const getTransactionsByRange = async (walletId, start, end, type) => {
                 const endDay = year === endYear && monthIndex === endMonthIndex ? end.getDate() : 31;
 
                 for (let day = startDay; day <= endDay; day++) {
-                    const dayRef = monthRef.doc('Day ' + day + ',');
+                    const dayRef = monthRef.doc(day);
                     const dayTransactionsSnapshot = await dayRef.get();
 
                     if (dayTransactionsSnapshot.exists) {
@@ -140,7 +151,6 @@ const getTransactionsByRange = async (walletId, start, end, type) => {
 
 const getTop3Expense = (transactions) => {
     if (!Array.isArray(transactions)) {
-        console.error('Invalid transactions input:', transactions);
         return [];
     }
     const totalExpense = getTotalExpense(transactions);
@@ -153,7 +163,6 @@ const getTop3Expense = (transactions) => {
 
 const getTotalExpense = (transactions) => {
     if (!Array.isArray(transactions)) {
-        console.error('Invalid transactions input:', transactions);
         return 0;
     }
     return transactions.reduce((total, transaction) => total + transaction.amount, 0);

@@ -10,11 +10,11 @@ const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
 
 // Firebase services
 async function updateTransaction(trans_id, newTransaction) {
-    const [month, day, year] = newTransaction.created_at.split(' ');
+    const [month, day, year] = newTransaction.created_at.replace(',', '').split(' ');
     const userId = getCurrentUser().uid;
     const userDocRef = userCollection.doc(userId);
     const yearDocRef = userDocRef.collection(FirebaseNodes.TRANSACTION).doc(year);
-    const dayDocRef = userCollection.doc(userId).collection(FirebaseNodes.TRANSACTION).doc(year).collection(month).doc(`Day ${day}`);
+    const dayDocRef = userCollection.doc(userId).collection(FirebaseNodes.TRANSACTION).doc(year).collection(month).doc(day);
 
     // Check if the user document exists
     let userDoc = await userDocRef.get();
@@ -64,7 +64,7 @@ async function updateTransaction(trans_id, newTransaction) {
             updatedTransactions = [...transactions, newTransaction];
         }
     } else {
-        newTransaction.trans_id = firebase.firestore().collection('dummy').doc().id; // Generate a new Firestore document ID
+        newTransaction.trans_id = firebase.firestore().collection('dummy').doc().id; 
         updatedTransactions = [...transactions, newTransaction];
     }
 

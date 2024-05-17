@@ -41,6 +41,7 @@ export {
 } from './services/transactionSlice';
 
 export {
+    deleteTransaction,
     default as updateTransactionFormReducer,
     setUpdateTransactionId,
     setUpdateTransactionAmount,

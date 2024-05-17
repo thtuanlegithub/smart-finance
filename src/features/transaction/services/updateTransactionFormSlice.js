@@ -1,6 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 import formatTime from "../../../utils/formatTime";
 import { formatDate } from "../../../utils/formatDate";
+import { getCurrentUser } from "../../authentication";
+import { FirebaseNodes } from "../../../data/firebaseConstant";
+import { FirestoreSingleton } from "../../../patterns";
+const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
+const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
+
+const deleteTransaction = async (transaction) => {
+    const transactionDate = transaction.created_at;
+    const trans_id = transaction.trans_id;
+    
+    const [month, day, year] = transactionDate.replace(',', '').split(' ');
+    const userId = getCurrentUser().uid;
+    const dayDocRef = userCollection.doc(userId).collection(FirebaseNodes.TRANSACTION).doc(year).collection(month).doc(day);
+
+    let dayDoc = await dayDocRef.get();
+    if (!dayDoc.exists) {
+        throw new Error('Transaction does not exist');
+    }
+
+    const transactions = dayDoc.data().transactions || [];
+    const existingTransactionIndex = transactions.findIndex(t => t.trans_id === trans_id);
+    if (existingTransactionIndex === -1) {
+        throw new Error('Transaction does not exist');
+    }
+
+    // Remove the transaction from the array
+    const updatedTransactions = transactions.filter(t => t.trans_id !== trans_id);
+
+    await dayDocRef.update({ transactions: updatedTransactions });
+}
 
 const initialState = {
     trans_id: '',
@@ -100,5 +130,9 @@ export const {
     clearUpdateInput,
     setDisplayUpdateTransactionModal,
 } = updateTransactionFormSlice.actions;
+
+export {
+    deleteTransaction,
+}
 
 export default updateTransactionFormSlice.reducer;

@@ -9,17 +9,22 @@ import ConfirmDialog from '../../../../../components/ConfirmDialog'
 import StackHeader from '../../../../../components/StackHeader'
 import UpdateTransactionBottomSheet from '../../../components/UpdateTransactionBottomSheet'
 import { useDispatch, useSelector } from 'react-redux'
-import { setDisplayUpdateTransactionModal, setUpdateTransactionAmount, setUpdateTransactionCategory, setUpdateTransactionDate, setUpdateTransactionDependents, setUpdateTransactionHasReminder, setUpdateTransactionHasTax, setUpdateTransactionId, setUpdateTransactionInsurance, setUpdateTransactionNote, setUpdateTransactionPeople, setUpdateTransactionReference, setUpdateTransactionReminderDate, setUpdateTransactionType, setUpdateTransactionWallet } from '../../../services/updateTransactionFormSlice'
-import { formatDate } from '../../../../../utils/formatDate'
+import { deleteTransaction, setDisplayUpdateTransactionModal, setUpdateTransactionAmount, setUpdateTransactionCategory, setUpdateTransactionDate, setUpdateTransactionDependents, setUpdateTransactionHasReminder, setUpdateTransactionHasTax, setUpdateTransactionId, setUpdateTransactionInsurance, setUpdateTransactionNote, setUpdateTransactionPeople, setUpdateTransactionReference, setUpdateTransactionReminderDate, setUpdateTransactionType, setUpdateTransactionWallet } from '../../../services/updateTransactionFormSlice'
 import { setCurrentTransactionCRUDAction } from '../../../services/transactionSlice'
 import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/native'
+import transactionType from '../../../data/transactionType'
+import { setBalance, updateUserWallet, updateWallet } from '../../../../setting'
 
 const TransactionDetail = ({ route }) => {
     const { transaction } = route.params;
     const { t } = useTranslation();
+    const navigation = useNavigation();
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const updateTransactionBottomSheetRef = useRef(null);
     const updateTransactionDisplayModal = useSelector(state => state.updateTransactionForm.displayModal);
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
+
     useEffect(() => {
         if (updateTransactionDisplayModal) {
             updateTransactionBottomSheetRef.current.present();
@@ -29,6 +34,38 @@ const TransactionDetail = ({ route }) => {
         }
     }, [updateTransactionDisplayModal]);
     const dispatch = useDispatch();
+
+    const handleDeleteTransaction = async () => {
+        let newWallet = { ...currentWallet };
+        switch (transaction.type) {
+            case transactionType.EXPENSE:
+                newWallet.balance += transaction.amount; // Reverse the operation
+                break;
+            case transactionType.INCOME:
+                newWallet.balance -= transaction.amount; // Reverse the operation
+                break;
+            case transactionType.DEBT_LOAN:
+                switch (categoryId) {
+                    case 'debt':
+                    case 'debtcollection':
+                        newWallet.balance -= transaction.amount; // Reverse the operation
+                        break;
+                    case 'loan':
+                    case 'repayment':
+                        newWallet.balance += transaction.amount; // Reverse the operation
+                        break;
+                }
+                break;
+        }
+
+        await updateUserWallet(transaction.wallet_id, newWallet);
+        await deleteTransaction(transaction); 
+        dispatch(updateWallet(newWallet));
+        if (currentWallet.wallet_id === newWallet.wallet_id)
+            dispatch(setBalance(newWallet.balance));
+
+        navigation.goBack();
+    }
 
     return (
         <View style={styles.container}>
@@ -86,7 +123,7 @@ const TransactionDetail = ({ route }) => {
                 title={t('delete-title')}
                 message={t('delete-message')}
                 onConfirm={() => {
-                    // handleDelete
+                    handleDeleteTransaction()
                     setConfirmDialogVisible(false)
                 }}
                 onCancel={() => { setConfirmDialogVisible(false) }}

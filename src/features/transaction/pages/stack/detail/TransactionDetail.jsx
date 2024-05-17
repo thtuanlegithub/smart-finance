@@ -9,7 +9,7 @@ import ConfirmDialog from '../../../../../components/ConfirmDialog'
 import StackHeader from '../../../../../components/StackHeader'
 import UpdateTransactionBottomSheet from '../../../components/UpdateTransactionBottomSheet'
 import { useDispatch, useSelector } from 'react-redux'
-import { setDisplayUpdateTransactionModal, setUpdateTransactionAmount, setUpdateTransactionCategory, setUpdateTransactionDate, setUpdateTransactionDependents, setUpdateTransactionHasReminder, setUpdateTransactionHasTax, setUpdateTransactionInsurance, setUpdateTransactionNote, setUpdateTransactionPeople, setUpdateTransactionReference, setUpdateTransactionReminderDate, setUpdateTransactionType, setUpdateTransactionWallet } from '../../../services/updateTransactionFormSlice'
+import { setDisplayUpdateTransactionModal, setUpdateTransactionAmount, setUpdateTransactionCategory, setUpdateTransactionDate, setUpdateTransactionDependents, setUpdateTransactionHasReminder, setUpdateTransactionHasTax, setUpdateTransactionId, setUpdateTransactionInsurance, setUpdateTransactionNote, setUpdateTransactionPeople, setUpdateTransactionReference, setUpdateTransactionReminderDate, setUpdateTransactionType, setUpdateTransactionWallet } from '../../../services/updateTransactionFormSlice'
 import { formatDate } from '../../../../../utils/formatDate'
 import { setCurrentTransactionCRUDAction } from '../../../services/transactionSlice'
 import { useTranslation } from 'react-i18next'
@@ -37,13 +37,14 @@ const TransactionDetail = ({ route }) => {
                 onEditPress={() => {
                     dispatch(setCurrentTransactionCRUDAction('update'));
                     dispatch(setDisplayUpdateTransactionModal(true));
+                    dispatch(setUpdateTransactionId(transaction.trans_id));
                     dispatch(setUpdateTransactionDate(transaction.created_at));
                     dispatch(setUpdateTransactionAmount(transaction.amount));
-                    dispatch(setUpdateTransactionCategory(transaction.category));
+                    dispatch(setUpdateTransactionCategory(transaction.category_id));
                     dispatch(setUpdateTransactionType(transaction.type));
-                    dispatch(setUpdateTransactionPeople(transaction.people));
-                    dispatch(setUpdateTransactionInsurance(transaction.insurance));
-                    dispatch(setUpdateTransactionDependents(transaction.dependents));
+                    dispatch(setUpdateTransactionPeople(transaction.people || []));
+                    dispatch(setUpdateTransactionInsurance(transaction.insurance || 0));
+                    dispatch(setUpdateTransactionDependents(transaction.dependents || 0));
                     dispatch(setUpdateTransactionHasTax(transaction.hasTax));
                     dispatch(setUpdateTransactionReference(transaction.reference));
                     dispatch(setUpdateTransactionNote(transaction.note));

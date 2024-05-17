@@ -41,6 +41,7 @@ const DayTransactionsGroup = (props) => {
     const handleDisplayTransactionDetail = (item) => {
         if (props.nestFrom == 'Transaction') {
             dispatch(setUpdateTransactionReference(item));
+            console.log(item);
             navigation.navigate("Transaction Detail", { transaction: item })
         }
         else

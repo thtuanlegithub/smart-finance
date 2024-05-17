@@ -15,7 +15,7 @@ const ExpenseTransaction = ({ item }) => {
                 source={getCategoryIcons(item.category_id)} />
             <View style={styles.transactionInformation}>
                 <View style={styles.detailInformation}>
-                    <Text style={styles.transactionType}>{t(item.category_id)}</Text>
+                    <Text style={styles.transactionType}>{t(item.type)}</Text>
                     <Text style={styles.transactionNote}>{item.note}</Text>
                 </View>
                 <Text style={styles.transactionAmount}>{formatCurrency(item.amount)}</Text>

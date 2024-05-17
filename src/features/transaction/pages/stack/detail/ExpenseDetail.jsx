@@ -21,10 +21,10 @@ const ExpenseDetail = ({ transaction }) => {
                 <View style={{ flexDirection: 'row', gap: 12 }}>
                     <FastImage
                         style={{ width: 30, height: 30 }}
-                        source={getCategoryIcons(transaction.category)}
+                        source={getCategoryIcons(transaction.category_id)}
                         resizeMode='contain'
                     />
-                    <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{t(transaction.category)}</Text>
+                    <Text style={{ ...typography.RegularInterH3, color: colors.green08 }}>{t(transaction.category_id)}</Text>
                 </View>
                 <View style={{
                     backgroundColor: colors.red05,
@@ -46,7 +46,7 @@ const ExpenseDetail = ({ transaction }) => {
             </View>
             <View style={{ flexDirection: 'row', gap: 8, marginTop: 10, marginLeft: 8 }}>
                 <FontAwesome5 name='calendar-day' size={18} color={colors.green07} solid />
-                <Text style={{ ...typography.RegularInterH4, color: colors.green07, marginLeft: 8 }}>{transaction.date}</Text>
+                <Text style={{ ...typography.RegularInterH4, color: colors.green07, marginLeft: 8 }}>{transaction.created_at}</Text>
             </View>
             <View style={{ flexDirection: 'row', gap: 8, marginTop: 10, marginLeft: 8 }}>
                 <FontAwesome5 name='wallet' size={18} color={colors.green07} solid />

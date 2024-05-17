@@ -102,6 +102,7 @@
     "amount": "Amount",
     "note": "Note",
     "add-transaction": "Add transaction",
+    "edit-transaction": "Edit transaction",
     "pick-a-date": "Pick a date",
     "contact": "Contact",
     "search-contact": "Search in contact...",

@@ -79,10 +79,8 @@ const AddTransactionForm = ({ navigation }) => {
             alert('Please fill in all required fields');
             return;
         }
-
         dispatch(setDisplayModal(false));
         dispatch(clearInput());
-
         let tax = 0;
         if (hasTax) {
             tax = {
@@ -112,7 +110,7 @@ const AddTransactionForm = ({ navigation }) => {
         }
 
         const newTransaction = new TransactionBuilder()
-            .setAmount(amount - calculatePersonalIncomeTax(amount, dependents, insurance))
+            .setAmount(amount - (tax.total_tax || 0))
             .setCategoryId(categoryId)
             .setCreatedAt(created_at)
             .setNote(note)

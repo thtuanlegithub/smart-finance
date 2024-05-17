@@ -42,6 +42,7 @@ export {
 
 export {
     default as updateTransactionFormReducer,
+    setUpdateTransactionId,
     setUpdateTransactionAmount,
     setUpdateTransactionNote,
     setUpdateTransactionDate,

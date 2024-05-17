@@ -119,7 +119,6 @@ const initialState = {
     hasTax: false,
     insurance: 0,
     dependents: 0,
-    people: [],
 };
 
 const addTransactionFormSlice = createSlice({

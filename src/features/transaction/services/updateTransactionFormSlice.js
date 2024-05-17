@@ -10,7 +10,7 @@ const initialState = {
     category_id: '',
     created_at: '',
     wallet: '',
-    displayModal: false,
+    displayModal: null,
     reminderTime: formatTime(new Date()),
     reminderDate: formatDate(new Date()),
     hasReminder: false,
@@ -19,7 +19,6 @@ const initialState = {
     hasTax: false,
     insurance: 0,
     dependents: 0,
-    people: [],
 };
 
 
@@ -27,6 +26,9 @@ const updateTransactionFormSlice = createSlice({
     name: 'updateTransactionForm',
     initialState,
     reducers: {
+        setUpdateTransactionId: (state, action) => {
+            state.trans_id = action.payload;
+        },
         setUpdateTransactionAmount: (state, action) => {
             state.amount = action.payload;
         },
@@ -80,6 +82,7 @@ const updateTransactionFormSlice = createSlice({
 
 
 export const {
+    setUpdateTransactionId,
     setUpdateTransactionAmount,
     setUpdateTransactionNote,
     setUpdateTransactionDate,

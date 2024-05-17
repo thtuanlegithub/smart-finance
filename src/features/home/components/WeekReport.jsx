@@ -16,7 +16,7 @@ const WeekReport = () => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const fetchTransactions = async () => {
         if (currentWallet && currentWallet.wallet_id) {
-            const transactionsInWeek = await getAllTransactionsInWeek(currentWallet.wallet_id, 'expense');
+            const transactionsInWeek = await getAllTransactionsInWeek(currentWallet.wallet_id);
             const top3Expense = getTop3Expense(transactionsInWeek);
             const totalExpenseInWeek = getTotalExpense(transactionsInWeek);
             setSpendingMoney(totalExpenseInWeek);

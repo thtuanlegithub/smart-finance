@@ -1,14 +1,15 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import BottomMenuItem from '../../../components/BottomMenuItem'
 import ActionSheet from 'react-native-actions-sheet'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearTransactionTimeRange, setTransactionTimeRangeEnd, setTransactionTimeRangeStart } from '../services/transactionSlice'
+import { clearTransactionTimeRange, setTransactionTimeRange, setTransactionTimeRangeEnd, setTransactionTimeRangeStart } from '../services/transactionSlice'
 import DatePicker from 'react-native-date-picker'
 import { formatDate } from '../../../utils/formatDate'
 import { useTranslation } from 'react-i18next'
+import { parse } from 'date-fns'
 
 const DISPLAY = true;
 const HIDE = false;
@@ -18,7 +19,6 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
     const { t } = useTranslation();
     const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
     const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
-
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [pickDateForStart, setPickDateForStart] = useState(true);
 
@@ -31,17 +31,36 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
         actionSheetCustomizeTransactionTimeRangeRef.current.setModalVisible(action);
     }
 
-
     const handleTransactionTimeRangeSelect = (transactionTimeRange) => {
-        if (transactionTimeRange === 'Customize') {
+        if (transactionTimeRange === 'customize') {
             handleActionSheetCustomizeTransactionTimeRangeDisplay(DISPLAY);
             handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
         }
         else {
             dispatch(clearTransactionTimeRange());
+            dispatch(setTransactionTimeRange(transactionTimeRange));
             handleActionSheetSelectTransactionTimeRangeDisplay(HIDE);
         }
     }
+
+    useEffect(() => {
+        if (transactionTimeRangeStart && transactionTimeRangeEnd) {
+            let transactionTimeRange
+            const start = parse(transactionTimeRangeStart, 'MMMM d, yyyy', new Date());
+            const end = parse(transactionTimeRangeEnd, 'MMMM d, yyyy', new Date());
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays > 365) {
+                transactionTimeRange = 'by-year';
+            } else if (diffDays > 30) {
+                transactionTimeRange = 'by-month';
+            } else {
+                transactionTimeRange = 'by-week';
+            }
+            dispatch(setTransactionTimeRange(transactionTimeRange));
+        }
+    }, [transactionTimeRangeStart, transactionTimeRangeEnd]);
+
     return (
         <>
             <ActionSheet ref={props.actionSheetTransactionTimeRangeRef}>
@@ -49,16 +68,16 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <BottomMenuItem
                         title={t('by-week')}
-                        onPress={() => handleTransactionTimeRangeSelect('This week')} />
+                        onPress={() => handleTransactionTimeRangeSelect('by-week')} />
                     <BottomMenuItem
                         title={t('by-month')}
-                        onPress={() => handleTransactionTimeRangeSelect('This month')} />
+                        onPress={() => handleTransactionTimeRangeSelect('by-month')} />
                     <BottomMenuItem
                         title={t('by-year')}
-                        onPress={() => handleTransactionTimeRangeSelect('This year')} />
+                        onPress={() => handleTransactionTimeRangeSelect('by-year')} />
                     <BottomMenuItem
                         title={t('customize')}
-                        onPress={() => handleTransactionTimeRangeSelect('Customize')} />
+                        onPress={() => handleTransactionTimeRangeSelect('customize')} />
                     <TouchableOpacity
                         onPress={() => handleActionSheetSelectTransactionTimeRangeDisplay(HIDE)}
                         style={styles.bottomMenuItemContainer}>

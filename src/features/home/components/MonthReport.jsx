@@ -15,7 +15,7 @@ const MonthReport = () => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const fetchTransactions = async () => {
         if (currentWallet && currentWallet.wallet_id) {
-            const transactionsInMonth = await getAllTransactionsInMonth(currentWallet.wallet_id, 'expense');
+            const transactionsInMonth = await getAllTransactionsInMonth(currentWallet.wallet_id);
             const top3Expense = getTop3Expense(transactionsInMonth);
             const totalExpenseInMonth = getTotalExpense(transactionsInMonth);
             setSpendingMoney(totalExpenseInMonth);

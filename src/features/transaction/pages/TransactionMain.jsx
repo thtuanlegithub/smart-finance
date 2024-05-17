@@ -13,7 +13,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ActionSheet from 'react-native-actions-sheet';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTransactions, groupTransactionsByWeek, setCurrentWallet, setTransactionTypeFilter } from '../services/transactionSlice';
+import { getAllTransactions, getTransactionsByRange, groupTransactionsByMonth, groupTransactionsByWeek, groupTransactionsByYear, setCurrentWallet, setTransactionTypeFilter } from '../services/transactionSlice';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import CustomHandle from '../../../components/CustomHandle';
@@ -22,6 +22,7 @@ import WalletItem from '../../../components/WalletItem';
 import ActionSheetSelectTimeRangeTransaction from '../components/ActionSheetSelectTimeRangeTransaction';
 import { selectWallet } from '../../setting';
 import { useTranslation } from 'react-i18next';
+import { parse } from 'date-fns';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -36,6 +37,8 @@ function TransactionMain(props) {
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
+    const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
+    const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
 
     const dispatch = useDispatch();
     const handleSelectTransactionType = (transactionType) => {
@@ -65,15 +68,33 @@ function TransactionMain(props) {
     );
 
     const fetchTransactions = async () => {
-        if (currentWallet && currentWallet.wallet_id) {
-            const transactionsInWeek = await getAllTransactions(currentWallet.wallet_id, 'expense');
-            setTimeRange(groupTransactionsByWeek(transactionsInWeek));
+        if (!currentWallet?.wallet_id) return;
+        let transactions
+        if (transactionTimeRangeStart && transactionTimeRangeEnd) {
+            const start = parse(transactionTimeRangeStart, 'MMMM d, yyyy', new Date());
+            const end = parse(transactionTimeRangeEnd, 'MMMM d, yyyy', new Date());
+            transactions = await getTransactionsByRange(currentWallet.wallet_id, start, end)
+        } else {
+            transactions = await getAllTransactions(currentWallet.wallet_id);
         }
+        let groupedTransactions;
+        switch (transactionTimeRange) {
+            case 'by-month':
+                groupedTransactions = groupTransactionsByMonth(transactions);
+                break;
+            case 'by-year':
+                groupedTransactions = groupTransactionsByYear(transactions);
+                break;
+            default:
+                groupedTransactions = groupTransactionsByWeek(transactions);
+                break;
+        }
+        setTimeRange(groupedTransactions);
     };
 
     useEffect(() => {
         fetchTransactions();
-    }, [currentWallet.balance]);
+    }, [currentWallet.balance, transactionTimeRangeStart, transactionTimeRangeEnd, transactionTimeRange]);
 
     useEffect(() => {
         if (timeRange) {

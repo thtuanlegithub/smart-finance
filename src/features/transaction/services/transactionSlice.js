@@ -45,7 +45,7 @@ const getAllTransactions = async (walletId) => {
     }
 };
 
-const getAllTransactionsInMonth = async (walletId, type) => {
+const getAllTransactionsInMonth = async (walletId) => {
     try {
         const uid = getCurrentUser().uid;
         const userRef = userCollection.doc(uid);
@@ -68,22 +68,24 @@ const getAllTransactionsInMonth = async (walletId, type) => {
             const transactionData = doc.data();
             const transactionsArray = transactionData.transactions || [];
             transactionsArray.forEach((transactionData) => {
-                if (transactionData.wallet_id === walletId && transactionData.type === type) {
+                if (transactionData.wallet_id === walletId) {
                     transactions.push(transactionData);
                 }
             });
         });
+        transactions = transactions.filter(transaction => transaction.type === 'expense');
         return transactions;
     } catch (error) {
         console.error("Error fetching month transactions:", error);
     }
 }
 
-const getAllTransactionsInWeek = async (walletId, type) => {
+const getAllTransactionsInWeek = async (walletId) => {
     try {
         const date = new Date();
         const { start, end } = getWeekRange(date);
-        return await getTransactionsByRange(walletId, start, end, type);
+        let transactions = await getTransactionsByRange(walletId, start, end);
+        return transactions.filter(transaction => transaction.type === 'expense');
     } catch (error) {
         console.error("Error fetching week transactions:", error);
     }
@@ -102,7 +104,7 @@ function getWeekRange(date) {
     return { start: firstDay, end: lastDay };
 }
 
-const getTransactionsByRange = async (walletId, start, end, type) => {
+const getTransactionsByRange = async (walletId, start, end) => {
     try {
         const uid = getCurrentUser().uid;
         const userRef = userCollection.doc(uid);
@@ -136,7 +138,7 @@ const getTransactionsByRange = async (walletId, start, end, type) => {
                     if (dayTransactionsSnapshot.exists) {
                         const dayTransactions = dayTransactionsSnapshot.data().transactions || [];
                         dayTransactions.forEach((transactionData) => {
-                            if (transactionData.wallet_id === walletId && transactionData.type === type) {
+                            if (transactionData.wallet_id === walletId) {
                                 transactions.push(transactionData);
                             }
                         });
@@ -183,6 +185,36 @@ const groupTransactionsByWeek = (transactions) => {
             grouped[week] = [];
         }
         grouped[week].push(transaction);
+    });
+    return grouped;
+};
+
+const groupTransactionsByMonth = (transactions) => {
+    const grouped = {};
+
+    transactions.forEach((transaction) => {
+        const date = parse(transaction.created_at, 'MMMM d, yyyy', new Date());
+        const month = format(date, 'MM/yyyy');
+
+        if (!grouped[month]) {
+            grouped[month] = [];
+        }
+        grouped[month].push(transaction);
+    });
+    return grouped;
+};
+
+const groupTransactionsByYear = (transactions) => {
+    const grouped = {};
+
+    transactions.forEach((transaction) => {
+        const date = parse(transaction.created_at, 'MMMM d, yyyy', new Date());
+        const year = format(date, 'yyyy');
+
+        if (!grouped[year]) {
+            grouped[year] = [];
+        }
+        grouped[year].push(transaction);
     });
     return grouped;
 };
@@ -245,6 +277,9 @@ export {
     getTop3Expense,
     getTotalExpense,
     groupTransactionsByWeek,
+    groupTransactionsByMonth,
+    groupTransactionsByYear,
+    getTransactionsByRange,
 }
 
 export default transactionSlice.reducer;

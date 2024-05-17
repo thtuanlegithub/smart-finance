@@ -9,32 +9,50 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 const TransactionsList = (props) => {
-    const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter)
     const { t } = useTranslation();
-    const [transactionListFilter, setTransactionListFilter] = useState([]);
-    const transactions = props.transactions || [];
-    console.log(transactions);
+    const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
+    
+    let transactions = props.transactions || [];
+    if (transactionTypeFilter) {
+        transactions = transactions.filter(transaction => transaction.type === transactionTypeFilter);
+    }
+
+    const groupTransactionsByDate = (transactions) => {
+        return transactions.reduce((acc, transaction) => {
+            const date = transaction.created_at;
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(transaction);
+            return acc;
+        }, {});
+    };
+    const groupedTransactions = groupTransactionsByDate(transactions);
+    const groupedTransactionsArray = Object.entries(groupedTransactions).map(([date, transactions]) => ({ date, transactions }));
     const getSumExpense = () => {
         return transactions.reduce((total, transaction) => {
             if (transaction.type === 'expense') {
                 return total + transaction.amount;
             }
+            return total;
         }, 0);
     }
-
+    
     const getSumIncome = () => {
         return transactions.reduce((total, transaction) => {
             if (transaction.type === 'income') {
                 return total + transaction.amount;
             }
+            return total;
         }, 0);
     }
-
+    
     const getSumDebtLoan = () => {
         return transactions.reduce((total, transaction) => {
             if (transaction.type === 'debt_loan') {
                 return total + transaction.amount;
             }
+            return total;
         }, 0);
     }
 
@@ -84,12 +102,12 @@ const TransactionsList = (props) => {
                         }
                     </View>
                 }
-                    data={transactions}
-                    renderItem={({ item }) => <DayTransactionsGroup
-                    nestFrom='Transaction' {...item} 
-                    transactions={transactions}    
+                data={groupedTransactionsArray}
+                renderItem={({ item }) => <DayTransactionsGroup
+                    nestFrom='Transaction' {...item}
+                    transactions={item.transactions}
                 />}
-                keyExtractor={item => item.trans_id}
+                keyExtractor={item => item.date}
                 showsVerticalScrollIndicator={false}
             />
         </View>

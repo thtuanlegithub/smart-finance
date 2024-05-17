@@ -14,7 +14,7 @@ const DayTransactionsGroup = (props) => {
     const { t } = useTranslation();
     const transactions = props.transactions || [];
     // Parse the date string into a Date object
-    const date = parse(props.created_at, 'MMMM d, yyyy', new Date());
+    const date = parse(props.date, 'MMMM d, yyyy', new Date());
     const month = format(date, 'MMMM');
     const day = format(date, 'd');
     const year = format(date, 'yyyy');

@@ -188,7 +188,9 @@ function TransactionMain(props) {
                             name={t(range.timeRange ? range.timeRange : 'Not available').toUpperCase()}
                             initialParams={{ range }}>
                             {
-                                props => <TransactionList {...props} type={transactionTypeFilter} transactions={range.transactions} />
+                                props => <TransactionList {...props} 
+                                type={transactionTypeFilter} 
+                                transactions={range.transactions} />
                             }
                         </Tab.Screen>
                     ))}

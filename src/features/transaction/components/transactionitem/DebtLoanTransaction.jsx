@@ -13,14 +13,14 @@ const DebtLoanTransaction = ({ item }) => {
     return (
         <View style={styles.container}>
             <Image style={globalStyles.transactionIcon}
-                source={getCategoryIcons(item.category)} />
+                source={getCategoryIcons(item.category_id)} />
             <View style={styles.transactionInformation}>
                 <View style={styles.detailInformation}>
-                    <Text style={styles.transactionType}>{t(item.category)}</Text>
+                    <Text style={styles.transactionType}>{t(item.category_id)}</Text>
                     <Text style={styles.transactionNote}>{item.note}</Text>
                 </View>
                 {
-                    (item.category == 'debt' || item.category == 'debtcollection')
+                    (item.category_id == 'debt' || item.category_id == 'debtcollection')
                     &&
                     <Text style={{
                         ...styles.transactionAmount,
@@ -28,7 +28,7 @@ const DebtLoanTransaction = ({ item }) => {
                     }}>{formatCurrency(item.amount)}</Text>
                 }
                 {
-                    (item.category == 'loan' || item.category == 'repayment')
+                    (item.category_id == 'loan' || item.category_id == 'repayment')
                     &&
                     <Text style={{
                         ...styles.transactionAmount,

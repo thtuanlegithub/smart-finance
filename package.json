@@ -26,6 +26,7 @@
     "@react-navigation/stack": "^6.3.28",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
     "gesture-handler": "^0.0.1",
     "i18next": "^23.11.3",
     "moment": "^2.30.1",

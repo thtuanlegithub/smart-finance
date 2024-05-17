@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getCurrentUser } from "../../authentication";
 import { FirestoreSingleton } from "../../../patterns"
 import { FirebaseNodes } from "../../../data/firebaseConstant";
+import { parse, format, startOfWeek, endOfWeek } from "date-fns";
+
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
 const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -73,7 +75,7 @@ const getAllTransactionsInMonth = async (walletId, type) => {
         });
         return transactions;
     } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.error("Error fetching month transactions:", error);
     }
 }
 
@@ -83,7 +85,7 @@ const getAllTransactionsInWeek = async (walletId, type) => {
         const { start, end } = getWeekRange(date);
         return await getTransactionsByRange(walletId, start, end, type);
     } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.error("Error fetching week transactions:", error);
     }
 }
 
@@ -128,7 +130,7 @@ const getTransactionsByRange = async (walletId, start, end, type) => {
                 const endDay = year === endYear && monthIndex === endMonthIndex ? end.getDate() : 31;
 
                 for (let day = startDay; day <= endDay; day++) {
-                    const dayRef = monthRef.doc(day);
+                    const dayRef = monthRef.doc(String(day));
                     const dayTransactionsSnapshot = await dayRef.get();
 
                     if (dayTransactionsSnapshot.exists) {
@@ -145,7 +147,7 @@ const getTransactionsByRange = async (walletId, start, end, type) => {
 
         return transactions;
     } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.error("Error fetching by range transactions:", error);
     }
 };
 
@@ -167,6 +169,23 @@ const getTotalExpense = (transactions) => {
     }
     return transactions.reduce((total, transaction) => total + transaction.amount, 0);
 }
+
+const groupTransactionsByWeek = (transactions) => {
+    const grouped = {};
+
+    transactions.forEach((transaction) => {
+        const date = parse(transaction.created_at, 'MMMM d, yyyy', new Date());
+        const start = startOfWeek(date);
+        const end = endOfWeek(date);
+        const week = format(start, 'd/M/yyyy') + ' - ' + format(end, 'd/M/yyyy');
+
+        if (!grouped[week]) {
+            grouped[week] = [];
+        }
+        grouped[week].push(transaction);
+    });
+    return grouped;
+};
 
 const initialState = {
     transactionTypeFilter: null,
@@ -225,6 +244,7 @@ export {
     getAllTransactionsInWeek,
     getTop3Expense,
     getTotalExpense,
+    groupTransactionsByWeek,
 }
 
 export default transactionSlice.reducer;

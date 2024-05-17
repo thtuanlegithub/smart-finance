@@ -1,54 +1,40 @@
 import { View, Text, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/TransactionStyles';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
 import formatCurrency from '../../../utils/formatCurrency';
 import DayTransactionsGroup from './transactionitem/DayTransactionsGroup';
-import fakeDataTransactionList from '../../../data/fakeDataTransactionList';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 const TransactionsList = (props) => {
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter)
     const { t } = useTranslation();
-    const fakeDataTransactionListFilter = fakeDataTransactionList.map(item => {
-        return {
-            ...item,
-            transactions: item.transactions.filter(transaction => transaction.type == transactionTypeFilter || transactionTypeFilter == null)
-        };
-    }).filter(item => item.transactions.length > 0);
-
+    const [transactionListFilter, setTransactionListFilter] = useState([]);
+    const transactions = props.transactions || [];
+    console.log(transactions);
     const getSumExpense = () => {
-        return fakeDataTransactionListFilter.reduce((total, item) => {
-            return total + item.transactions.reduce((total, transaction) => {
-                if (transaction.type == 'expense') {
-                    return total + transaction.amount;
-                }
-                return total;
-            }, 0);
+        return transactions.reduce((total, transaction) => {
+            if (transaction.type === 'expense') {
+                return total + transaction.amount;
+            }
         }, 0);
     }
 
     const getSumIncome = () => {
-        return fakeDataTransactionListFilter.reduce((total, item) => {
-            return total + item.transactions.reduce((total, transaction) => {
-                if (transaction.type == 'income') {
-                    return total + transaction.amount;
-                }
-                return total;
-            }, 0);
+        return transactions.reduce((total, transaction) => {
+            if (transaction.type === 'income') {
+                return total + transaction.amount;
+            }
         }, 0);
     }
 
     const getSumDebtLoan = () => {
-        return fakeDataTransactionListFilter.reduce((total, item) => {
-            return total + item.transactions.reduce((total, transaction) => {
-                if (transaction.type == 'debt_loan') {
-                    return total + transaction.amount;
-                }
-                return total;
-            }, 0);
+        return transactions.reduce((total, transaction) => {
+            if (transaction.type === 'debt_loan') {
+                return total + transaction.amount;
+            }
         }, 0);
     }
 
@@ -66,43 +52,44 @@ const TransactionsList = (props) => {
                                 {
                                     props.type == 'expense'
                                     &&
-                                    <Text style={[typography.SemiBoldInterH4, { color: colors.red01 }]}>{formatCurrency(getSumExpense())}</Text>
+                                    <Text style={[typography.SemiBoldInterH4, { color: colors.red01 }]}>{formatCurrency(getSumExpense()) || "0"}</Text>
                                 }
                                 {
                                     props.type == 'income'
                                     &&
-                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumIncome())}</Text>
+                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumIncome()) || "0"}</Text>
                                 }
 
                                 {
                                     props.type == 'debt_loan'
                                     &&
-                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumDebtLoan())}</Text>
+                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumDebtLoan()) || "0"}</Text>
                                 }
                             </View>
                             :
                             <View style={{ flexDirection: 'column', gap: 4 }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                                     <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('total-expense-of-this-time')}</Text>
-                                    <Text style={[typography.SemiBoldInterH4, { color: colors.red01 }]}>{formatCurrency(getSumExpense())}</Text>
+                                    <Text style={[typography.SemiBoldInterH4, { color: colors.red01 }]}>{formatCurrency(getSumExpense()) || "0"}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                    <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('total-expense-of-this-time')}</Text>
-                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumIncome())}</Text>
+                                    <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('total-income-of-this-time')}</Text>
+                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumIncome()) || "0"}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                                     <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('total-debt-loan-of-this-time')}</Text>
-                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumDebtLoan())}</Text>
+                                    <Text style={[typography.SemiBoldInterH4, { color: colors.green08 }]}>{formatCurrency(getSumDebtLoan()) || "0"}</Text>
                                 </View>
                             </View>
-
                         }
                     </View>
                 }
-                data={fakeDataTransactionListFilter}
-                renderItem={({ item }) => <DayTransactionsGroup
-                    nestFrom='Transaction' {...item} />}
-                keyExtractor={item => item.id.toString()}
+                    data={transactions}
+                    renderItem={({ item }) => <DayTransactionsGroup
+                    nestFrom='Transaction' {...item} 
+                    transactions={transactions}    
+                />}
+                keyExtractor={item => item.trans_id}
                 showsVerticalScrollIndicator={false}
             />
         </View>

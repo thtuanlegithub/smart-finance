@@ -26,6 +26,7 @@ export {
     getAllTransactionsInWeek,
     getTop3Expense,
     getTotalExpense,
+    groupTransactionsByWeek,
     default as transactionReducer,
     setTransactionTypeFilter,
     setTransactionTimeRange,

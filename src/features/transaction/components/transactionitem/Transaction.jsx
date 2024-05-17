@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native'
 
 const Transaction = ({ item }) => {
     const navigation = useNavigation();
-
     return (
         <View>
             {

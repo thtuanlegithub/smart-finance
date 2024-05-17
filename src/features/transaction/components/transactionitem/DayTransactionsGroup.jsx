@@ -2,18 +2,24 @@ import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 import styles from '../../styles/DayTransactionGroupStyles';
 import formatCurrency from '../../../../utils/formatCurrency';
-import { getDate } from '../../../../utils/getDate';
-import { getDayName } from '../../../../utils/getDayName';
-import { getMonth } from '../../../../utils/getMonth';
 import Transaction from './Transaction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { getYear } from '../../../../utils/getYear';
 import { useDispatch } from 'react-redux';
 import { setUpdateTransactionReference } from '../../services/updateTransactionFormSlice';
+import { format, parse } from 'date-fns';
+
 const DayTransactionsGroup = (props) => {
     const { t } = useTranslation();
+    const transactions = props.transactions || [];
+    // Parse the date string into a Date object
+    const date = parse(props.created_at, 'MMMM d, yyyy', new Date());
+    const month = format(date, 'MMMM');
+    const day = format(date, 'd');
+    const year = format(date, 'yyyy');
+    const dayOfWeek = format(date, 'EEEE');
+
     const getSum = (total, item) => {
         if (item.type == 'income') {
             return total + item.amount;
@@ -43,38 +49,38 @@ const DayTransactionsGroup = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.dateText}>{getDate(props.date)}</Text>
+                <Text style={styles.dateText}>{day}</Text>
                 <View style={styles.rightHeader}>
                     <View>
-                        <Text style={styles.dayText}>{t(getDayName(props.date).toLowerCase())}</Text>
-                        <View style={{flexDirection: 'row', gap: 2}}>
-                            <Text style={styles.monthYearText}>{t(getMonth(props.date).toLowerCase())},</Text>
-                            <Text style={styles.monthYearText}>{getYear(props.date)}</Text>
+                        <Text style={styles.dayText}>{t(dayOfWeek.toLowerCase())}</Text>
+                        <View style={{ flexDirection: 'row', gap: 2 }}>
+                            <Text style={styles.monthYearText}>{t(month.toLowerCase())},</Text>
+                            <Text style={styles.monthYearText}>{year}</Text>
                         </View>
                     </View>
                     {
-                        props.transactions.reduce(getSum, 0) == 0
+                        transactions.reduce(getSum, 0) == 0
                         &&
                         <Text style={{ ...styles.totalMoneyOfDay, color: colors.blue05 }}>0</Text>
                     }
                     {
-                        props.transactions.reduce(getSum, 0) > 0
+                        transactions.reduce(getSum, 0) > 0
                         &&
-                        <Text style={styles.totalMoneyOfDay}>+{formatCurrency(props.transactions.reduce(getSum, 0))}</Text>
+                        <Text style={styles.totalMoneyOfDay}>+{formatCurrency(transactions.reduce(getSum, 0))}</Text>
                     }
                     {
-                        props.transactions.reduce(getSum, 0) < 0
+                        transactions.reduce(getSum, 0) < 0
                         &&
                         <Text style={{
                             ...styles.totalMoneyOfDay,
                             color: colors.red01
-                        }}>{formatCurrency(props.transactions.reduce(getSum, 0))}</Text>
+                        }}>{formatCurrency(transactions.reduce(getSum, 0))}</Text>
                     }
                 </View>
             </View>
             <FlatList
                 gap={10}
-                data={props.transactions}
+                data={transactions}
                 renderItem={({ item }) =>
                     <TouchableOpacity onPress={() => handleDisplayTransactionDetail(item)}>
                         <Transaction item={item} />

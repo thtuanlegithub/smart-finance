@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/TransactionStyles';
 import WalletSelect from '../../../components/WalletSelect';
@@ -13,7 +13,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ActionSheet from 'react-native-actions-sheet';
 import BottomMenuItem from '../../../components/BottomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentWallet, setTransactionTypeFilter } from '../services/transactionSlice';
+import { getAllTransactions, groupTransactionsByWeek, setCurrentWallet, setTransactionTypeFilter } from '../services/transactionSlice';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
 import CustomHandle from '../../../components/CustomHandle';
@@ -31,12 +31,10 @@ function TransactionMain(props) {
 
     const userWallet = useSelector(state => state.wallet.wallets);
     const { t } = useTranslation();
-    const transactionTimeRanges = ['last-week', 'this-week']
     const actionSheetTransactionTypeRef = useRef();
 
     const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
-
     const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
 
     const dispatch = useDispatch();
@@ -56,9 +54,36 @@ function TransactionMain(props) {
         actionSheetTransactionTimeRangeRef.current.setModalVisible(action);
     }
 
-    useEffect(() => {   
-        
-    }, [currentWallet.balance]);    
+    const [timeRange, setTimeRange] = useState(null);
+    const [transactionTimeRanges, setTransactionTimeRanges] = useState(
+        [
+            {
+                "timeRange": "",
+                "transactions": []
+            }
+        ]
+    );
+
+    const fetchTransactions = async () => {
+        if (currentWallet && currentWallet.wallet_id) {
+            const transactionsInWeek = await getAllTransactions(currentWallet.wallet_id, 'expense');
+            setTimeRange(groupTransactionsByWeek(transactionsInWeek));
+        }
+    };
+
+    useEffect(() => {
+        fetchTransactions();
+    }, [currentWallet.balance]);
+
+    useEffect(() => {
+        if (timeRange) {
+            const newTransactionTimeRanges = Object.keys(timeRange).map(timeRangeKey => ({
+                timeRange: timeRangeKey,
+                transactions: timeRange[timeRangeKey]
+            }));
+            setTransactionTimeRanges(newTransactionTimeRanges);
+        }
+    }, [timeRange]);
 
     return (
         <View style={styles.container}>
@@ -160,10 +185,10 @@ function TransactionMain(props) {
                     {transactionTimeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={t(range).toUpperCase()}
+                            name={t(range.timeRange ? range.timeRange : 'Not available').toUpperCase()}
                             initialParams={{ range }}>
                             {
-                                props => <TransactionList {...props} type={transactionTypeFilter} />
+                                props => <TransactionList {...props} type={transactionTypeFilter} transactions={range.transactions} />
                             }
                         </Tab.Screen>
                     ))}

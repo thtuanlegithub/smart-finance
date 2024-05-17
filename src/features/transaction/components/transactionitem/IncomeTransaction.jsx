@@ -12,10 +12,10 @@ const IncomeTransaction = ({ item }) => {
     const { t } = useTranslation(); 
     return (
         <View style={styles.container}>
-            <Image style={globalStyles.transactionIcon} source={getCategoryIcons(item.category)} />
+            <Image style={globalStyles.transactionIcon} source={getCategoryIcons(item.category_id)} />
             <View style={styles.transactionInformation}>
                 <View style={styles.detailInformation}>
-                    <Text style={styles.transactionType}>{t(item.category)}</Text>
+                    <Text style={styles.transactionType}>{t(item.category_id)}</Text>
                     <Text style={styles.transactionNote}>{item.note}</Text>
                 </View>
                 <Text style={{

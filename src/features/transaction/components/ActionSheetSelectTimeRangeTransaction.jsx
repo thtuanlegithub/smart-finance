@@ -48,13 +48,13 @@ const ActionSheetSelectTimeRangeTransaction = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 36 }}>
                     <Text style={[typography.RegularInterH3, { color: colors.green09, padding: 16 }]}>{t('select-time-range')}</Text>
                     <BottomMenuItem
-                        title={t('this-week')}
+                        title={t('by-week')}
                         onPress={() => handleTransactionTimeRangeSelect('This week')} />
                     <BottomMenuItem
-                        title={t('this-month')}
+                        title={t('by-month')}
                         onPress={() => handleTransactionTimeRangeSelect('This month')} />
                     <BottomMenuItem
-                        title={t('this-year')}
+                        title={t('by-year')}
                         onPress={() => handleTransactionTimeRangeSelect('This year')} />
                     <BottomMenuItem
                         title={t('customize')}

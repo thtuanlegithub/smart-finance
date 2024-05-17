@@ -157,12 +157,32 @@ const getTop3Expense = (transactions) => {
     if (!Array.isArray(transactions)) {
         return [];
     }
-    const totalExpense = getTotalExpense(transactions);
-    const top3Transactions = transactions.sort((a, b) => b.amount - a.amount).slice(0, 3);
-    top3Transactions.forEach(transaction => {
-        transaction.percentage = Math.round((transaction.amount / totalExpense) * 100);
+
+    // Group transactions by category_id
+    const groups = transactions.reduce((acc, transaction) => {
+        if (!acc[transaction.category_id]) {
+            acc[transaction.category_id] = [];
+        }
+        acc[transaction.category_id].push(transaction);
+        return acc;
+    }, {});
+
+    // Calculate total amount for each group
+    const groupTotals = Object.entries(groups).map(([category_id, transactions]) => {
+        const amount = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+        return { category_id, amount, transactions };
     });
-    return top3Transactions;
+
+    // Sort groups by total amount and take top 3
+    const top3Groups = groupTotals.sort((a, b) => b.amount - a.amount).slice(0, 3);
+
+    // Calculate percentage for each group
+    const totalExpense = top3Groups.reduce((total, group) => total + group.amount, 0);
+    top3Groups.forEach(group => {
+        group.percentage = Math.round((group.amount / totalExpense) * 100);
+    });
+
+    return top3Groups;
 };
 
 const getTotalExpense = (transactions) => {

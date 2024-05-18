@@ -67,6 +67,10 @@ const TransactionDetail = ({ route }) => {
         navigation.goBack();
     }
 
+    const handleSaveTransaction = () => {
+        navigation.goBack();
+    }
+
     return (
         <View style={styles.container}>
             <StackHeader
@@ -92,12 +96,12 @@ const TransactionDetail = ({ route }) => {
             {
                 transaction?.type == 'expense'
                 &&
-                <ExpenseDetail transaction={transaction} />
+                <ExpenseDetail transaction={transaction}/>
             }
             {
                 transaction?.type == 'income'
                 &&
-                <IncomeDetail transaction={transaction} />
+                <IncomeDetail transaction={transaction}/>
             }
             {
                 transaction?.type == 'debt_loan'
@@ -130,7 +134,9 @@ const TransactionDetail = ({ route }) => {
             />
             <UpdateTransactionBottomSheet
                 selectedTransaction={transaction}
-                updateTransactionBottomSheetRef={updateTransactionBottomSheetRef} />
+                updateTransactionBottomSheetRef={updateTransactionBottomSheetRef}
+                onSave={handleSaveTransaction} 
+            />
         </View>
     )
 }

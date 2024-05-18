@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import typography from '../../../../../styles/typography'
 import colors from '../../../../../styles/colors'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -35,7 +35,6 @@ const UpdateTransactionForm = (props) => {
     const actionSheetRef = useRef();
     const [datePickerOpen, setDatePickerOpen] = useState(false);
     const { t } = useTranslation();
-
     // redux selector
     const dispatch = useDispatch();
     const trans_id = useSelector(state => state.updateTransactionForm.trans_id);
@@ -56,7 +55,6 @@ const UpdateTransactionForm = (props) => {
 
 
     const navigation = useNavigation();
-
     // Handle Select Transaction Date
     const handleSelectTransactionDay = (index) => {
         if (index === TODAY) {
@@ -76,6 +74,11 @@ const UpdateTransactionForm = (props) => {
         amount = parseInt(amount);
         dispatch(setUpdateTransactionAmount(amount));
     }
+    const { onSave } = props.route.params;
+    const [initialAmount, setInitialAmount] = useState(amount);
+    useEffect(() => {
+        setInitialAmount(amount);
+    }, []);
 
     const handleSaveTransaction = async () => {
         if (!created_at || !amount || !wallet || !categoryId) {
@@ -116,20 +119,20 @@ const UpdateTransactionForm = (props) => {
         let newWallet = { ...wallet };
         switch (type) {
             case transactionType.EXPENSE:
-                newWallet.balance += amount;
+                newWallet.balance += initialAmount;
                 break;
             case transactionType.INCOME:
-                newWallet.balance -= amount;
+                newWallet.balance -= initialAmount;
                 break;
             case transactionType.DEBT_LOAN:
                 switch (categoryId) {
                     case 'debt':
                     case 'debtcollection':
-                        newWallet.balance -= amount;
+                        newWallet.balance -= initialAmount;
                         break;
                     case 'loan':
                     case 'repayment':
-                        newWallet.balance += amount;
+                        newWallet.balance += initialAmount;
                         break;
                 }
                 break;
@@ -138,7 +141,7 @@ const UpdateTransactionForm = (props) => {
         // Now you can subtract the new transaction amount
         const newTransaction = new TransactionBuilder()
             .setTransId(trans_id)
-            .setAmount(amount - tax.total_tax || 0)
+            .setAmount(amount - (tax.total_tax || 0))
             .setCategoryId(categoryId)
             .setCreatedAt(created_at)
             .setNote(note)
@@ -170,11 +173,14 @@ const UpdateTransactionForm = (props) => {
                 break;
         }
 
-        updateUserWallet(wallet.wallet_id, newWallet);
+        await updateUserWallet(wallet.wallet_id, newWallet);
         await updateTransaction(trans_id, newTransaction);
         dispatch(updateWallet(newWallet));
         if (currentWallet.wallet_id === wallet.wallet_id)
             dispatch(setBalance(newWallet.balance));
+        if (onSave) {
+            onSave();
+        }
     }
 
     return (

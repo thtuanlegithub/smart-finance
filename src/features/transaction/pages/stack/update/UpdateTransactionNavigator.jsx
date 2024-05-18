@@ -13,7 +13,7 @@ import ReminderForm from '../add/ReminderForm';
 
 const UpdateTransactionStack = createStackNavigator();
 
-const UpdateTransactionNavigator = () => {
+const UpdateTransactionNavigator = (props) => {
     return (
         <UpdateTransactionStack.Navigator
             screenOptions={{
@@ -24,7 +24,9 @@ const UpdateTransactionNavigator = () => {
                     close: TransitionSpecs.TransitionIOSSpec,
                 },
             }}>
-            <UpdateTransactionStack.Screen name="Update Transaction" component={UpdateTransactionForm} />
+            <UpdateTransactionStack.Screen name="Update Transaction" 
+                component={UpdateTransactionForm} 
+                initialParams={{ onSave: props.onSave }}/>
             <UpdateTransactionStack.Screen name="Select Category" component={SelectCategoryForm} />
             <UpdateTransactionStack.Screen name="Note" component={NoteForm} />
             <UpdateTransactionStack.Screen name="Wallet" component={WalletForm} />

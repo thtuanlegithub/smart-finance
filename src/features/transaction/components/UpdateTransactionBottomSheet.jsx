@@ -26,7 +26,7 @@ const UpdateTransactionBottomSheet = (props) => {
             handleComponent={CustomHandle} // Use the custom handle
         >
             <NavigationContainer independent={true}>
-                <UpdateTransactionNavigator />
+                <UpdateTransactionNavigator onSave={props.onSave}/>
             </NavigationContainer>
         </BottomSheetModal>
     )

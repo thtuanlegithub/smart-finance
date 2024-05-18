@@ -53,10 +53,10 @@ const ActionSheetSelectTimeRangeAddLimit = (props) => {
                         onPress={() => handleAddLimitTimeRangeSelect('this-week')} />
                     <BottomMenuItem
                         title={t('this-month')}
-                        onPress={() => handleAddLimitTimeRangeSelect(t('this-month'))} />
+                        onPress={() => handleAddLimitTimeRangeSelect('this-month')} />
                     <BottomMenuItem
                         title={t('this-year')}
-                        onPress={() => handleAddLimitTimeRangeSelect(t('this-year'))} />
+                        onPress={() => handleAddLimitTimeRangeSelect('this-year')} />
                     <BottomMenuItem
                         title={t('customize')}
                         onPress={() => handleAddLimitTimeRangeSelect('customize')} />

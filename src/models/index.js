@@ -1,5 +1,5 @@
-export {default as BudgetTargetType} from './budget_target/budgetTargetType';
-export {default as BudgetTarget} from './budget_target/budgetTarget';
+export {default as Limit} from './limit/limit';
+export {default as BudgetTarget} from './limit/limit';
 
 export {default as Category} from './category/category';
 

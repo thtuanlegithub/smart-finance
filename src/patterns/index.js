@@ -11,9 +11,7 @@ export {default as FirestoreSingleton} from './singleton/FirestoreSingleton';
 //                                 .setBalance(100)
 //                                 .setAccountId('456')
 //                                 .build();
-export {default as BudgetTargetTypeBuilder} from './builder/budget_target/budgetTargetTypeBuilder';
-export {default as BudgetTargetBuilder} from './builder/budget_target/budgetTargetBuilder';
-
+export {default as LimitBuilder} from './builder/limit/limitBuilder';
 export {default as CategoryBuilder} from './builder/category/categoryBuilder';
 
 export {default as CurrencyBuilder} from './builder/currency/currencyBuilder';    

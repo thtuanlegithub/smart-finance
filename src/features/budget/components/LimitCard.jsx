@@ -34,7 +34,7 @@ const LimitCard = (props) => {
             <View style={{ flex: 1 }}>
                 <View style={styles.rowPlaceBetween}>
                     <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t(props.category)}</Text>
-                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>Limit: {formatCurrency(props.limit)}</Text>
+                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t('limit')}: {formatCurrency(props.limit)}</Text>
                 </View>
                 <View style={styles.rowPlaceBetween}>
                     <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('due-day')}: {props.limitTimeRangeEnd}</Text>

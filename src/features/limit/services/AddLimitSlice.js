@@ -1,4 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { FirebaseNodes } from "../../../data/firebaseConstant";
+import { getCurrentUser } from "../../authentication";
+import { FirestoreSingleton } from "../../../patterns";
+
+const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
+const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+const updateNewLimit = async (limit_id, newLimit) => {
+    try {
+        const uid = getCurrentUser().uid;
+        const userRef = userCollection.doc(uid);
+        const limitRef = userRef.collection('limits');
+
+        if (limit_id) {
+            const docRef = limitRef.doc(limit_id);
+            await docRef.set(newLimit, { merge: true });
+        } else {
+            const docRef = await limitRef.add(newLimit);
+            await docRef.update({ limit_id: docRef.id });
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 const initialState = {
     addLimitBottomSheetDisplay: null,
@@ -7,6 +33,7 @@ const initialState = {
     addLimitTimeRangeEnd: null,
     addLimitCategory: null,
     addLimitWallet: null,
+    addLimitAmount: 0,
 }
 const addLimitSlice = createSlice({
     name: 'addLimit',
@@ -30,6 +57,9 @@ const addLimitSlice = createSlice({
         setAddLimitWallet: (state, action) => {
             state.addLimitWallet = action.payload;
         },
+        setAddLimitAmount: (state, action) => {
+            state.addLimitAmount = action.payload;
+        },
         clearAddLimitTimeRange: (state) => {
             state.addLimitTimeRange = null;
             state.addLimitTimeRangeStart = null;
@@ -38,6 +68,17 @@ const addLimitSlice = createSlice({
     }
 })
 
-export const { setAddLimitBottomSheetDisplay, setAddLimitTimeRange, setAddLimitTimeRangeStart, setAddLimitTimeRangeEnd, clearAddLimitTimeRange } = addLimitSlice.actions
+export const { 
+    setAddLimitBottomSheetDisplay, 
+    setAddLimitTimeRange, 
+    setAddLimitTimeRangeStart, 
+    setAddLimitTimeRangeEnd, 
+    setAddLimitAmount,
+    clearAddLimitTimeRange 
+} = addLimitSlice.actions
+
+export {
+    updateNewLimit,
+}
 
 export default addLimitSlice.reducer;

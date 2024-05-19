@@ -6,8 +6,6 @@ import { FirestoreSingleton } from "../../../patterns";
 const firestoreInstance = FirestoreSingleton.getInstance().getFirestore();
 const userCollection = firestoreInstance.collection(FirebaseNodes.USERS);
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
 const updateNewLimit = async (limit_id, newLimit) => {
     try {
         const uid = getCurrentUser().uid;
@@ -23,6 +21,35 @@ const updateNewLimit = async (limit_id, newLimit) => {
         }
     } catch (error) {
         console.error(error)
+    }
+}
+
+const deleteLimit = async (limit_id) => {
+    try {
+        const uid = getCurrentUser().uid;
+        const userRef = userCollection.doc(uid);
+        const limitRef = userRef.collection('limits');
+        const docRef = limitRef.doc(limit_id);
+        await docRef.delete();
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+const getAllLimit = async () => {
+    try {
+        const uid = getCurrentUser().uid;
+        const userRef = userCollection.doc(uid);
+        const limitRef = userRef.collection('limits');
+        const snapshot = await limitRef.get();
+        const limitList = [];
+        snapshot.forEach(doc => {
+            limitList.push(doc.data());
+        })
+        return limitList;
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -79,6 +106,8 @@ export const {
 
 export {
     updateNewLimit,
+    getAllLimit,
+    deleteLimit,
 }
 
 export default addLimitSlice.reducer;

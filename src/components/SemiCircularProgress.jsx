@@ -6,12 +6,17 @@ import colors from '../styles/colors';
 import formatCurrency from '../utils/formatCurrency';
 import globalStyles from '../styles/globalStyles';
 import { useTranslation } from 'react-i18next';
-const SemiCircularProgress = ({ fill }) => {
+
+const SemiCircularProgress = ({ fill, limitList, categoryList}) => {
     const size = 328;
     const strokeWidth = 28;
     const radius = (size - strokeWidth) / 2;
     const circumference = Math.PI * radius;
+    const totalAmount = limitList.reduce((total, limit) => total + limit.amount, 0);
+    const totalCurrent = limitList.reduce((total, limit) => total + limit.current, 0);
+    fill = (totalCurrent / totalAmount) * 100; 
     const progress = circumference - (fill / 100) * circumference;
+    
     const { t } = useTranslation();
     let mainColor;
     let subColor;
@@ -35,6 +40,7 @@ const SemiCircularProgress = ({ fill }) => {
         labelTextColor = colors.green08;
         contentTextColor = colors.green07;
     }
+
     return (
         <View>
             <View style={{ position: 'relative' }}>
@@ -69,21 +75,21 @@ const SemiCircularProgress = ({ fill }) => {
                     flex: 1,
                 }}>
                     <Text style={[typography.MediumInterH4, { color: labelTextColor }]}>{t('total-spending')}</Text>
-                    <Text style={[typography.SemiBoldInterH2, { color: contentTextColor }]}>{formatCurrency(2500000)}</Text>
+                    <Text style={[typography.SemiBoldInterH2, { color: contentTextColor }]}>{formatCurrency(totalCurrent) || '0'}</Text>
                 </View>
             </View>
             <View style={styles.quickReportThreeColumn}>
                 <View style={globalStyles.centerAlign}>
                     <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>{t('limit-budget')}</Text>
-                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{formatCurrency(3000000)}</Text>
+                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{formatCurrency(totalAmount)}</Text>
                 </View>
                 <View style={globalStyles.centerAlign}>
                     <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>{t('remaining-budget')}</Text>
-                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{formatCurrency(500000)}</Text>
+                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{formatCurrency(totalAmount - totalCurrent)}</Text>
                 </View>
                 <View style={globalStyles.centerAlign}>
                     <Text style={[typography.RegularInterH6, { color: labelTextColor }]}>{t('due-day')}</Text>
-                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>4 {t('days')}</Text>
+                    <Text style={[typography.SemiBoldInterH6, { color: contentTextColor }]}>{(limitList[0] && limitList[0].to_date) || ''}</Text>
                 </View>
             </View>
         </View>

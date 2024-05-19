@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import StackHeader from '../../../../components/StackHeader'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUpdateLimitAmount, setUpdateLimitBottomSheetDisplay, setUpdateLimitTimeRange, setUpdateLimitTimeRangeEnd, setUpdateLimitTimeRangeStart } from '../../services/UpdateLimitSlice'
+import { setNavigationGoBack, setUpdateLimitAmount, setUpdateLimitBottomSheetDisplay, setUpdateLimitTimeRange, setUpdateLimitTimeRangeEnd, setUpdateLimitTimeRangeStart } from '../../services/UpdateLimitSlice'
 import { useNavigation } from '@react-navigation/native'
 import MoneyInput from '../../../../components/MoneyInput'
 import SelectCategoryInput from '../../../transaction/components/SelectCategoryInput'
@@ -14,6 +14,7 @@ import ActionSheetSelectTimeRangeUpdateLimit from '../../components/ActionSheetS
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, format } from 'date-fns';
 import LimitBuilder from '../../../../patterns/builder/limit/limitBuilder'
 import { updateNewLimit } from '../../services/AddLimitSlice'
+import { setDataChange } from '../../../budget'
 
 const UpdateLimitForm = () => {
     const { t } = useTranslation();
@@ -24,11 +25,12 @@ const UpdateLimitForm = () => {
     const updateLimitTimeRangeStart = useSelector(state => state.updateLimit.updateLimitTimeRangeStart);
     const updateLimitTimeRangeEnd = useSelector(state => state.updateLimit.updateLimitTimeRangeEnd);
     const currentWallet = useSelector(state => state.wallet.currentWallet);
-    const amount = useSelector(state => state.updateLimit.updateLimitAmount);
     const category_id = useSelector(state => state.addTransactionForm.category_id)
+    const amount = useSelector(state => state.updateLimit.updateLimitAmount);
     const limit_id = useSelector(state => state.updateLimit.updateLimitId)
+    const dataChange = useSelector(state => state.updateLimit.dataChange)
     const [updateLimitTimeRangeInputDisplay, setUpdateLimitTimeRangeInputDisplay] = useState(null);
-    
+
     function handleUpdateLimitTimeRange() {
         const now = new Date();
         if (updateLimitTimeRange === 'customize') {
@@ -63,6 +65,7 @@ const UpdateLimitForm = () => {
 
     const handleSaveLimit = async () => {
         const newLimit = new LimitBuilder()
+            .setLimitId(limit_id)
             .setAmount(amount)
             .setCategoryId(category_id)
             .setFromDate(updateLimitTimeRangeStart)
@@ -71,6 +74,8 @@ const UpdateLimitForm = () => {
             .build();
         await updateNewLimit(limit_id, newLimit);
         dispatch(setUpdateLimitBottomSheetDisplay(false));
+        dispatch(setDataChange(!dataChange));
+        dispatch(setNavigationGoBack(true));
     }
 
     useEffect(() => {
@@ -133,8 +138,8 @@ const UpdateLimitForm = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
             }}>
-                <W1Button title={t('save')} 
-                    onPress={handleSaveLimit}/>
+                <W1Button title={t('save')}
+                    onPress={handleSaveLimit} />
             </View>
             <ActionSheetSelectTimeRangeUpdateLimit
                 actionSheetUpdateLimitTimeRangeRef={actionSheetUpdateLimitTimeRangeRef}

@@ -1,8 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { FirestoreSingleton } from "../../../patterns"
-import { FirebaseNodes } from "../../../data/firebaseConstant"
-
-
 
 const initialState = {
     budgetTypeFilter: 'Limit',
@@ -10,6 +6,7 @@ const initialState = {
     budgetTimeRangeStart: null,
     budgetTimeRangeEnd: null,
     selectedLimitItem: null,
+    dataChange: false,
 }
 const budgetSlice = createSlice({
     name: 'budget',
@@ -30,6 +27,9 @@ const budgetSlice = createSlice({
         setSelectedLimitItem: (state, action) => {
             state.selectedLimitItem = action.payload
         },
+        setDataChange: (state, action) => {
+            state.dataChange = action.payload
+        },  
         clearBudgetTimeRange(state) {
             state.budgetTimeRange = null
             state.budgetTimeRangeStart = null
@@ -38,6 +38,14 @@ const budgetSlice = createSlice({
     }
 })
 
-export const { setBudgetTypeFilter, setBudgetTimeRange, setBudgetTimeRangeStart, setBudgetTimeRangeEnd, setSelectedLimitItem, clearBudgetTimeRange } = budgetSlice.actions;
+export const { 
+    setBudgetTypeFilter, 
+    setBudgetTimeRange, 
+    setBudgetTimeRangeStart, 
+    setBudgetTimeRangeEnd, 
+    setSelectedLimitItem,
+    setDataChange, 
+    clearBudgetTimeRange
+} = budgetSlice.actions;
 
 export default budgetSlice.reducer;

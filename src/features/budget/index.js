@@ -5,4 +5,5 @@ export {
     setBudgetTimeRangeEnd,
     setSelectedLimitItem,
     clearBudgetTimeRange,
+    setDataChange,
 } from './services/budgetSlice';

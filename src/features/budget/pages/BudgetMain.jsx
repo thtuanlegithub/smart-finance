@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import colors from '../../../styles/colors';
 import globalStyles from '../../../styles/globalStyles';
@@ -19,16 +19,16 @@ import { formatDate } from '../../../utils/formatDate';
 import InvestmentList from '../components/InvestmentList';
 import ActionSheetSelectTimeRangeBudget from '../components/ActionSheetSelectTimeRangeBudget';
 import { useTranslation } from 'react-i18next';
+import { getAllLimit } from '../../limit';
+import { getAllTransactions } from '../../transaction';
 const DISPLAY = true;
 const HIDE = false;
 
 const Tab = createMaterialTopTabNavigator();
 
 function BudgetMain(props) {
-
-    const budgetTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week'];
     const budgetTypeFilter = useSelector(state => state.budget.budgetTypeFilter);
-    const { t } = useTranslation(); 
+    const { t } = useTranslation();
     const actionSheetBudgetTypeRef = useRef();
     const handleDisplayActionSheetBudgetType = (DISPLAY) => {
         actionSheetBudgetTypeRef.current?.setModalVisible(DISPLAY);
@@ -59,6 +59,57 @@ function BudgetMain(props) {
         dispatch(setBudgetTypeFilter(type))
         handleDisplayActionSheetBudgetType(HIDE);
     }
+    const dataChange = useSelector(state => state.budget.dataChange)
+    const [limitList, setLimitList] = useState(
+        [
+            {
+                "timeRange": "",
+                "transactions": []
+            }
+        ]
+    );
+
+    const groupByDateAndCategory = (list) => {
+        return list.reduce((acc, item) => {
+            let timeRange = `${item.from_date}-${item.to_date}`;
+            if (item.from_date === item.to_date) {
+                timeRange = item.from_date;
+            }
+            if (!acc[timeRange]) {
+                acc[timeRange] = {};
+            }
+            if (!acc[timeRange][item.category_id]) {
+                acc[timeRange][item.category_id] = { ...item, amount: 0 };
+            }
+            acc[timeRange][item.category_id].amount += item.amount;
+            return acc;
+        }, {});
+    }
+
+    const transformData = (groupedLimitList) => {
+        const transformedData = Object.entries(groupedLimitList).map(([timeRange, limitList]) => ({
+            timeRange,
+            limitList
+        }));
+        return transformedData.sort((a, b) => a.timeRange.length - b.timeRange.length);
+    }
+
+    const fetchLimitList = async () => {
+        const limitList = await getAllLimit();
+        const groupedLimitList = groupByDateAndCategory(limitList);
+        const transformedData = transformData(groupedLimitList);
+        setLimitList(transformedData);
+    }
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const [transactions, setTransactions] = useState([{}]);
+    const fetchTransactions = async () => {
+        setTransactions(await getAllTransactions(currentWallet.wallet_id));
+    }
+
+    useEffect(() => {
+        fetchLimitList();
+        fetchTransactions();
+    }, [dataChange, currentWallet.balance])
 
     return (
         <View style={styles.container}>
@@ -69,11 +120,11 @@ function BudgetMain(props) {
                             <BudgetSelect selected={budgetTypeFilter} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => handleActionSheetSelectBudgetTimeRangeDisplay(DISPLAY)}
                         style={styles.calendar}>
                         <FontAwesome5 name="calendar-alt" size={24} color={colors.green07} solid />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
             <View style={styles.timeRangeContainer}>
@@ -98,20 +149,19 @@ function BudgetMain(props) {
                             borderBottomColor: colors.gray03,
                         }
                     }}>
-                    {budgetTimeRanges.map((range, index) => (
+                    {limitList.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={t(range).toUpperCase()}
-                            initialParams={{ range }}
-                        >
+                            name={t(range.timeRange ? range.timeRange : t('pending')).toUpperCase()}
+                            initialParams={{ range }} >
                             {() => {
                                 switch (budgetTypeFilter) {
                                     case 'Investment':
                                         return <InvestmentList />;
                                     case 'Limit':
-                                        return <LimitList />;
+                                        return <LimitList limitList={range.limitList} transactions={transactions}/>;
                                     default:
-                                        return <LimitList />;
+                                        return <LimitList limitList={range.limitList} transactions={transactions}/>;
                                 }
                             }}
                         </Tab.Screen>

@@ -9,6 +9,7 @@ const initialState = {
     updateLimitCategory: null,
     updateLimitWallet: null,
     updateLimitAmount: 0,
+    navigationGoBack: false,
 }
 const updateLimitSlice = createSlice({
     name: 'updateLimit',
@@ -38,6 +39,9 @@ const updateLimitSlice = createSlice({
         setUpdateLimitAmount: (state, action) => {
             state.updateLimitAmount = action.payload;
         },  
+        setNavigationGoBack: (state, action) => {
+            state.navigationGoBack = action.payload;
+        },
         clearUpdateLimitTimeRange: (state) => {
             state.updateLimitTimeRange = null;
             state.updateLimitTimeRangeStart = null;
@@ -53,7 +57,10 @@ export const {
     setUpdateLimitTimeRangeStart, 
     setUpdateLimitTimeRangeEnd,
     setUpdateLimitAmount, 
-    clearUpdateLimitTimeRange 
+    setUpdateLimitWallet,
+    setUpdateLimitCategory,
+    setNavigationGoBack,
+    clearUpdateLimitTimeRange
 } = updateLimitSlice.actions
 
 export default updateLimitSlice.reducer;

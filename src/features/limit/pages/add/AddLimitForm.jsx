@@ -15,8 +15,10 @@ import { setCurrentCategory } from '../../../category/services/categorySlice'
 import { setTransactionCategory, setUpdateTransactionCategory } from '../../../transaction'
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, format } from 'date-fns';
 import LimitBuilder from '../../../../patterns/builder/limit/limitBuilder'
+import { setDataChange } from '../../../budget'
 
 const AddLimitForm = () => {
+    const { t } = useTranslation();
     dispatch = useDispatch();
     const navigation = useNavigation();
     const actionSheetAddLimitTimeRangeRef = useRef();
@@ -26,7 +28,7 @@ const AddLimitForm = () => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const category_id = useSelector(state => state.addTransactionForm.category_id)
     const amount = useSelector(state => state.addLimit.addLimitAmount);
-    const { t } = useTranslation();
+    const dataChange = useSelector(state => state.addLimit.dataChange)
     const [addLimitTimeRangeInputDisplay, setAddLimitTimeRangeInputDisplay] = useState(null);
 
     function handleAddLimitTimeRange() {
@@ -72,6 +74,7 @@ const AddLimitForm = () => {
             .build();
         await updateNewLimit('', newLimit);
         dispatch(setAddLimitBottomSheetDisplay(false));
+        dispatch(setDataChange(!dataChange));
     }
 
     useEffect(() => {

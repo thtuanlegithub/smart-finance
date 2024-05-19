@@ -206,7 +206,7 @@ function TransactionMain(props) {
                     {transactionTimeRanges.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={t(range.timeRange ? range.timeRange : 'Not available').toUpperCase()}
+                            name={t(range.timeRange ? range.timeRange : t('pending')).toUpperCase()}
                             initialParams={{ range }}>
                             {
                                 props => <TransactionList {...props} 

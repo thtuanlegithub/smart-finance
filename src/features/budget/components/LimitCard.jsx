@@ -14,7 +14,7 @@ const LimitCard = (props) => {
     let progressLabelColor;
     const { t } = useTranslation();
     const userLanguage = useSelector(state => state.setting.language);
-    const fill = props.current / props.limit * 100;
+    const fill = props.current / props.amount * 100;
     if (fill >= 75) {
         progressLabelColor = colors.red05;
     }
@@ -29,25 +29,25 @@ const LimitCard = (props) => {
             style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image style={styles.image}
-                    source={getCategoryIcons(props.category)} />
+                    source={getCategoryIcons(props.category_id)} />
             </View>
             <View style={{ flex: 1 }}>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t(props.category)}</Text>
-                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t('limit')}: {formatCurrency(props.limit)}</Text>
+                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t(props.category_id)}</Text>
+                    <Text style={[typography.SemiBoldInterH4, { color: colors.green07 }]}>{t('limit')}: {formatCurrency(props.amount)}</Text>
                 </View>
                 <View style={styles.rowPlaceBetween}>
-                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('due-day')}: {props.limitTimeRangeEnd}</Text>
+                    <Text style={[typography.RegularInterH5, { color: colors.green08 }]}>{t('due-day')}: {props.to_date}</Text>
                 </View>
                 <View style={{ marginTop: 8 }}>
                     <LineProgressBar
                         completeColor={colors.red05}
                         current={props.current}
-                        limit={props.limit} />
+                        limit={props.amount} />
                 </View>
                 <Text style={[typography.SemiBoldInterH4, { color: progressLabelColor, textAlign: 'right', marginTop: 4 }]}>{formatCurrency(props.current)}</Text>
                 {
-                    props.current >= props.limit &&
+                    props.current >= props.amount &&
                     <View style={{ alignItems: 'flex-end' }}>
                         <Text style={[typography.MediumInterH4, { color: colors.red05 }]}>{t('you-have-reach-the-limit')}</Text>
                     </View>
@@ -56,9 +56,9 @@ const LimitCard = (props) => {
                         <Text style={[typography.RegularInterH4, { color: progressLabelColor }]}>
 
                             {userLanguage === 'en' ?
-                                `${formatCurrency(props.limit - props.current)} left to reach the limit`
+                                `${formatCurrency(props.amount - props.current)} left to reach the limit`
                                 :
-                                `Còn lại ${formatCurrency(props.limit - props.current)} là đạt hạn mức`}
+                                `Còn lại ${formatCurrency(props.amount - props.current)} là đạt hạn mức`}
                         </Text>
                     </View>
                 }

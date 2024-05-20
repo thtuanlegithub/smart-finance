@@ -9,16 +9,21 @@ import DayTransactionsGroup from '../../transaction/components/transactionitem/D
 import { FlatList } from 'react-native-gesture-handler';
 
 import fakeDataTransactionList from '../../../data/fakeDataTransactionList';
+import { useTranslation } from 'react-i18next';
 
 const TimeRangeDetailReport = ({ route }) => {
     const navigation = useNavigation();
     const { selectedItem } = route.params;
+    const { t } = useTranslation();
+
     const fakeDataTransactionListFilter = fakeDataTransactionList.map(item => {
         return {
             ...item,
             transactions: item.transactions.filter(transaction => transaction.type == 'Expense')
         };
-    }).filter(item => item.transactions.length > 0); return (
+    }).filter(item => item.transactions.length > 0); 
+    
+    return (
         <View style={styles.container}>
             <ReportHeader
                 item={selectedItem}
@@ -34,7 +39,7 @@ const TimeRangeDetailReport = ({ route }) => {
                                 ...typography.MediumInterH4,
                                 color: colors.green07,
                             }
-                        }>Total expense this time: </Text>
+                        }>{t('total-expense-of-this-time')}</Text>
                         <Text style={{
                             ...typography.SemiBoldInterH4,
                             color: colors.red01,

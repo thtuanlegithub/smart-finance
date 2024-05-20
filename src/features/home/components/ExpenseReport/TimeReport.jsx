@@ -11,10 +11,19 @@ import { useTranslation } from 'react-i18next'
 
 const screenWidth = Dimensions.get('window').width;
 
-const TimeReport = () => {
+const TimeReport = (props) => {
     const { t } = useTranslation();
-    const mergedData = fakeDataBarChart.labels.map((label, index) => {
-        return { label: label, value: fakeDataBarChart.datasets[0].data[index] };
+    const transactions = props.transactions || [];
+    const data = {
+        labels: transactions.map(transaction => t(transaction.category_id)),
+        datasets: [
+            {
+                data: transactions.map(transaction => transaction.amount),
+            },
+        ],
+    };
+    const mergedData = data.labels.map((label, index) => {
+        return { label: label, value: data.datasets[0].data[index] };
     });
     return (
         <View style={styles.container}>
@@ -24,17 +33,17 @@ const TimeReport = () => {
                         <View style={styles.header}>
                             <View style={styles.summary}>
                                 <Text style={styles.title}>{t('total')}</Text>
-                                <Text style={styles.money}>{formatCurrency(fakeDataBarChart.datasets[0].data.reduce(getSum, 0))}</Text>
+                                <Text style={styles.money}>{formatCurrency(data.datasets[0].data.reduce(getSum, 0))}</Text>
                             </View>
                             <View style={styles.summary}>
                                 <Text style={styles.title}>{t('daily-average')}</Text>
-                                <Text style={styles.money}>{formatCurrency(Math.round(fakeDataBarChart.datasets[0].data.reduce(getSum, 0) / fakeDataBarChart.datasets[0].data.length))}</Text>
+                                <Text style={styles.money}>{formatCurrency(Math.round(data.datasets[0].data.reduce(getSum, 0) / data.datasets[0].data.length))}</Text>
                             </View>
                         </View>
                         <View style={styles.barChartContainer}>
                             <BarChart
                                 bezier
-                                data={fakeDataBarChart}
+                                data={data}
                                 width={screenWidth * 0.95}
                                 height={220}
                                 chartConfig={chartConfig}

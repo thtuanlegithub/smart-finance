@@ -4,28 +4,52 @@ import CircularProgress from './CircularProgress'
 import formatCurrency from '../utils/formatCurrency'
 import colors from '../styles/colors'
 import typography from '../styles/typography';
+import { useTranslation } from 'react-i18next'
 
-const LimitItem = () => {
+const LimitItem = (props) => {
+    const limit = props.limit;
+    const { t } = useTranslation();
+    const fill = Math.round((limit.current / limit.amount) * 100);
+
+    if (fill >= 75) {
+        mainColor = colors.red05;
+        subColor = colors.red04;
+        labelTextColor = colors.red05;
+        contentTextColor = colors.red02;
+    }
+    else if (fill >= 50) {
+        mainColor = colors.orange04;
+        subColor = colors.orange02;
+        labelTextColor = colors.orange05;
+        contentTextColor = colors.orange04;
+    }
+    else {
+        mainColor = colors.green07;
+        subColor = colors.green03;
+        labelTextColor = colors.green08;
+        contentTextColor = colors.green07;
+    }
+
     return (
         <View style={styles.limitItem}>
             <View style={styles.limitProgress}>
-                <CircularProgress fill={50} subColor={colors.red04} mainColor={colors.red03} textColor={colors.red05} />
+                <CircularProgress fill={fill} subColor={subColor} mainColor={mainColor} textColor={contentTextColor} />
             </View>
             <View style={styles.limitInformation}>
                 <View>
                     <View style={styles.limitInformationHeader}>
-                        <Text style={[typography.MediumInterH4, { color: colors.red05 }]}>Vacations</Text>
-                        <View style={styles.tagItem}>
+                    <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t(limit.category_id)}</Text>
+                        {/* <View style={styles.tagItem}>
                             <Text style={[typography.MediumInterH6, { color: 'white' }]}>Limit</Text>
-                        </View>
+                        </View> */}
                     </View>
-                    <Text style={[typography.MediumInterH5, { color: colors.red05 }]}>{formatCurrency(2000000)}/</Text>
-                    <Text style={[typography.MediumInterH5, { color: colors.red05 }]}>{formatCurrency(4000000)} VND</Text>
-                    <Text style={[typography.RegularInterH6, styles.completedPrediction]}>Goal will be completed on 21st April, 2024</Text>
+                    <Text style={[typography.MediumInterH5, { color: colors.green05 }]}>{formatCurrency(limit.current) || 0} /</Text>
+                    <Text style={[typography.MediumInterH5, { color: colors.green05 }]}>{formatCurrency(limit.amount)} VND</Text>
+                    <Text style={[typography.RegularInterH6, styles.completedPrediction]}>{t('due-day')}: {limit.to_date}</Text>
                 </View>
                 <View style={styles.moneyLeftGroup}>
-                    <Text style={[styles.moneyLeft, typography.MediumInterH5, { color: colors.red05 }]}>{formatCurrency(986000)}</Text>
-                    <Text style={[styles.moneyLeft, typography.MediumInterH5, { color: colors.red05 }]}>VND left</Text>
+                    <Text style={[styles.moneyLeft, typography.MediumInterH5, { color: colors.green08 }]}>{t('left')}</Text>
+                    <Text style={[styles.moneyLeft, typography.MediumInterH5, { color: colors.green08 }]}>{formatCurrency(limit.amount-limit.current)}</Text>
                 </View>
             </View>
         </View>
@@ -68,7 +92,7 @@ const styles = StyleSheet.create({
     completedPrediction: {
         width: 170,
         paddingTop: 4,
-        color: colors.red05,
+        color: colors.green08,
     },
     moneyLeftGroup: {
         flex: 1,

@@ -12,36 +12,36 @@ import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
-const screenWidth = Dimensions.get('window').width;
-const piedata = [
-    { name: 'Rentals', population: 2298000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Food & Beverage', population: 1555000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-];
-
-const data = {
-    labels: ['Rentals', 'Food & Beverage', 'Shopping', 'Transportation', 'Medical Check-up', 'Other Expense'],
-    datasets: [
-        {
-            data: [2298000, 1555000, 458000, 210000, 80000, 48000],
-        },
-    ],
-};
-
-const CategoryReport = () => {
+const widthAndHeight = 140
+const sliceColor = [colors.green06, colors.green04, colors.green05, colors.green03, colors.green02, colors.green08]
+const CategoryReport = (props) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
+    const transactions = props.transactions || [];
     const handleCategoryDetailReport = (item) => {
         navigation.navigate("CategoryDetail", { selectedItem: item });
-        console.log(item);
     }
-
+    const data = {
+        labels: transactions.map(transaction => t(transaction.category_id)),
+        datasets: [
+            {
+                data: transactions.map(transaction => transaction.amount),
+            },
+        ],
+    };
     const mergedData = data.labels.map((label, index) => {
         return { label: label, value: data.datasets[0].data[index] };
     });
-
-    const widthAndHeight = 140
-    const sliceColor = [colors.green06, colors.green04, colors.green05, colors.green03, colors.green02, colors.green08]
     const series = data.datasets[0].data;
+    const seriesSum = series.reduce((a, b) => a + b, 0);
+    if (seriesSum === 0) {
+        return (
+            <View>
+                <Text>{t('no-data-to-display')}</Text>
+            </View>
+        );
+    }
+    const dynamicSliceColor = series.map((_, index) => sliceColor[index % sliceColor.length]);
 
     return (
         <View style={styles.container}>
@@ -64,12 +64,12 @@ const CategoryReport = () => {
                                     <PieChart
                                         widthAndHeight={widthAndHeight}
                                         series={series}
-                                        sliceColor={sliceColor}
+                                        sliceColor={dynamicSliceColor}
                                         coverRadius={0.55}
                                         coverFill={'#FFF'}
                                     />
                                     <View style={styles.listCategoryItemInPieChart}>
-                                        {sliceColor.map((color, index) =>
+                                        {dynamicSliceColor.map((color, index) =>
                                         (
                                             <View
                                                 key={index}

@@ -33,13 +33,6 @@ function TransactionMain(props) {
     const userWallet = useSelector(state => state.wallet.wallets);
     const { t } = useTranslation();
     const actionSheetTransactionTypeRef = useRef();
-
-    const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
-    const currentWallet = useSelector(state => state.wallet.currentWallet);
-    const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
-    const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
-    const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
-
     const dispatch = useDispatch();
     const handleSelectTransactionType = (transactionType) => {
         dispatch(setTransactionTypeFilter(transactionType));
@@ -56,7 +49,12 @@ function TransactionMain(props) {
     const handleActionSheetSelectTransactionTimeRangeDisplay = (action) => {
         actionSheetTransactionTimeRangeRef.current.setModalVisible(action);
     }
-
+    
+    const transactionTypeFilter = useSelector(state => state.transaction.transactionTypeFilter);
+    const currentWallet = useSelector(state => state.wallet.currentWallet);
+    const transactionTimeRange = useSelector(state => state.transaction.transactionTimeRange);
+    const transactionTimeRangeStart = useSelector(state => state.transaction.transactionTimeRangeStart);
+    const transactionTimeRangeEnd = useSelector(state => state.transaction.transactionTimeRangeEnd);
     const [timeRange, setTimeRange] = useState(null);
     const [transactionTimeRanges, setTransactionTimeRanges] = useState(
         [

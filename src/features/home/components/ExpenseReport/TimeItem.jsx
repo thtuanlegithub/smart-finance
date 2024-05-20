@@ -32,7 +32,7 @@ const TimeItem = (props) => {
                 <View style={{
                     flexDirection: 'row',
                     gap: 16, justifyContent: 'center',
-                    alignPropss: 'center'
+                    alignProps: 'center'
                 }}>
                     <Text style={{
                         ...typography.RegularInterH4,

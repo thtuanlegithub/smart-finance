@@ -6,22 +6,31 @@ import { BarChart } from 'react-native-chart-kit'
 import incomeChartConfig from './incomeChartConfig'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-
+import getCategoryNameById from '../../../../utils/getCategoryNameById'
 
 const screenWidth = Dimensions.get('window').width;
+// const data = {
+//     labels: ['10', '11', '12', '13', '14', '15', '16'],
+//     datasets: [
+//         {
+//             data: [20000, 45000, 28000, 80000, 20000, 45000, 28000],
+//         },
+//     ],
+// };
 
-const data = {
-    labels: ['10', '11', '12', '13', '14', '15', '16'],
-    datasets: [
-        {
-            data: [20000, 45000, 28000, 80000, 20000, 45000, 28000],
-        },
-    ],
-};
-
-const GeneralIncomeReportCard = () => {
+const GeneralIncomeReportCard = (props) => {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const transactions = props.transactions || [];
+    const data = {
+        labels: transactions.map(transaction => t(transaction.category_id)),
+        datasets: [
+            {
+                data: transactions.map(transaction => transaction.amount),
+            },
+        ],
+    };
+
     const handleNavigationTransactionReport = (type) => {
         navigation.navigate(type);
     }
@@ -32,12 +41,12 @@ const GeneralIncomeReportCard = () => {
                     ...typography.SemiBoldInterH3,
                     color: colors.green08,
                 }}>{t('income')}</Text>
-                <TouchableOpacity onPress={() => handleNavigationTransactionReport("IncomeReport")}>
+                {/* <TouchableOpacity onPress={() => handleNavigationTransactionReport("IncomeReport")}>
                     <Text style={{
                         ...typography.SemiBoldInterH4,
                         color: colors.green06,
                     }}>{t('see-details')}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
             <View style={styles.incomeReport}>
                 <BarChart

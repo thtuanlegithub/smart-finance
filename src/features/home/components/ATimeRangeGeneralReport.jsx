@@ -10,18 +10,22 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
 
 
-const ATimeRangeGeneralReport = () => {
+const ATimeRangeGeneralReport = (props) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
+    const transactions = props.transactions || [];
+    const rawTransactions = props.rawTransactions || [];
+    const incomeTransactions = transactions.filter(transaction => transaction.type === 'income');
+    const expenseTransactions = transactions.filter(transaction => transaction.type === 'expense');
     const handleNavigationTransactionReport = (type) => {
         navigation.navigate(type);
     }
     return (
         <ScrollView>
             <View style={styles.container}>
-                <GeneralIncomeReportCard />
-                <GeneralExpenseReportCard />
-                <View style={styles.reportCard}>
+                <GeneralIncomeReportCard transactions={incomeTransactions}/>
+                <GeneralExpenseReportCard transactions={expenseTransactions} rawTransactions={rawTransactions}/>
+                {/* <View style={styles.reportCard}>
                     <View style={styles.cardHeader}>
                         <Text style={styles.cardTitle}>{t('debt')}</Text>
                         <TouchableOpacity>
@@ -37,7 +41,7 @@ const ATimeRangeGeneralReport = () => {
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.debtLoanSummary}>{formatCurrency(500000)}</Text>
-                </View>
+                </View> */}
                 <View style={{ marginBottom: 32 }}></View>
             </View>
         </ScrollView>

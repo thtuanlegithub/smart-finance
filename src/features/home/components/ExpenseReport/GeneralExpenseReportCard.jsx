@@ -8,26 +8,44 @@ import calculatePercentage from '../../../../utils/calculatePercentage'
 import getSum from '../../../../utils/getSum'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-const data = {
-    labels: ['Rentals', 'Food & Beverage', 'Shopping', 'Transportation', 'Medical Check-up', 'Other Expense'],
-    datasets: [
-        {
-            data: [2298000, 1555000, 458000, 210000, 80000, 48000],
-        },
-    ],
-};
+// const data = {
+//     labels: ['Rentals', 'Food & Beverage', 'Shopping', 'Transportation', 'Medical Check-up'],
+//     datasets: [
+//         {
+//             data: [229521, 1555000, 458000, 210000, 80000],
+//         },
+//     ],
+// };
 
 const screenWidth = Dimensions.get('window').width;
 const widthAndHeight = 100
 const sliceColor = [colors.green06, colors.green04, colors.green05, colors.green03, colors.green02, colors.green08]
 
-const series = data.datasets[0].data;
-
-const GeneralExpenseReportCard = () => {
+const GeneralExpenseReportCard = (props) => {
     const navigation = useNavigation();
     const { t } = useTranslation();
-    const handleNavigationTransactionReport = (type) => {
-        navigation.navigate(type);
+    const transactions = props.transactions || [];
+    const rawTransactions = props.rawTransactions || [];
+    const data = {
+        labels: transactions.map(transaction => t(transaction.category_id)),
+        datasets: [
+            {
+                data: transactions.map(transaction => transaction.amount),
+            },
+        ],
+    };
+    const series = data.datasets[0].data;
+    const seriesSum = series.reduce((a, b) => a + b, 0);
+    if (seriesSum === 0) {
+        return (
+            <View>
+                <Text>{t('no-data-to-display')}</Text>
+            </View>
+        );
+    }
+    const dynamicSliceColor = series.map((_, index) => sliceColor[index % sliceColor.length]);
+    const handleNavigationTransactionReport = (type, myData) => {
+        navigation.navigate(type, { data: myData });
     }
     return (
         <View style={styles.reportCard}>
@@ -36,7 +54,7 @@ const GeneralExpenseReportCard = () => {
                     ...typography.SemiBoldInterH3,
                     color: colors.green08,
                 }}>{t('expense')}</Text>
-                <TouchableOpacity onPress={() => handleNavigationTransactionReport("ExpenseReport")}>
+                <TouchableOpacity onPress={() => handleNavigationTransactionReport("ExpenseReport", rawTransactions)}>
                     <Text style={{
                         ...typography.SemiBoldInterH4,
                         color: colors.green06,
@@ -48,12 +66,12 @@ const GeneralExpenseReportCard = () => {
                     <PieChart
                         widthAndHeight={widthAndHeight}
                         series={series}
-                        sliceColor={sliceColor}
+                        sliceColor={dynamicSliceColor}
                         coverRadius={0.55}
                         coverFill={'#FFF'}
                     />
                     <View style={styles.listCategoryItemInPieChart}>
-                        {sliceColor.map((color, index) =>
+                        {dynamicSliceColor.map((color, index) =>
                         (
                             <View
                                 key={index}
@@ -68,7 +86,6 @@ const GeneralExpenseReportCard = () => {
                                         width: 14,
                                         height: 14,
                                         marginRight: 8,
-
                                     }}></View>
                                 <View style={{
                                     flexDirection: 'row',
@@ -98,12 +115,11 @@ const GeneralExpenseReportCard = () => {
                                                 ...typography.MediumInterH6,
                                                 color: colors.red01,
                                             }}
-                                        >{calculatePercentage(data.datasets[0].data.reduce(getSum, 0), data.datasets[0].data[index])}</Text>
+                                        >{calculatePercentage(seriesSum, series[index])}</Text>
                                     </View>
                                 </View>
                             </View>
-                        )
-                        )}
+                        ))}
                     </View>
                 </View>
             </View>

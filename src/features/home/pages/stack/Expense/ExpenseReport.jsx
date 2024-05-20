@@ -1,20 +1,29 @@
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AddTransactionInputViewHeader from '../../../../transaction/components/AddTransactionInputViewHeader';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import typography from '../../../../../styles/typography';
 import colors from '../../../../../styles/colors';
 import ATimeRangeExpenseReport from '../../../components/ExpenseReport/ATimeRangeExpenseReport';
 import { useTranslation } from 'react-i18next';
+import { getAllTransactions, getTransactionsByRange, groupTransactionsByMonth, groupTransactionsByWeek, groupTransactionsByYear } from '../../../../transaction';
+import { useSelector } from 'react-redux';
 
 const TimeTab = createMaterialTopTabNavigator();
 
 const ExpenseReport = (props) => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const rawTransaction = route.params?.data || [];
+    const expenseTransactions = rawTransaction.map(item => {
+        const filteredTransactions = item.transactions.filter(transaction => transaction.type === 'expense');
+        return { ...item, transactions: filteredTransactions };
+    });
+
     const { t } = useTranslation();
-    const reportTimeRanges = ['25/3/2024 - 31/3/2024', '1/4/2024 - 7/4/2024', 'last-week', 'this-week']
+
     return (
         <View style={{ position: 'relative', flex: 1 }}>
             <AddTransactionInputViewHeader
@@ -22,10 +31,10 @@ const ExpenseReport = (props) => {
                 onBackPress={() => {
                     navigation.navigate("GeneralReport");
                 }} />
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={styles.calendar}>
                 <FontAwesome5 name="calendar-alt" size={24} color={colors.green07} solid />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TimeTab.Navigator
                 screenOptions={{
                     tabBarPressColor: colors.gray02,
@@ -48,15 +57,17 @@ const ExpenseReport = (props) => {
                     }
                 }}>
                 {
-                    reportTimeRanges.map((range, index) => (
+                    expenseTransactions.map((range, index) => (
                         <TimeTab.Screen
                             screenOptions={{
                             }}
                             key={index}
-                            name={t(range).toUpperCase()}
+                            name={t(range.timeRange ? range.timeRange : t('pending')).toUpperCase()}
                             initialParams={{ range }}>
                             {
-                                props => <ATimeRangeExpenseReport {...props} type={props.route.name} />
+                                props => <ATimeRangeExpenseReport {...props} 
+                                    type={props.route.name}
+                                    transactions={range.transactions} />
                             }
                         </TimeTab.Screen>
                     ))

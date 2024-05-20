@@ -9,7 +9,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Tab = createMaterialTopTabNavigator();
 
-const ATimeRangeReport = () => {
+const ATimeRangeReport = (props) => {
+    const transactions = props.transactions || [];
+    
     return (
         <View style={{
             flex: 1,
@@ -51,13 +53,15 @@ const ATimeRangeReport = () => {
                         tabBarLabel: () => <FontAwesome5 name="chart-bar" size={20} color={colors.green08} solid />,
                     }}
                     name="Bar"
-                    component={TimeReport} />
+                    children={() => <TimeReport transactions={transactions} />}
+                />
                 <Tab.Screen
                     options={{
                         tabBarLabel: () => <FontAwesome5 name="chart-pie" size={20} color={colors.green08} solid />,
                     }}
                     name="Pie"
-                    component={CategoryListReport} />
+                    children={() => <CategoryListReport transactions={transactions} />}
+                />
             </Tab.Navigator>
         </View>
 

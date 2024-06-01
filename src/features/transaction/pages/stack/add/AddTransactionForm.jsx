@@ -26,6 +26,12 @@ import calculatePersonalIncomeTax from '../../../../../utils/calculatePersonalIn
 import getCategoryNameById from '../../../../../utils/getCategoryNameById'
 import { useTranslation } from 'react-i18next'
 import StackHeader from '../../../../../components/StackHeader'
+import { getAllTransactions } from '../../../services/transactionSlice'
+import { getAllLimit } from '../../../../limit'
+import { addNewNotification } from '../../../../home/pages/stack/Notification/NotificationService'
+import PushNotification from 'react-native-push-notification';
+import { showWarningNotification } from '../../../../setting/utils/notification'
+import { endOfMonth, endOfYear, isWithinInterval, parse } from 'date-fns'
 
 const TODAY = 0;
 const YESTERDAY = 1;
@@ -142,6 +148,125 @@ const AddTransactionForm = ({ navigation }) => {
                 }
                 break;
         }
+
+        ///// ================================== /////
+        // FETCH LIMIT LIST TO UPDATE NOTIFICATION //
+        const parseFromDate = (dateStr) => {
+            if (!dateStr)
+                return;
+            const parts = dateStr.split('/');
+            if (parts.length === 1) {
+                // Only year is provided
+                return new Date(parts[0], 0, 1); // January 1st of that year
+            } else if (parts.length === 2) {
+                // Month and year are provided
+                return new Date(parts[1], parts[0] - 1, 1); // First day of that month
+            } else if (parts.length === 3) {
+                // Full date is provided
+                return new Date(parts[2], parts[1] - 1, parts[0]); // The exact date
+            }
+            return null;
+        };
+
+        const parseToDate = (dateStr) => {
+            if (!dateStr)
+                return;
+            const parts = dateStr.split('/');
+            if (parts.length === 1) {
+                // Only year is provided
+                return endOfYear(new Date(parts[0], 0, 1)); // Last day of that year
+            } else if (parts.length === 2) {
+                // Month and year are provided
+                return endOfMonth(new Date(parts[1], parts[0] - 1, 1)); // Last day of that month
+            } else if (parts.length === 3) {
+                // Full date is provided
+                return new Date(parts[2], parts[1] - 1, parts[0]); // The exact date
+            }
+            return null;
+        };
+
+        const calculateCurrent = (limit, transactions) => {
+            const fromDate = parseFromDate(limit.from_date);
+            const toDate = parseToDate(limit.to_date);
+            const relevantTransactions = transactions.filter(transaction => {
+                if (!transaction || typeof transaction.created_at !== 'string') {
+                    return false;
+                }
+                const transactionDate = parse(transaction.created_at, 'MMMM dd, yyyy', new Date());
+                return transaction.category_id === limit.category_id
+                    && isWithinInterval(transactionDate, { start: fromDate, end: toDate });
+            });
+            const current = relevantTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+            return { ...limit, current };
+        };
+
+        const fetchTransaction = async () => {
+            try {
+                const transactions = await getAllTransactions(currentWallet.wallet_id);
+                return transactions;
+            } catch (err) {
+                setError(err.message);
+            }
+        }
+
+        const fetchLimitList = async () => {
+            try {
+                const limits = await getAllLimit();
+                return limits;
+            } catch (err) {
+                setError(err.message);
+            }
+        }
+
+        const fetchData = async () => {
+            try {
+                const limitList = await fetchLimitList();
+                const transaction = await fetchTransaction();
+                return { limitList, transaction };
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+
+        const groupBy = (array, keys) => {
+            return array.reduce((result, obj) => {
+                const key = keys.map(k => obj[k]).join('-');
+                if (!result[key]) {
+                    result[key] = { ...obj, current: 0, amount: 0 };
+                }
+                result[key].current += obj.current;
+                result[key].amount += obj.amount;
+                return result;
+            }, {});
+        };
+
+        try {
+            const data = await fetchData();
+            let updatedList = data.limitList.map(limit => calculateCurrent(limit, data.transaction));
+            updatedList = updatedList.sort((a, b) => (b.current / b.amount) - (a.current / a.amount));
+
+            const grouped = Object.values(groupBy(updatedList, ['from_date', 'to_date', 'category_id']));
+            grouped.forEach(group => {
+                if (group.category_id === newTransaction.category_id) {
+                    group.current += newTransaction.amount;
+                }
+            });
+            const overLimitGroup = grouped.find(group => group.category_id === newTransaction.category_id
+                                                && group.current >= group.amount / 2);
+            if (overLimitGroup) {
+                const newNotification = {
+                    title: 'Cảnh báo chi tiêu',
+                    message: `Bạn sắp vượt hạn mức chi tiêu ${t(overLimitGroup.category_id)} trong khoảng thời gian ${overLimitGroup.to_date}. Số tiền đã chi: ${overLimitGroup.current}. Hạn mức: ${overLimitGroup.amount}.`,
+                    created_at: new Date().toISOString(),
+                    read: false,
+                };
+                showWarningNotification(newNotification);
+                await addNewNotification(newNotification);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        ///// ================================== /////
 
         updateUserWallet(wallet.wallet_id, newWallet);
         await updateTransaction('', newTransaction);

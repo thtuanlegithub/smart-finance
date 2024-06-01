@@ -40,6 +40,28 @@ PushNotification.createChannel(
     },
 );
 
+PushNotification.createChannel(
+    {
+        channelId: "limit-warning-notification",
+        channelName: "Limit Warning",
+        channelDescription: "A channel to categorize your notifications",
+        playSound: true,
+        soundName: "default",
+        importance: 4,
+        vibrate: true,
+    },
+);
+
+export const showWarningNotification = (group) => {
+    PushNotification.localNotification({
+        channelId: "limit-warning-notification",
+        title: group.title,
+        message: group.message,
+        playSound: true,
+        soundName: 'default',
+    });
+}
+
 export const setReminderNotification = (reminder) => {
     let date = convertToDateTime(reminder.date, reminder.notify_time);
     let message = reminder.message || 'Check your spending now!';

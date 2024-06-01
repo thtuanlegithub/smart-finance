@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { getAllTransactions } from '../../transaction';
 import { getAllLimit } from '../../limit';
 import { parse, isWithinInterval, endOfMonth, endOfYear } from 'date-fns';
+import { showWarningNotification } from '../../setting/utils/notification';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
@@ -166,7 +167,7 @@ function Home(props) {
     }, [transaction, limitList]);
 
     return (
-        <ScrollView>
+        <ScrollView>  
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View>

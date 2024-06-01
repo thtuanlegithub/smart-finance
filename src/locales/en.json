@@ -101,8 +101,8 @@
     "new-investment": "New Investment",
     "total-interest": "Total interest",
     "fixed": "Fixed",
-    "dynamic": "Dynamic",    "add-note": "Add note",
-
+    "dynamic": "Dynamic",    
+    "add-note": "Add note",
     "amount": "Amount",
     "note": "Note",
     "add-transaction": "Add transaction",

@@ -1,97 +1,42 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import StackHeader from '../../../../../components/StackHeader';
 import colors from '../../../../../styles/colors';
 import typography from '../../../../../styles/typography';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useTranslation} from 'react-i18next';
-
-enum NOTIFICATION_STATUS {
-  READ = 'read',
-  UNREAD = 'unread',
-}
-
-const NOTIFICATION_LIST = [
-  {
-    id: 1,
-    title: 'Notification 1',
-    description: 'Description Notification 1',
-    status: NOTIFICATION_STATUS.UNREAD,
-  },
-  {
-    id: 2,
-    title: 'Notification 2',
-    description: 'Description 2',
-    status: NOTIFICATION_STATUS.UNREAD,
-  },
-  {
-    id: 3,
-    title: 'Notification 3',
-    description: 'Description 3',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 4,
-    title: 'Notification 4',
-    description: 'Description 4',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 5,
-    title: 'Notification 5',
-    description: 'Description 5',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 6,
-    title: 'Notification 6',
-    description: 'Description 6',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 7,
-    title: 'Notification 7',
-    description: 'Description 7',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 8,
-    title: 'Notification 8',
-    description: 'Description 8',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 9,
-    title: 'Notification 9',
-    description: 'Description 9',
-    status: NOTIFICATION_STATUS.READ,
-  },
-  {
-    id: 10,
-    title: 'Notification 10',
-    description: 'Description 10',
-    status: NOTIFICATION_STATUS.READ,
-  },
-];
+import { getAllNotifications, updateReadStatusNotification } from './NotificationService';
 
 const Notification = () => {
   const {t} = useTranslation();
-  const handleReadStatus = () => {
-    // Handle read status
+  const [notificationList, setNotificationList] = useState([]);
+  const fetchNotification = async () => {
+    const notificationList = await getAllNotifications();
+    setNotificationList(notificationList);
+  }
+  const handleReadStatus = async (item) => {
+    if (item.read !== true) {
+      await updateReadStatusNotification(item.id);
+      fetchNotification();
+    }
   };
+
+  useEffect(() => {
+    fetchNotification();
+  }, []);
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <StackHeader title={t('notification')} />
       <FlatList
-        data={NOTIFICATION_LIST}
+        data={notificationList}
         keyExtractor={(item, index) => item.id.toString()}
         renderItem={({item}) => (
           <>
             <TouchableOpacity
-              onPress={handleReadStatus}
+              onPress={() => handleReadStatus(item)}
               style={{
                 ...styles.container,
-                opacity: item.status === NOTIFICATION_STATUS.READ ? 0.3 : 1,
+                opacity: item.read === true ? 0.4 : 1,
               }}>
               <FontAwesome5
                 color={colors.green06}
@@ -105,14 +50,14 @@ const Notification = () => {
                     ...typography.SemiBoldInterH5,
                     color: colors.green06,
                   }}>
-                  [{item.title}]
+                  {item.title}
                 </Text>
                 <Text
                   style={{
                     ...typography.RegularInterH4,
                     color: colors.green08,
                   }}>
-                  Notification
+                  {item.message}
                 </Text>
               </View>
             </TouchableOpacity>

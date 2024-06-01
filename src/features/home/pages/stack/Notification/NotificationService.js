@@ -13,10 +13,18 @@ const getAllNotifications = async () => {
 const addNewNotification = async (newNotification) => {
     const currentUser = getCurrentUser();
     const notificationRef = firestoreInstance.collection('users').doc(currentUser.uid).collection('notifications');
-    await notificationRef.add(newNotification);
+    const docRef = await notificationRef.add(newNotification);
+    await docRef.update({ id: docRef.id });
+}
+
+const updateReadStatusNotification = async (notificationId) => {    
+    const currentUser = getCurrentUser();
+    const notificationRef = firestoreInstance.collection('users').doc(currentUser.uid).collection('notifications').doc(notificationId);
+    await notificationRef.update({ read: true });
 }
 
 export {
     addNewNotification,
-    getAllNotifications
+    getAllNotifications,
+    updateReadStatusNotification,
 }

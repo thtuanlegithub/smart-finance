@@ -20,7 +20,6 @@ const TransactionNavigator = () => {
                         close: TransitionSpecs.TransitionIOSSpec,
                     },
                 }
-
             }>
             <TransactionStack.Screen name="Transaction Main" component={TransactionMain} />
             <TransactionStack.Screen name="Transaction Detail" component={TransactionDetail} />

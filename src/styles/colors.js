@@ -27,4 +27,7 @@ export default colors = {
     orange03: "#FFA352",
     orange02: "#FFD07B",
     orange01: "#FFFEA4",
+    black: {
+        main: "#000000",
+    }
 }

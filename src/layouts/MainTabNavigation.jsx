@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import UpdateLimitBottomSheetModal from '../features/limit/components/UpdateLimitBottomSheetModal';
 import AddInvestmentBottomSheet from '../features/investment/components/AddInvestmentBottomSheet';
 import UpdateInvestmentBottomSheet from '../features/investment/components/UpdateInvestmentBottomSheet';
+import HomeNavigator from '../features/home/pages/HomeNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -101,7 +102,7 @@ const MainTabNavigation = (props) => {
                         >
                             <Tab.Screen
                                 name="Home"
-                                component={Home}
+                                component={HomeNavigator}
                                 options={{
                                     headerShown: false,
                                 }} />

@@ -173,9 +173,11 @@ function Home(props) {
                         <Text style={[typography.SemiBoldInterH2, styles.balancesAmount]}>{formatCurrency(currentWallet?.balance.toString())}</Text>
                         <Text style={[typography.RegularInterH4, styles.totalBalancesLabel]}>{t('total-balance')}</Text>
                     </View>
-                    <View style={styles.notificationContainer}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Notification')}
+                        style={styles.notificationContainer}>
                         <FontAwesome5 name="bell" size={24} color={colors.green07} solid />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.wallet}>
                     <View style={styles.walletHeader}>

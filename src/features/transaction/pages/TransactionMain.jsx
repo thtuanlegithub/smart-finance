@@ -71,7 +71,7 @@ function TransactionMain(props) {
         if (transactionTimeRangeStart && transactionTimeRangeEnd) {
             const start = parse(transactionTimeRangeStart, 'MMMM d, yyyy', new Date());
             const end = parse(transactionTimeRangeEnd, 'MMMM d, yyyy', new Date());
-            transactions = await getTransactionsByRange(currentWallet.wallet_id, start, end)
+            transactions = await getTransactionsByRange(currentWallet.wallet_id, start, end);
         } else {
             transactions = await getAllTransactions(currentWallet.wallet_id);
         }

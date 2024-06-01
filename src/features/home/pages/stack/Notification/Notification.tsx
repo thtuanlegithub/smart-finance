@@ -15,7 +15,7 @@ const NOTIFICATION_LIST = [
   {
     id: 1,
     title: 'Notification 1',
-    description: 'Description 1',
+    description: 'Description Notification 1',
     status: NOTIFICATION_STATUS.UNREAD,
   },
   {

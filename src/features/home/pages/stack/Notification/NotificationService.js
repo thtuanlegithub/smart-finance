@@ -7,7 +7,8 @@ const getAllNotifications = async () => {
     const currentUser = getCurrentUser();
     const notificationRef = firestoreInstance.collection('users').doc(currentUser.uid).collection('notifications');
     const snapshot = await notificationRef.get();
-    return snapshot.docs.map(doc => doc.data());
+    const notifications = snapshot.docs.map(doc => doc.data()).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    return notifications;
 }
 
 const addNewNotification = async (newNotification) => {

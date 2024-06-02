@@ -256,7 +256,7 @@ const AddTransactionForm = ({ navigation }) => {
             if (overLimitGroup) {
                 const newNotification = {
                     title: 'Cảnh báo chi tiêu',
-                    message: `Bạn sắp vượt hạn mức chi tiêu ${t(overLimitGroup.category_id)} trong khoảng thời gian ${overLimitGroup.to_date}. Số tiền đã chi: ${overLimitGroup.current}. Hạn mức: ${overLimitGroup.amount}.`,
+                    message: `Bạn sắp vượt hạn mức chi tiêu ${t(overLimitGroup.category_id)} trong khoảng thời gian ${overLimitGroup.to_date}. Số tiền đã chi: ${formatCurrency(overLimitGroup.current)}. Hạn mức: ${formatCurrency(overLimitGroup.amount)}.`,
                     created_at: new Date().toISOString(),
                     read: false,
                 };

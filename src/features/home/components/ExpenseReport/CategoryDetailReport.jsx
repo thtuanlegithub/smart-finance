@@ -18,7 +18,7 @@ const screenWidth = Dimensions.get('window').width;
 const CategoryDetailReport = ({ route }) => {
     const navigation = useNavigation();
     const handleBackPress = () => {
-        navigation.navigate("ExpenseReport")
+        navigation.goBack();
     }
     const mergedData = fakeDataBarChart.labels.map((label, index) => {
         return { label: label, value: fakeDataBarChart.datasets[0].data[index] };

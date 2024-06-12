@@ -1,16 +1,14 @@
-import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { useTranslation } from 'react-i18next'
+
 import typography from '../../../../../styles/typography'
 import colors from '../../../../../styles/colors'
-import transactionCategoryIcons from '../../../../../data/transactionCategoryIcons'
 import formatCurrency from '../../../../../utils/formatCurrency'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { useSelector } from 'react-redux'
 import { getCategoryIcons } from '../../../../category'
-import getCategoryNameById from '../../../../../utils/getCategoryNameById'
-import getTypeNameById from '../../../../../utils/getTypeNameById'
-import { useTranslation } from 'react-i18next'
 
 const ExpenseDetail = ({ transaction }) => {
     const currentWallet = useSelector(state => state.wallet.currentWallet);
@@ -52,7 +50,7 @@ const ExpenseDetail = ({ transaction }) => {
                 <FontAwesome5 name='wallet' size={18} color={colors.green07} solid />
                 <Text style={{ ...typography.RegularInterH4, color: colors.green07, marginLeft: 8 }}>{currentWallet.wallet_name}</Text>
             </View>
-        </View >
+        </View>
     )
 }
 

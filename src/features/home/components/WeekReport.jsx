@@ -30,29 +30,37 @@ const WeekReport = () => {
     
     return (
         <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 4 }}>
-            <View>
-                <Text style={[typography.BoldInterH3, { color: colors.green07 }]}>{formatCurrency(spendingMoney)} VND</Text>
-                <View style={styles.summaryGroup}>
-                    <Text style={[typography.RegularInterH5]}>{t('total-spend-of-this-week')}</Text>
-                    {/* <View style={styles.changeReport}>
-                        <View style={styles.changeIcon}>
-                            <FontAwesome5 name="arrow-up" size={11} color={colors.red03} />
+            {
+                top3Expense.length > 0 ? (
+                <>                        
+                    <View>
+                        <Text style={[typography.BoldInterH3, { color: colors.green07 }]}>{formatCurrency(spendingMoney)} VND</Text>
+                        <View style={styles.summaryGroup}>
+                            <Text style={[typography.RegularInterH5]}>{t('total-spend-of-this-week')}</Text>
+                            {/* <View style={styles.changeReport}>
+                                <View style={styles.changeIcon}>
+                                    <FontAwesome5 name="arrow-up" size={11} color={colors.red03} />
+                                </View>
+                                <Text style={[typography.MediumInterH5, { color: colors.red03 }]}> 15%</Text>
+                            </View> */}
                         </View>
-                        <Text style={[typography.MediumInterH5, { color: colors.red03 }]}> 15%</Text>
-                    </View> */}
-                </View>
-            </View>
-            <View style={{ marginTop: 16 }}>
-                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Top spending</Text>
-                {top3Expense.map((transaction, index) => (
-                    <SpendingCategoryReport
-                        key={index}
-                        category={transaction.category_id}
-                        amount={transaction.amount}
-                        percentage={transaction.percentage}
-                    />
-                ))}
-            </View>
+                    </View>
+                    <View style={{ marginTop: 16 }}>
+                        <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>Top spending</Text>
+                        {top3Expense.map((transaction, index) => (
+                            <SpendingCategoryReport
+                                key={index}
+                                category={transaction.category_id}
+                                amount={transaction.amount}
+                                percentage={transaction.percentage}
+                            />
+                        ))}
+                    </View>
+                </>
+                )
+                    :
+                    <Text style={[typography.RegularInterH5, { color: colors.green07 }]}>{t('no-data')}</Text>
+            }
         </View>
     )
 }

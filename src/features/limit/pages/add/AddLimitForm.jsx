@@ -65,6 +65,10 @@ const AddLimitForm = () => {
     }
 
     const handleSaveLimit = async () => {
+        if (amount <= 0) {
+            alert('Amount must be greater than 0');
+            return;
+        }
         const newLimit = new LimitBuilder()
             .setAmount(amount)
             .setCategoryId(category_id)

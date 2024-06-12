@@ -31,7 +31,8 @@ const TimeItem = (props) => {
                 }}>{props.item.label}</Text>
                 <View style={{
                     flexDirection: 'row',
-                    gap: 16, justifyContent: 'center',
+                    gap: 16,
+                    justifyContent: 'center',
                     alignProps: 'center'
                 }}>
                     <Text style={{

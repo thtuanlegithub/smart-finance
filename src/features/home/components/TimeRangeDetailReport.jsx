@@ -28,7 +28,7 @@ const TimeRangeDetailReport = ({ route }) => {
             <ReportHeader
                 item={selectedItem}
                 onBackPress={() => {
-                    navigation.navigate("ExpenseReport")
+                    navigation.goBack();
                 }}
                 title={selectedItem?.label} />
             <FlatList

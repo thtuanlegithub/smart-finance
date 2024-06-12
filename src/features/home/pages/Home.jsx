@@ -1,29 +1,28 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { parse, isWithinInterval, endOfMonth, endOfYear } from 'date-fns';
+import { useTranslation } from 'react-i18next';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 import formatCurrency from '../../../utils/formatCurrency';
 import typography from '../../../styles/typography';
 import colors from '../../../styles/colors';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import styles from '../HomeStyles';
-import SavingItem from '../../../components/SavingItem';
 import LimitItem from '../../../components/LimitItem';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import WeekReport from '../components/WeekReport';
 import MonthReport from '../components/MonthReport';
-import { useNavigation } from '@react-navigation/native';
-import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import CustomHandle from '../../../components/CustomHandle';
 import AddTransactionInputViewHeader from '../../transaction/components/AddTransactionInputViewHeader';
 import WalletItem from '../../../components/WalletItem';
 import { useSnapPoints } from '../../../hooks/useSnapPoints';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectWallet } from '../../setting';
 import BottomSheetReport from '../components/BottomSheetReport';
-import { useTranslation } from 'react-i18next';
 import { getAllTransactions } from '../../transaction';
 import { getAllLimit } from '../../limit';
-import { parse, isWithinInterval, endOfMonth, endOfYear } from 'date-fns';
-import { showWarningNotification } from '../../setting/utils/notification';
 
 const SpendingReportTab = createMaterialTopTabNavigator();
 
@@ -74,7 +73,7 @@ function Home(props) {
     }
 
     const [transaction, setTransaction] = useState([{}]);
-    const [limitList, setLimitList] = useState([{}]);
+    const [limitList, setLimitList] = useState([]);
     const [updatedLimitList, setUpdatedLimitList] = useState([]);
     const dataChange = useSelector(state => state.budget.dataChange);
     const parseFromDate = (dateStr) => {
@@ -162,7 +161,12 @@ function Home(props) {
             let updatedList = limitList.map(limit => calculateCurrent(limit, transaction));
             updatedList = updatedList.sort((a, b) => (b.current / b.amount) - (a.current / a.amount));
             updatedList = updatedList.slice(0, 3);
-            setUpdatedLimitList(updatedList);
+            if (updatedList.length > 0) {
+                setUpdatedLimitList(updatedList);
+            }
+            else {
+                setUpdatedLimitList([]);
+            }
         }
     }, [transaction, limitList]);
 
@@ -251,10 +255,16 @@ function Home(props) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.targetProgressCard}>
-                        {/* <SavingItem /> */}
-                        {updatedLimitList.map((limit, index) => (
-                            <LimitItem key={index} limit={limit} />
-                        ))}
+                        {
+                            updatedLimitList.length > 0 ?
+                            updatedLimitList.map((limit, index) => (
+                                <LimitItem key={index} limit={limit} />
+                            ))
+                                :
+                                <View style={styles.noLimit}>
+                                    <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('no-data')}</Text>
+                                </View>
+                        }
                     </View>
                 </View>
             </View>

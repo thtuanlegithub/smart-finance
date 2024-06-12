@@ -1,26 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 import colors from '../../../styles/colors';
 import globalStyles from '../../../styles/globalStyles';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import BudgetSelect from '../components/BudgetSelect';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import typography from '../../../styles/typography';
-import { useSelector } from 'react-redux';
-import SavingList from '../components/SavingList';
 import LimitList from '../components/LimitList';
 import ActionSheet from 'react-native-actions-sheet';
 import BottomMenuItem from '../../../components/BottomMenuItem';
-import { useDispatch } from 'react-redux';
-
-import { clearBudgetTimeRange, setBudgetTimeRangeEnd, setBudgetTimeRangeStart, setBudgetTypeFilter } from '../services/budgetSlice';
-import DatePicker from 'react-native-date-picker';
-import { formatDate } from '../../../utils/formatDate';
+import { clearBudgetTimeRange, setBudgetTypeFilter } from '../services/budgetSlice';
 import InvestmentList from '../components/InvestmentList';
 import ActionSheetSelectTimeRangeBudget from '../components/ActionSheetSelectTimeRangeBudget';
-import { useTranslation } from 'react-i18next';
 import { getAllLimit } from '../../limit';
 import { getAllTransactions } from '../../transaction';
+
 const DISPLAY = true;
 const HIDE = false;
 
@@ -60,14 +57,12 @@ function BudgetMain(props) {
         handleDisplayActionSheetBudgetType(HIDE);
     }
     const dataChange = useSelector(state => state.budget.dataChange)
-    const [limitList, setLimitList] = useState(
-        [
-            {
-                "timeRange": "",
-                "transactions": []
-            }
-        ]
-    );
+    const [limitList, setLimitList] = useState([
+        {
+            "timeRange": "",
+            "limitList": []
+        }
+    ]);
 
     const groupByDateAndCategory = (list) => {
         return list.reduce((acc, item) => {
@@ -98,7 +93,17 @@ function BudgetMain(props) {
         const limitList = await getAllLimit();
         const groupedLimitList = groupByDateAndCategory(limitList);
         const transformedData = transformData(groupedLimitList);
-        setLimitList(transformedData);
+        if (transformedData.length > 0) {
+            setLimitList(transformedData);
+        }
+        else {
+            setLimitList([
+                {
+                    "timeRange": "",
+                    "limitList": []
+                }
+            ]);
+        }
     }
     const currentWallet = useSelector(state => state.wallet.currentWallet);
     const [transactions, setTransactions] = useState([{}]);
@@ -152,7 +157,7 @@ function BudgetMain(props) {
                     {limitList.map((range, index) => (
                         <Tab.Screen
                             key={index}
-                            name={t(range.timeRange ? range.timeRange : t('pending')).toUpperCase()}
+                            name={t(range.timeRange ? range.timeRange : t('no-data')).toUpperCase()}
                             initialParams={{ range }} >
                             {() => {
                                 switch (budgetTypeFilter) {

@@ -1,11 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+
 import typography from '../../../../styles/typography'
 import colors from '../../../../styles/colors'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import formatCurrency from '../../../../utils/formatCurrency'
-import expenseCategoryIcons from '../../../../data/expenseCategoryIcons'
-import FastImage from 'react-native-fast-image'
 
 const CategoryItem = (props) => {
     return (
@@ -26,7 +25,7 @@ const CategoryItem = (props) => {
                 <View style={{
                     flexDirection: 'row'
                 }}>
-                    <FastImage
+                    {/* <FastImage
                         source={expenseCategoryIcons[props.item.label]}
                         style={{
                             height: 22,
@@ -34,7 +33,7 @@ const CategoryItem = (props) => {
                             marginRight: 10,
                         }}
                         resizeMode={FastImage.resizeMode.contain}
-                    />
+                    /> */}
                     <Text style={{
                         ...typography.RegularInterH4,
                         color: colors.green08,

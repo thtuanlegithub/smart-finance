@@ -64,7 +64,17 @@ const GeneralReport = (props) => {
                 timeRange: timeRangeKey,
                 transactions: timeRange[timeRangeKey]
             }));
-            setTransactionTimeRanges(newTransactionTimeRanges);
+            if (newTransactionTimeRanges.length > 0) {
+                setTransactionTimeRanges(newTransactionTimeRanges);
+            }
+            else {
+                setTransactionTimeRanges([
+                    {
+                        "timeRange": "",
+                        "transactions": []
+                    }
+                ]);
+            }
         }
     }, [timeRange]);
 
@@ -107,7 +117,7 @@ const GeneralReport = (props) => {
                             screenOptions={{
                             }}
                             key={index}
-                            name={t(range.timeRange ? range.timeRange : t('pending')).toUpperCase()}
+                            name={t(range.timeRange ? range.timeRange : t('no-data')).toUpperCase()}
                             initialParams={{ range }}>
                             {
                                 props => <ATimeRangeGeneralReport {...props} 

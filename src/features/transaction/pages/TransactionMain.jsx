@@ -100,7 +100,17 @@ function TransactionMain(props) {
                 timeRange: timeRangeKey,
                 transactions: timeRange[timeRangeKey]
             }));
-            setTransactionTimeRanges(newTransactionTimeRanges);
+            if (newTransactionTimeRanges.length > 0){
+                setTransactionTimeRanges(newTransactionTimeRanges);
+            }
+            else {
+                setTransactionTimeRanges([
+                    {
+                        "timeRange": "",
+                        "transactions": []
+                    }
+                ]);
+            }
         }
     }, [timeRange]);
 
@@ -179,41 +189,45 @@ function TransactionMain(props) {
                 </View>
             </BottomSheetModal>
             <View style={styles.timeRangeContainer}>
-                <Tab.Navigator
-                    initialRouteName={transactionTimeRange ? transactionTimeRange : 'This week'}
-                    screenOptions={{
-                        tabBarPressColor: colors.gray02,
-                        tabBarScrollEnabled: true,
-                        tabBarLabelStyle: {
-                            ...typography.MediumInterH5,
-                            color: colors.green07,
-                            textTransform: 'none',
-                        },
-                        tabBarIndicatorStyle: {
-                            backgroundColor: colors.green07,
-                        },
-                        tabBarItemStyle: {
-                            width: 'auto',
-                        },
-                        tabBarStyle: {
-                            shadowColor: "#FFF",
-                            borderBottomWidth: 0.3,
-                            borderBottomColor: colors.gray03,
-                        }
-                    }}>
-                    {transactionTimeRanges.map((range, index) => (
-                        <Tab.Screen
-                            key={index}
-                            name={t(range.timeRange ? range.timeRange : t('pending')).toUpperCase()}
-                            initialParams={{ range }}>
-                            {
-                                props => <TransactionList {...props} 
-                                type={transactionTypeFilter} 
-                                transactions={range.transactions} />
+                {
+                    transactionTimeRanges.length > 0
+                    &&
+                    <Tab.Navigator
+                        initialRouteName={transactionTimeRange ? transactionTimeRange : 'This week'}
+                        screenOptions={{
+                            tabBarPressColor: colors.gray02,
+                            tabBarScrollEnabled: true,
+                            tabBarLabelStyle: {
+                                ...typography.MediumInterH5,
+                                color: colors.green07,
+                                textTransform: 'none',
+                            },
+                            tabBarIndicatorStyle: {
+                                backgroundColor: colors.green07,
+                            },
+                            tabBarItemStyle: {
+                                width: 'auto',
+                            },
+                            tabBarStyle: {
+                                shadowColor: "#FFF",
+                                borderBottomWidth: 0.3,
+                                borderBottomColor: colors.gray03,
                             }
-                        </Tab.Screen>
-                    ))}
-                </Tab.Navigator>
+                        }}>
+                        {transactionTimeRanges.map((range, index) => (
+                            <Tab.Screen
+                                key={index}
+                                name={t(range.timeRange ? range.timeRange : t('no-data')).toUpperCase()}
+                                initialParams={{ range }}>
+                                {
+                                    props => <TransactionList {...props} 
+                                    type={transactionTypeFilter} 
+                                    transactions={range.transactions} />
+                                }
+                            </Tab.Screen>
+                        ))}
+                    </Tab.Navigator>
+                }
             </View>
         </View>
     );

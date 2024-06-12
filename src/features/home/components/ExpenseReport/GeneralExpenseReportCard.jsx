@@ -1,21 +1,13 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
-import colors from '../../../../styles/colors'
-import typography from '../../../../styles/typography'
-import PieChart from 'react-native-pie-chart'
-import FastImage from 'react-native-fast-image'
-import calculatePercentage from '../../../../utils/calculatePercentage'
-import getSum from '../../../../utils/getSum'
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-// const data = {
-//     labels: ['Rentals', 'Food & Beverage', 'Shopping', 'Transportation', 'Medical Check-up'],
-//     datasets: [
-//         {
-//             data: [229521, 1555000, 458000, 210000, 80000],
-//         },
-//     ],
-// };
+import PieChart from 'react-native-pie-chart'
+import FastImage from 'react-native-fast-image'
+
+import colors from '../../../../styles/colors'
+import typography from '../../../../styles/typography'
+import calculatePercentage from '../../../../utils/calculatePercentage'
 
 const screenWidth = Dimensions.get('window').width;
 const widthAndHeight = 100
@@ -130,7 +122,7 @@ const GeneralExpenseReportCard = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        gap: 8,
         alignItems: 'center',
     },
     reportCard: {
@@ -138,6 +130,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingTop: 16,
         marginHorizontal: 16,
+        flex: 1,
     },
     cardHeader: {
         justifyContent: 'space-between',
@@ -149,6 +142,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginLeft: 8,
         padding: 16,
+        flex: 1,
     },
     listCategoryItemInPieChart: {
         flexDirection: 'column',

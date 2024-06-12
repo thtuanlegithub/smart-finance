@@ -29,29 +29,31 @@ const MonthReport = () => {
 
     return (
         <View style={styles.spendingReportCardContainer}>
-            <View>
-                <Text style={[typography.BoldInterH3, { color: colors.green07 }]}>{formatCurrency(spendingMoney)} VND</Text>
-                <View style={styles.summaryGroup}>
-                    <Text style={[typography.RegularInterH5]}>{t('total-spend-of-this-month')}</Text>
-                    {/* <View style={styles.changeReport}>
-                        <View style={styles.changeIcon}>
-                            <FontAwesome5 name="arrow-down" size={11} color={colors.green06} />
+            {
+                top3Expense.length > 0 ? (
+                    <>
+                        <View>
+                            <Text style={[typography.BoldInterH3, { color: colors.green07 }]}>{formatCurrency(spendingMoney)} VND</Text>
+                            <View style={styles.summaryGroup}>
+                                <Text style={[typography.RegularInterH5]}>{t('total-spend-of-this-month')}</Text>
+                            </View>
                         </View>
-                        <Text style={[typography.MediumInterH5, { color: colors.green07 }]}> 15%</Text>
-                    </View> */}
-                </View>
-            </View>
-            <View style={{ marginTop: 16 }}>
-                <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('top-spending')}</Text>
-                {top3Expense.map((transaction, index) => (
-                    <SpendingCategoryReport
-                        key={index}
-                        category={transaction.category_id}
-                        amount={transaction.amount}
-                        percentage={transaction.percentage}
-                    />
-                ))}
-            </View>
+                        <View style={{ marginTop: 16 }}>
+                            <Text style={[typography.MediumInterH4, { color: colors.green07 }]}>{t('top-spending')}</Text>
+                            {top3Expense.map((transaction, index) => (
+                                <SpendingCategoryReport
+                                    key={index}
+                                    category={transaction.category_id}
+                                    amount={transaction.amount}
+                                    percentage={transaction.percentage}
+                                />
+                            ))}
+                        </View>
+                    </>
+                )
+                    :
+                    <Text style={[typography.RegularInterH5, { color: colors.green07 }]}>{t('no-data')}</Text>
+            }
         </View>
     )
 }

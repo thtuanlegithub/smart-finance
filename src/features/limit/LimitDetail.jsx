@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import typography from '../../styles/typography'
 import ConfirmDialog from '../../components/ConfirmDialog'
 import { deleteLimit } from './services/AddLimitSlice'
+import { setDataChange } from '../budget'
 
 const LimitDetail = () => {
     const selectedLimitItem = useSelector(state => state.budget.selectedLimitItem)

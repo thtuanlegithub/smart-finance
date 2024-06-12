@@ -29,7 +29,7 @@ const ExpenseReport = (props) => {
             <AddTransactionInputViewHeader
                 title={t('expense-detail')}
                 onBackPress={() => {
-                    navigation.navigate("GeneralReport");
+                    navigation.goBack();
                 }} />
             {/* <TouchableOpacity
                 style={styles.calendar}>

@@ -30,8 +30,11 @@ const CategoryReport = (props) => {
         ],
     };
     const mergedData = data.labels.map((label, index) => {
-        return { label: label, value: data.datasets[0].data[index] };
+        return {
+            label: label, value: data.datasets[0].data[index]
+        };
     });
+    console.log((mergedData));
     const series = data.datasets[0].data;
     const seriesSum = series.reduce((a, b) => a + b, 0);
     if (seriesSum === 0) {
@@ -142,13 +145,10 @@ const CategoryReport = (props) => {
 
 const styles = StyleSheet.create({
     listCategoryItemInPieChart: {
-        flexDirection: 'column',
         justifyContent: 'space-around',
     },
     container: {
-        flex: 1,
         backgroundColor: 'white',
-        alignItems: 'center',
         justifyContent: 'center',
         paddingTop: 20,
         flexDirection: 'row',
@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
         color: colors.red01,
     },
     pieChartContainer: {
-        // alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
         marginBottom: 20,

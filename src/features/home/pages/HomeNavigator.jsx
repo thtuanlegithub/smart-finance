@@ -20,7 +20,7 @@ const HomeNavigator = () => {
                     },
                 }
             }>
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="HomeScreen" component={Home} />
       <HomeStack.Screen name="Notification" component={Notification}/>
     </HomeStack.Navigator>
   )

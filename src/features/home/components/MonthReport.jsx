@@ -1,13 +1,15 @@
 import { View, Text } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+
+import styles from '../HomeStyles'
 import typography from '../../../styles/typography'
 import colors from '../../../styles/colors'
 import formatCurrency from '../../../utils/formatCurrency'
 import SpendingCategoryReport from '../../../components/SpendingCategoryReport'
-import styles from '../HomeStyles'
-import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { getAllTransactionsInMonth, getTop3Expense, getTotalExpense } from '../../transaction'
+
 const MonthReport = () => {
     const { t } = useTranslation();
     const [spendingMoney, setSpendingMoney] = useState(0);

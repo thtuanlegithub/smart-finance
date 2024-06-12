@@ -1,15 +1,13 @@
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import AddTransactionInputViewHeader from '../../../../transaction/components/AddTransactionInputViewHeader';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import React from 'react'
+import { View,  StyleSheet } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+
 import typography from '../../../../../styles/typography';
 import colors from '../../../../../styles/colors';
 import ATimeRangeExpenseReport from '../../../components/ExpenseReport/ATimeRangeExpenseReport';
-import { useTranslation } from 'react-i18next';
-import { getAllTransactions, getTransactionsByRange, groupTransactionsByMonth, groupTransactionsByWeek, groupTransactionsByYear } from '../../../../transaction';
-import { useSelector } from 'react-redux';
+import AddTransactionInputViewHeader from '../../../../transaction/components/AddTransactionInputViewHeader';
 
 const TimeTab = createMaterialTopTabNavigator();
 

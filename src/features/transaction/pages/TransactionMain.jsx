@@ -189,9 +189,6 @@ function TransactionMain(props) {
                 </View>
             </BottomSheetModal>
             <View style={styles.timeRangeContainer}>
-                {
-                    transactionTimeRanges.length > 0
-                    &&
                     <Tab.Navigator
                         initialRouteName={transactionTimeRange ? transactionTimeRange : 'This week'}
                         screenOptions={{
@@ -227,7 +224,7 @@ function TransactionMain(props) {
                             </Tab.Screen>
                         ))}
                     </Tab.Navigator>
-                }
+                
             </View>
         </View>
     );
